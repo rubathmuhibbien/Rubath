@@ -636,14 +636,11 @@ preview.addEventListener("touchend", e => {
   if (endX - startX > 50) prevImg();
 });
 
-<script>
-  
-  <!-- ===== YOUTUBE VIDEO + PLAYLIST (ALL-IN-ONE) ===== -->
+<!-- ===== YOUTUBE VIDEO + PLAYLIST ===== -->
 <section class="video-section">
 
   <h2>Kajian & Dokumentasi</h2>
 
-  <!-- PLAYER -->
   <div class="yt-player">
     <iframe 
       id="ytPlayer"
@@ -653,7 +650,6 @@ preview.addEventListener("touchend", e => {
     </iframe>
   </div>
 
-  <!-- PLAYLIST -->
   <div class="yt-playlist">
 
     <div class="yt-item active" data-id="w3tdRtM1HlI">
@@ -683,7 +679,6 @@ preview.addEventListener("touchend", e => {
   max-width:900px;
   aspect-ratio:16/9;
   border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
 .yt-playlist {
@@ -700,23 +695,6 @@ preview.addEventListener("touchend", e => {
   background:#f5f5f5;
   border-radius:10px;
   cursor:pointer;
-  transition:0.25s;
-}
-
-.yt-item:hover {
-  background:#e0e0e0;
-  transform:translateX(5px);
-}
-
-.yt-item img {
-  width:110px;
-  border-radius:6px;
-}
-
-.yt-item p {
-  margin:0;
-  font-size:14px;
-  text-align:left;
 }
 
 .yt-item.active {
@@ -735,7 +713,6 @@ document.addEventListener("DOMContentLoaded", function(){
     item.addEventListener("click", function(){
 
       const id = this.getAttribute("data-id");
-
       player.src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
 
       items.forEach(i => i.classList.remove("active"));
