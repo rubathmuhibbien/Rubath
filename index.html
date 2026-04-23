@@ -640,28 +640,50 @@ preview.addEventListener("touchend", e => {
 
 </section>
 
-<!-- ===== VIDEO + YOUTUBE SECTION ===== -->
+<!-- ===== YOUTUBE STYLE PLAYER ===== -->
 <section class="video-section">
 
-  <h2>Rubath Al-Muhibbien</h2>
+  <h2>Kajian Rubath</h2>
 
-  <div class="video-flex">
+  <div class="yt-layout">
 
-    <!-- 🎬 VIDEO LOKAL -->
-    <div class="video-box">
-      <video controls>
-        <source src="video/pondok.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <!-- ▶️ YOUTUBE -->
-    <div class="video-box">
+    <!-- 🎬 PLAYER (KIRI) -->
+    <div class="yt-player">
       <iframe 
+        id="ytPlayer"
         src="https://www.youtube.com/embed/w3tdRtM1HlI"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        title="YouTube video"
+        allow="autoplay"
         allowfullscreen>
       </iframe>
+    </div>
+
+    <!-- 📺 PLAYLIST (KANAN) -->
+    <div class="yt-sidebar">
+
+      <div class="yt-item active" data-id="w3tdRtM1HlI">
+        <img src="https://img.youtube.com/vi/w3tdRtM1HlI/mqdefault.jpg">
+        <div>
+          <p>Wisuda Santri</p>
+          <small>Rubath Channel</small>
+        </div>
+      </div>
+
+      <div class="yt-item" data-id="9SaYOoAduR8">
+        <img src="https://img.youtube.com/vi/9SaYOoAduR8/mqdefault.jpg">
+        <div>
+          <p>Tentang Pondok</p>
+          <small>Rubath Channel</small>
+        </div>
+      </div>
+
+      <div class="yt-item" data-id="NJ5_pcywd3o">
+        <img src="https://img.youtube.com/vi/NJ5_pcywd3o/mqdefault.jpg">
+        <div>
+          <p>Kajian Terbaru</p>
+          <small>Live / Update</small>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -670,49 +692,117 @@ preview.addEventListener("touchend", e => {
 
 <style>
 
-/* ===== VIDEO SECTION ===== */
+/* SECTION */
 .video-section {
   text-align: center;
 }
 
-/* FLEX LAYOUT */
-.video-flex {
+/* LAYOUT */
+.yt-layout {
   display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 30px auto;
+  align-items: flex-start;
 }
 
-/* BOX VIDEO */
-.video-box {
-  flex: 1;
-  min-width: 300px;
-  max-width: 500px;
-  aspect-ratio: 16 / 9;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+/* PLAYER */
+.yt-player {
+  flex: 2;
 }
 
-/* VIDEO & YOUTUBE FULL */
-.video-box video,
-.video-box iframe {
+.yt-player iframe {
   width: 100%;
-  height: 100%;
-  border: none;
-  object-fit: cover;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* SIDEBAR */
+.yt-sidebar {
+  flex: 1;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* ITEM */
+.yt-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  transition: 0.25s;
+  background: #f5f5f5;
+}
+
+.yt-item:hover {
+  background: #e0e0e0;
+  transform: translateX(5px);
+}
+
+.yt-item img {
+  width: 120px;
+  border-radius: 6px;
+}
+
+.yt-item p {
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.yt-item small {
+  font-size: 12px;
+  color: gray;
+}
+
+.yt-item.active {
+  background: #1B5E20;
+  color: white;
+}
+
+/* SCROLLBAR */
+.yt-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.yt-sidebar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .video-flex {
+  .yt-layout {
     flex-direction: column;
   }
 }
+
 </style>
 
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const items = document.querySelectorAll(".yt-item");
+  const player = document.getElementById("ytPlayer");
+
+  items.forEach(item => {
+    item.addEventListener("click", function(){
+
+      const id = this.getAttribute("data-id");
+
+      player.src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+
+      items.forEach(i => i.classList.remove("active"));
+      this.classList.add("active");
+
+    });
+  });
+
+});
+</script>
+  
 </section>
   
 <section class="map-section">
