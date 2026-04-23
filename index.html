@@ -637,120 +637,126 @@ preview.addEventListener("touchend", e => {
 });
 
 <script>
+<!-- ===== YOUTUBE VIDEO + PLAYLIST SIMPLE ===== -->
+<section class="video-section">
 
-const API_KEY = "AIzaSyCLHrh-SazIpukmAu_yEHNF_Fks2XpK80s";
-const CHANNEL_ID = "UC7rFjYVRO4XIoKYpbf74zTQ";
+  <h2>Kajian & Dokumentasi</h2>
 
-// 🔥 fallback live lo
-const MANUAL_LIVE_ID = "NJ5_pcywd3o";
+  <!-- 🎬 PLAYER -->
+  <div class="yt-player">
+    <iframe 
+      id="ytPlayer"
+      src="https://www.youtube.com/embed/w3tdRtM1HlI"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
+  </div>
 
-let currentLive = null;
+  <!-- 📺 PLAYLIST -->
+  <div class="yt-playlist">
+
+    <div class="yt-item active" data-id="w3tdRtM1HlI">
+      <img src="https://img.youtube.com/vi/w3tdRtM1HlI/mqdefault.jpg">
+      <p>Wisuda Santri</p>
+    </div>
+
+    <div class="yt-item" data-id="9SaYOoAduR8">
+      <img src="https://img.youtube.com/vi/9SaYOoAduR8/mqdefault.jpg">
+      <p>Tentang Pondok</p>
+    </div>
+
+    <div class="yt-item" data-id="NJ5_pcywd3o">
+      <img src="https://img.youtube.com/vi/NJ5_pcywd3o/mqdefault.jpg">
+      <p>Live / Kajian Terbaru</p>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+.video-section {
+  text-align: center;
+}
+
+/* PLAYER */
+.yt-player iframe {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* PLAYLIST */
+.yt-playlist {
+  max-width: 900px;
+  margin: 25px auto;
+}
+
+/* ITEM */
+.yt-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.yt-item:hover {
+  background: #e0e0e0;
+  transform: translateX(5px);
+}
+
+.yt-item img {
+  width: 110px;
+  border-radius: 6px;
+}
+
+.yt-item p {
+  margin: 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.yt-item.active {
+  background: #1B5E20;
+  color: white;
+}
+
+</style>
+
+<script>
 
 document.addEventListener("DOMContentLoaded", function(){
 
+  const items = document.querySelectorAll(".yt-item");
   const player = document.getElementById("ytPlayer");
-  const manualItems = document.querySelectorAll(".yt-playlist:last-child .yt-item");
 
-  // ▶️ PLAYLIST MANUAL
-  manualItems.forEach(item => {
+  items.forEach(item => {
     item.addEventListener("click", function(){
 
       const id = this.getAttribute("data-id");
+
+      // autoplay
       player.src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
 
-      manualItems.forEach(i => i.classList.remove("active"));
+      // active highlight
+      items.forEach(i => i.classList.remove("active"));
       this.classList.add("active");
+
     });
   });
 
-  loadLive();
-
-  // 🔁 cek tiap 30 detik
-  setInterval(loadLive, 30000);
-
 });
 
-// 🔴 LOAD LIVE SYSTEM
-async function loadLive(){
-
-  const liveURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
-  const upcomingURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=upcoming&type=video&key=${API_KEY}`;
-
-  const container = document.getElementById("liveContainer");
-
-  try {
-
-    const liveRes = await fetch(liveURL);
-    const liveData = await liveRes.json();
-
-    const upcomingRes = await fetch(upcomingURL);
-    const upcomingData = await upcomingRes.json();
-
-    let html = "";
-
-    // 🔴 LIVE SEKARANG (PRIORITAS 1)
-    if (liveData.items && liveData.items.length > 0){
-
-      const live = liveData.items[0];
-      const id = live.id.videoId;
-
-      html += `
-        <div class="yt-item active" onclick="playVideo('${id}')">
-          <img src="${live.snippet.thumbnails.medium.url}">
-          <p>🔴 LIVE SEKARANG: ${live.snippet.title}</p>
-        </div>
-      `;
-
-      // 🔥 AUTO PLAY
-      if(currentLive !== id){
-        playVideo(id);
-        currentLive = id;
-      }
-    }
-
-    // ⏰ UPCOMING (PRIORITAS 2)
-    if (upcomingData.items && upcomingData.items.length > 0){
-      upcomingData.items.forEach(item => {
-        html += `
-          <div class="yt-item" onclick="playVideo('${item.id.videoId}')">
-            <img src="${item.snippet.thumbnails.medium.url}">
-            <p>⏰ ${item.snippet.title}</p>
-          </div>
-        `;
-      });
-    }
-
-    // 💣 FALLBACK (PRIORITAS TERAKHIR)
-    if (html === "") {
-      html = `
-        <div class="yt-item active" onclick="playVideo('${MANUAL_LIVE_ID}')">
-          <img src="https://img.youtube.com/vi/${MANUAL_LIVE_ID}/mqdefault.jpg">
-          <p>🔴 Live Akan Datang</p>
-        </div>
-      `;
-    }
-
-    container.innerHTML = html;
-
-  } catch(err){
-    console.error(err);
-
-    // fallback kalau API error
-    container.innerHTML = `
-      <div class="yt-item active" onclick="playVideo('${MANUAL_LIVE_ID}')">
-        <img src="https://img.youtube.com/vi/${MANUAL_LIVE_ID}/mqdefault.jpg">
-        <p>🔴 Live (fallback)</p>
-      </div>
-    `;
-  }
-}
-
-// ▶️ PLAY VIDEO
-function playVideo(id){
-  document.getElementById("ytPlayer").src =
-    "https://www.youtube.com/embed/" + id + "?autoplay=1";
-}
-
+</script>
+  
 </script><section class="map-section">
   <h2>Lokasi</h2>
 
