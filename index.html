@@ -638,14 +638,12 @@ preview.addEventListener("touchend", e => {
 
 </script>
 
-</section>
-
-<!-- ===== VIDEO SECTION PRO ===== -->
+<!-- ===== VIDEO SECTION PRO (YOUTUBE ONLY) ===== -->
 <section class="video-section">
 
   <h2>Kajian Rubath</h2>
 
-  <!-- 🎬 YOUTUBE PLAYER UTAMA -->
+  <!-- 🎬 PLAYER -->
   <div class="yt-player">
     <iframe 
       id="ytPlayer"
@@ -660,32 +658,29 @@ preview.addEventListener("touchend", e => {
 
     <div class="yt-item active" data-id="w3tdRtM1HlI">
       <img src="https://img.youtube.com/vi/w3tdRtM1HlI/mqdefault.jpg">
-      <p>Kajian 1</p>
+      <p>Wisuda Santri</p>
     </div>
 
     <div class="yt-item" data-id="9SaYOoAduR8">
       <img src="https://img.youtube.com/vi/9SaYOoAduR8/mqdefault.jpg">
-      <p>Kajian 2</p>
+      <p>Tentang Pondok</p>
     </div>
 
-    <div class="yt-item" data-id="9SaYOoAduR8">
-      <img src="https://img.youtube.com/vi/9SaYOoAduR8/mqdefault.jpg">
+    <div class="yt-item" data-id="jMfrLwm-YnY">
+      <img src="https://img.youtube.com/vi/jMfrLwm-YnY/mqdefault.jpg">
       <p>Kajian 3</p>
     </div>
 
   </div>
 
-  <!-- 🎬 VIDEO LOKAL (DI BAWAH) -->
-  <div class="local-video">
-    <h3>📺 Dokumentasi Pondok</h3>
-    <video controls>
-      <source src="video/pondok.mp4" type="video/mp4">
-    </video>
-  </div>
-
 </section>
 
 <style>
+
+/* SECTION */
+.video-section {
+  text-align: center;
+}
 
 /* PLAYER */
 .yt-player iframe {
@@ -696,55 +691,75 @@ preview.addEventListener("touchend", e => {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* PLAYLIST */
+/* PLAYLIST WRAPPER */
 .yt-playlist {
   max-width: 900px;
-  margin: 20px auto;
+  margin: 25px auto;
 }
 
+/* ITEM */
 .yt-item {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   margin-bottom: 10px;
-  padding: 8px;
+  padding: 10px;
   background: #f5f5f5;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.25s;
 }
 
+/* THUMB */
 .yt-item img {
-  width: 100px;
+  width: 110px;
   border-radius: 6px;
 }
 
+/* TEXT */
 .yt-item p {
   margin: 0;
+  font-size: 14px;
+  text-align: left;
 }
 
+/* HOVER */
 .yt-item:hover {
-  background: #ddd;
+  background: #e0e0e0;
+  transform: translateX(5px);
 }
 
+/* ACTIVE */
 .yt-item.active {
   background: #1B5E20;
   color: white;
 }
 
-/* VIDEO LOKAL */
-.local-video {
-  max-width: 900px;
-  margin: 30px auto;
-}
-
-.local-video video {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const items = document.querySelectorAll(".yt-item");
+  const player = document.getElementById("ytPlayer");
+
+  items.forEach(item => {
+    item.addEventListener("click", function(){
+
+      const videoId = this.getAttribute("data-id");
+
+      // autoplay
+      player.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+
+      // active highlight
+      items.forEach(i => i.classList.remove("active"));
+      this.classList.add("active");
+
+    });
+  });
+
+});
+</script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
