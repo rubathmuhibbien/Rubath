@@ -661,6 +661,14 @@ preview.addEventListener("touchend", e => {
     <div class="yt-sidebar">
 
       <div class="yt-item active" data-id="w3tdRtM1HlI">
+        <img src="https://img.youtube.com/vi/NJ5_pcywd3o/mqdefault.jpg">
+        <div>
+          <p>Live Maulid Malam Jumat</p>
+          <small>Rubath Channel</small>
+        </div>
+      </div>
+
+      <div class="yt-item" data-id="9SaYOoAduR8">
         <img src="https://img.youtube.com/vi/w3tdRtM1HlI/mqdefault.jpg">
         <div>
           <p>Wisuda Santri</p>
@@ -668,18 +676,10 @@ preview.addEventListener("touchend", e => {
         </div>
       </div>
 
-      <div class="yt-item" data-id="9SaYOoAduR8">
+      <div class="yt-item" data-id="NJ5_pcywd3o">
         <img src="https://img.youtube.com/vi/9SaYOoAduR8/mqdefault.jpg">
         <div>
           <p>Tentang Pondok</p>
-          <small>Rubath Channel</small>
-        </div>
-      </div>
-
-      <div class="yt-item" data-id="NJ5_pcywd3o">
-        <img src="https://img.youtube.com/vi/NJ5_pcywd3o/mqdefault.jpg">
-        <div>
-          <p>Kajian Terbaru</p>
           <small>Live / Update</small>
         </div>
       </div>
@@ -774,9 +774,31 @@ preview.addEventListener("touchend", e => {
 
 /* MOBILE */
 @media (max-width: 768px) {
+
   .yt-layout {
     flex-direction: column;
+    align-items: center; /* 🔥 biar center */
+    gap: 20px;
   }
+
+  .yt-player {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .yt-sidebar {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .yt-item {
+    width: 100%;
+  }
+
+  .video-section {
+    padding: 40px 10px; /* biar gak mepet */
+  }
+
 }
 
 </style>
