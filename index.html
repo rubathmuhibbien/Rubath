@@ -788,8 +788,12 @@ async function loadLive(){
     }
 
     if (html === "") {
-      html = "<p>Tidak ada live / jadwal saat ini</p>";
-    }
+  html = `
+    <div class="yt-item">
+      <p>📺 Belum ada live, silakan cek video di atas</p>
+    </div>
+  `;
+}
 
     container.innerHTML = html;
 
@@ -804,9 +808,9 @@ function playVideo(id){
   document.getElementById("ytPlayer").src =
     "https://www.youtube.com/embed/" + id + "?autoplay=1";
 }
-  
-  }
 </script>
+
+
   
 <section class="map-section">
   <h2>Lokasi</h2>
@@ -867,6 +871,7 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
+  
 
 </body>
 </html>
