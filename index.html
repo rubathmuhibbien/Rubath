@@ -638,10 +638,10 @@ preview.addEventListener("touchend", e => {
 
 </script>
 
-<!-- ===== VIDEO SECTION PRO (YOUTUBE ONLY) ===== -->
+<!-- ===== VIDEO + LIVE COMBINED ===== -->
 <section class="video-section">
 
-  <h2>Kajian Rubath</h2>
+  <h2>Kajian & Live Rubath</h2>
 
   <!-- 🎬 PLAYER -->
   <div class="yt-player">
@@ -653,7 +653,10 @@ preview.addEventListener("touchend", e => {
     </iframe>
   </div>
 
-  <!-- 📺 PLAYLIST -->
+  <!-- 🔴 LIVE & UPCOMING -->
+  <div id="liveContainer" class="yt-playlist"></div>
+
+  <!-- 📺 PLAYLIST MANUAL -->
   <div class="yt-playlist">
 
     <div class="yt-item active" data-id="w3tdRtM1HlI">
@@ -666,21 +669,11 @@ preview.addEventListener("touchend", e => {
       <p>Tentang Pondok</p>
     </div>
 
-    <div class="yt-item" data-id="jMfrLwm-YnY">
-      <img src="https://img.youtube.com/vi/jMfrLwm-YnY/mqdefault.jpg">
-      <p>Kajian 3</p>
-    </div>
-
   </div>
 
 </section>
 
 <style>
-
-/* SECTION */
-.video-section {
-  text-align: center;
-}
 
 /* PLAYER */
 .yt-player iframe {
@@ -688,48 +681,31 @@ preview.addEventListener("touchend", e => {
   max-width: 900px;
   aspect-ratio: 16/9;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* PLAYLIST WRAPPER */
+/* PLAYLIST */
 .yt-playlist {
   max-width: 900px;
-  margin: 25px auto;
+  margin: 20px auto;
 }
 
 /* ITEM */
 .yt-item {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   margin-bottom: 10px;
   padding: 10px;
   background: #f5f5f5;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.25s;
 }
 
-/* THUMB */
 .yt-item img {
-  width: 110px;
+  width: 100px;
   border-radius: 6px;
 }
 
-/* TEXT */
-.yt-item p {
-  margin: 0;
-  font-size: 14px;
-  text-align: left;
-}
-
-/* HOVER */
-.yt-item:hover {
-  background: #e0e0e0;
-  transform: translateX(5px);
-}
-
-/* ACTIVE */
 .yt-item.active {
   background: #1B5E20;
   color: white;
@@ -738,51 +714,88 @@ preview.addEventListener("touchend", e => {
 </style>
 
 <script>
+
+// 🔥 MASUKIN API KEY DI SINI
+const API_KEY = "ISI_API_KEY_LO";
+const CHANNEL_ID = "ISI_CHANNEL_ID_LO";
+
 document.addEventListener("DOMContentLoaded", function(){
 
-  const items = document.querySelectorAll(".yt-item");
   const player = document.getElementById("ytPlayer");
+  const manualItems = document.querySelectorAll(".yt-item");
 
-  items.forEach(item => {
+  // PLAYLIST MANUAL
+  manualItems.forEach(item => {
     item.addEventListener("click", function(){
 
-      const videoId = this.getAttribute("data-id");
+      const id = this.getAttribute("data-id");
 
-      // autoplay
-      player.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+      player.src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
 
-      // active highlight
-      items.forEach(i => i.classList.remove("active"));
+      manualItems.forEach(i => i.classList.remove("active"));
       this.classList.add("active");
-
     });
   });
 
+  // 🔴 LOAD LIVE + UPCOMING
+  loadLive();
+
 });
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function(){
+async function loadLive(){
 
-  const items = document.querySelectorAll(".yt-item");
-  const player = document.getElementById("ytPlayer");
+  const liveURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${UC7rFjYVRO4XIoKYpbf74zTQ}&eventType=live&type=video&key=${AIzaSyCLHrh-SazIpukmAu_yEHNF_Fks2XpK80s}`;
+  const upcomingURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${UC7rFjYVRO4XIoKYpbf74zTQ}&eventType=upcoming&type=video&key=${AIzaSyCLHrh-SazIpukmAu_yEHNF_Fks2XpK80s}`;
 
-  items.forEach(item => {
-    item.addEventListener("click", function(){
+  const container = document.getElementById("liveContainer");
 
-      const videoId = this.getAttribute("data-id");
+  try {
 
-      // autoplay
-      player.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+    const liveRes = await fetch(liveURL);
+    const liveData = await liveRes.json();
 
-      // highlight aktif
-      items.forEach(i => i.classList.remove("active"));
-      this.classList.add("active");
+    const upcomingRes = await fetch(upcomingURL);
+    const upcomingData = await upcomingRes.json();
 
+    let html = "";
+
+    // 🔴 LIVE
+    liveData.items.forEach(item => {
+      html += `
+        <div class="yt-item" onclick="playVideo('${item.id.videoId}')">
+          <img src="${item.snippet.thumbnails.medium.url}">
+          <p>🔴 LIVE: ${item.snippet.title}</p>
+        </div>
+      `;
     });
-  });
 
-});
+    // ⏰ UPCOMING
+    upcomingData.items.forEach(item => {
+      html += `
+        <div class="yt-item" onclick="playVideo('${item.id.videoId}')">
+          <img src="${item.snippet.thumbnails.medium.url}">
+          <p>⏰ ${item.snippet.title}</p>
+        </div>
+      `;
+    });
+
+    if(html === ""){
+      html = "<p>Tidak ada live saat ini</p>";
+    }
+
+    container.innerHTML = html;
+
+  } catch(err){
+    container.innerHTML = "<p>Gagal load live</p>";
+  }
+}
+
+// PLAY VIDEO DARI LIVE
+function playVideo(id){
+  document.getElementById("ytPlayer").src =
+  "https://www.youtube.com/embed/" + id + "?autoplay=1";
+}
+
 </script>
   
 <section class="map-section">
