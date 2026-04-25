@@ -86,7 +86,7 @@
       width:100%; height:100%;
       background:
         linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(27,94,32,0.6)),
-        url('Images/Pondok 1.jpeg');
+        url('Images/Poto Pondok.png');
       background-size:cover;
       background-position:center;
       z-index:0;
@@ -153,24 +153,14 @@
       width:100%;
       border-radius:10px;
     }
+.yt-wrapper {
+  flex-direction: column;
+}
 
-    /* VIDEO */
-    .video-section { text-align:center; }
-
-    .video-wrapper {
-      width: 100%;
-      max-width: 1000px;
-      margin: 30px auto;
-      aspect-ratio: 16 / 9;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .video-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
-
+.yt-list {
+  max-height: none;
+}
+    
     /* MAP PRO */
     .map-container {
       display:flex;
@@ -260,49 +250,6 @@
     @keyframes fadeUp {
       to { opacity:1; transform:translateY(0); }
     }
-.delay-3 { animation-delay:1.5s; }
-}
-
-.yt-container {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.yt-player {
-  flex: 1.5;
-  min-width: 600px;
-  margin: auto;
-  aspect-ratio: 16 / 9;
-}
-
-.yt-player iframe {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-}
-
-.yt-list {
-  flex: 1;
-  max-height: 350px;
-  overflow-y: auto;
-}
-
-.yt-item {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-}
-
-.yt-item img {
-  width: 100px;
-  border-radius: 6px;
-}
-
 /* ========================= */
 /* 📱 MOBILE RESPONSIVE FIX */
 /* ========================= */
@@ -320,14 +267,6 @@
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 10px;
-  }
-
-    .yt-container {
-    flex-direction: column;
-  }
-
-  .yt-list {
-    max-height: none;
   }
 
   nav a {
@@ -696,39 +635,35 @@ preview.addEventListener("touchend", e => {
 
   <h2>Rubath Al-Muhibbien</h2>
 
-  <div class="yt-container">
+ <!-- ▶️ YOUTUBE PREMIUM -->
+<div class="yt-wrapper">
 
-    <!-- 🎬 PLAYER -->
-    <div class="yt-player">
-      <iframe 
-        id="mainVideo"
-        src="https://www.youtube.com/embed/w3tdRtM1HlI"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+  <!-- PLAYER -->
+  <div class="yt-player">
+    <iframe 
+      id="mainVideo"
+      src="https://www.youtube.com/embed/w3tdRtM1HlI"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- LIST -->
+  <div class="yt-list">
+
+    <div class="yt-item active" onclick="playVideo('w3tdRtM1HlI', this)">
+      <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
+      <p>Kajian Rubath</p>
     </div>
 
-    <!-- 📃 LIST VIDEO -->
-    <div class="yt-list">
-
-      <div class="yt-item active" onclick="playVideo('w3tdRtM1HlI', this)">
-        <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
-        <p>Video 1 - Kajian Rubath</p>
-      </div>
-
-      <div class="yt-item" onclick="playVideo('VIDEO_ID_2', this)">
-        <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
-        <p>Video 2</p>
-      </div>
-
-      <div class="yt-item" onclick="playVideo('VIDEO_ID_3', this)">
-        <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg">
-        <p>Video 3</p>
-      </div>
-
+    <div class="yt-item" onclick="playVideo('VIDEO_ID_2', this)">
+      <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
+      <p>Video 2</p>
     </div>
 
   </div>
+
+</div>
 
 </section>
 
@@ -838,6 +773,18 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
+<script>
+function playVideo(id, el) {
+  document.getElementById("mainVideo").src =
+    "https://www.youtube.com/embed/" + id + "?autoplay=1";
 
+  document.querySelectorAll(".yt-item").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  el.classList.add("active");
+}
+</script>
+  
 </body>
 </html>
