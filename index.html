@@ -153,14 +153,24 @@
       width:100%;
       border-radius:10px;
     }
-.yt-wrapper {
-  flex-direction: column;
-}
 
-.yt-list {
-  max-height: none;
-}
-    
+    /* VIDEO */
+    .video-section { text-align:center; }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      margin: 30px auto;
+      aspect-ratio: 16 / 9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
     /* MAP PRO */
     .map-container {
       display:flex;
@@ -635,35 +645,17 @@ preview.addEventListener("touchend", e => {
 
   <h2>Rubath Al-Muhibbien</h2>
 
- <!-- ▶️ YOUTUBE PREMIUM -->
-<div class="yt-wrapper">
-
-  <!-- PLAYER -->
-  <div class="yt-player">
-    <iframe 
-      id="mainVideo"
-      src="https://www.youtube.com/embed/w3tdRtM1HlI"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <!-- LIST -->
-  <div class="yt-list">
-
-    <div class="yt-item active" onclick="playVideo('w3tdRtM1HlI', this)">
-      <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
-      <p>Kajian Rubath</p>
-    </div>
-
-    <div class="yt-item" onclick="playVideo('VIDEO_ID_2', this)">
-      <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
-      <p>Video 2</p>
+    <!-- ▶️ YOUTUBE -->
+    <div class="video-box">
+      <iframe 
+        src="https://www.youtube.com/embed/w3tdRtM1HlI"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        title="YouTube video"
+        allowfullscreen>
+      </iframe>
     </div>
 
   </div>
-
-</div>
 
 </section>
 
@@ -773,18 +765,6 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
-<script>
-function playVideo(id, el) {
-  document.getElementById("mainVideo").src =
-    "https://www.youtube.com/embed/" + id + "?autoplay=1";
 
-  document.querySelectorAll(".yt-item").forEach(item => {
-    item.classList.remove("active");
-  });
-
-  el.classList.add("active");
-}
-</script>
-  
 </body>
 </html>
