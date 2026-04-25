@@ -50,20 +50,59 @@
     }
 
     nav a:hover::after { width:100%; }
+    
+<head>
+<style>
 
-    .dropdown { position:relative; display:flex; align-items:center; }
+/* CSS dropdown utama */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
-    .dropdown-content {
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      background:white;
-      min-width:180px;
-      border-radius:8px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.2);
-      z-index:9999;
-    }
+/* FIX MOBILE */
+@media (max-width: 768px) {
+  .dropdown-content {
+    position: static;
+    display: none;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+}
+
+</style>
+</head>
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+/* item dropdown */
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background: #f5f5f5;
+}
+
+/* desktop hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
     .dropdown-content a { display:block; padding:10px; color:#333; }
     .dropdown-content a:hover { background:#f5f5f5; }
@@ -375,9 +414,14 @@
       </div>
     </div>
 
-    <a href="#">Pendaftaran</a>
-    <a href="#">Kontak</a>
-  </nav>
+<div class="dropdown">
+  <a href="#">Pendaftaran ▾</a>
+  <div class="dropdown-content">
+    <a href="alumni.html">Alumni</a>
+    <a href="pendaftaran.html">Santri Baru</a>
+  </div>
+</div>
+    
 </header>
 
 <section class="hero">
@@ -903,6 +947,19 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('.dropdown > a').forEach(el => {
+    el.addEventListener('click', function(e){
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        this.parentElement.classList.toggle('active');
+      }
+    });
+  });
+});
+</script>
 
 </body>
 </html>
