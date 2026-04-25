@@ -645,77 +645,31 @@ preview.addEventListener("touchend", e => {
 
   <h2>Rubath Al-Muhibbien</h2>
 
+  <div class="video-flex">
+
+    <!-- 🎬 VIDEO LOKAL -->
+    <div class="video-box">
+      <video controls>
+        <source src="video/pondok.mp4" type="video/mp4">
+      </video>
+    </div>
+
     <!-- ▶️ YOUTUBE -->
-   <div class="video-box">
+    <div class="video-box">
+      <iframe 
+        src="https://www.youtube.com/embed/w3tdRtM1HlI"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        title="YouTube video"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-  <!-- PLAYER -->
-  <iframe 
-    id="mainVideo"
-    src="https://www.youtube.com/embed/w3tdRtM1HlI"
-    allowfullscreen>
-  </iframe>
-
-</div>
-
-<!-- 🔥 PLAYLIST (AMAN DI BAWAH) -->
-<div class="yt-playlist">
-
-  <div class="yt-item active" onclick="playVideo('w3tdRtM1HlI', this)">
-    <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
-    <p>Kajian 1</p>
   </div>
-
-  <div class="yt-item" onclick="playVideo('VIDEO_ID_2', this)">
-    <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
-    <p>Kajian 2</p>
-  </div>
-
-  <div class="yt-item" onclick="playVideo('VIDEO_ID_3', this)">
-    <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg">
-    <p>Kajian 3</p>
-  </div>
-
-</div>
 
 </section>
 
 <style>
 
-/* 🔥 PLAYLIST */
-.yt-playlist {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  margin-top: 15px;
-  padding-bottom: 10px;
-}
-
-.yt-item {
-  min-width: 160px;
-  cursor: pointer;
-}
-
-.yt-item img {
-  width: 100%;
-  border-radius: 8px;
-}
-
-.yt-item p {
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.yt-item:hover {
-  transform: scale(1.05);
-}
-
-.yt-item.active {
-  border: 2px solid #4CAF50;
-  border-radius: 8px;
-}
-
-</style>
-  
 /* ===== VIDEO SECTION ===== */
 .video-section {
   text-align: center;
@@ -821,17 +775,5 @@ window.onload = function () {
 
 }
 
-  function playVideo(id, el) {
-  document.getElementById("mainVideo").src =
-    "https://www.youtube.com/embed/" + id + "?autoplay=1";
-
-  document.querySelectorAll(".yt-item").forEach(item => {
-    item.classList.remove("active");
-  });
-
-  el.classList.add("active");
-}
-</script>
-  
 </body>
 </html>
