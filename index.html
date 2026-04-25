@@ -643,32 +643,73 @@ preview.addEventListener("touchend", e => {
 <!-- ===== VIDEO + YOUTUBE SECTION ===== -->
 <section class="video-section">
 
-  <h2>Rubath Al-Muhibbien</h2>
+<!-- ▶️ YOUTUBE + PLAYLIST -->
+<div class="video-box">
 
-  <div class="video-flex">
+  <!-- PLAYER -->
+  <iframe 
+    name="ytframe"
+    src="https://www.youtube.com/embed/w3tdRtM1HlI"
+    allowfullscreen>
+  </iframe>
 
-    <!-- 🎬 VIDEO LOKAL -->
-    <div class="video-box">
-      <video controls>
-        <source src="video/pondok.mp4" type="video/mp4">
-      </video>
-    </div>
+</div>
 
-    <!-- ▶️ YOUTUBE -->
-    <div class="video-box">
-      <iframe 
-        src="https://www.youtube.com/embed/w3tdRtM1HlI"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        title="YouTube video"
-        allowfullscreen>
-      </iframe>
-    </div>
+<!-- 🔥 PLAYLIST -->
+<div class="yt-playlist">
 
-  </div>
+  <a href="https://www.youtube.com/embed/w3tdRtM1HlI" target="ytframe" class="yt-item">
+    <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
+    <p>Kajian 1</p>
+  </a>
+
+  <a href="https://www.youtube.com/embed/VIDEO_ID_2" target="ytframe" class="yt-item">
+    <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
+    <p>Kajian 2</p>
+  </a>
+
+  <a href="https://www.youtube.com/embed/VIDEO_ID_3" target="ytframe" class="yt-item">
+    <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg">
+    <p>Kajian 3</p>
+  </a>
+
+</div>
+
+</div>
 
 </section>
 
 <style>
+
+  /* PLAYLIST */
+.yt-playlist {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  margin-top: 10px;
+  padding-bottom: 5px;
+}
+
+.yt-item {
+  min-width: 140px;
+  text-decoration: none;
+  color: #333;
+  font-size: 12px;
+}
+
+.yt-item img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.yt-item p {
+  margin-top: 5px;
+}
+
+/* HOVER */
+.yt-item:hover {
+  transform: scale(1.05);
+}
 
 /* ===== VIDEO SECTION ===== */
 .video-section {
