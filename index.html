@@ -51,20 +51,60 @@
 
     nav a:hover::after { width:100%; }
 
-    .dropdown { position:relative; display:flex; align-items:center; }
+.dropdown {
+  position: relative;
+  display: inline-block; /* ⬅️ ini penting */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* ITEM */
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+}
+
+/* HOVER DESKTOP */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+    @media (max-width: 768px) {
+
+  .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
 
     .dropdown-content {
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      background:white;
-      min-width:180px;
-      border-radius:8px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.2);
-      z-index:9999;
-    }
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.3s;
+}
 
+.dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+} 
+  
     .dropdown-content a { display:block; padding:10px; color:#333; }
     .dropdown-content a:hover { background:#f5f5f5; }
     .dropdown:hover .dropdown-content { display:block; }
@@ -375,7 +415,13 @@
       </div>
     </div>
 
-    <a href="#">Pendaftaran</a>
+<div class="dropdown">
+  <a href="#">Pendaftaran ▾</a>
+  <div class="dropdown-content">
+    <a href="alumni.html">Alumni</a>
+    <a href="pendaftaran.html">Santri Baru</a>
+  </div>
+</div>
     <a href="#">Kontak</a>
   </nav>
 </header>
@@ -903,6 +949,19 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
+
+  ... kode lain ...
+
+<script>
+document.querySelectorAll('.dropdown > a').forEach(el => {
+  el.addEventListener('click', function(e){
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      this.parentElement.classList.toggle('active');
+    }
+  });
+});
+</script>
 
 </body>
 </html>
