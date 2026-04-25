@@ -642,43 +642,56 @@ preview.addEventListener("touchend", e => {
 
 <!-- ===== VIDEO + YOUTUBE SECTION ===== -->
 <section class="video-section">
+<section class="video-section">
 
-<!-- ▶️ YOUTUBE + PLAYLIST -->
-<div class="video-box">
+<h2>Media Rubath</h2>
 
-  <!-- PLAYER -->
-  <iframe 
-    name="ytframe"
-    src="https://www.youtube.com/embed/w3tdRtM1HlI"
-    allowfullscreen>
-  </iframe>
+<div class="video-flex">
 
-</div>
+  <!-- VIDEO LOKAL -->
+  <div class="video-box">
+    <video controls>
+      <source src="video/pondok.mp4" type="video/mp4">
+    </video>
+  </div>
 
-<!-- 🔥 PLAYLIST -->
-<div class="yt-playlist">
+  <!-- YOUTUBE + PLAYLIST -->
+  <div style="flex:1; min-width:300px; max-width:500px;">
 
-  <a href="https://www.youtube.com/embed/w3tdRtM1HlI" target="ytframe" class="yt-item">
-    <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
-    <p>Kajian 1</p>
-  </a>
+    <!-- PLAYER -->
+    <div class="video-box">
+      <iframe 
+        name="ytframe"
+        src="https://www.youtube.com/embed/w3tdRtM1HlI"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-  <a href="https://www.youtube.com/embed/VIDEO_ID_2" target="ytframe" class="yt-item">
-    <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
-    <p>Kajian 2</p>
-  </a>
+    <!-- PLAYLIST -->
+    <div class="yt-playlist">
 
-  <a href="https://www.youtube.com/embed/VIDEO_ID_3" target="ytframe" class="yt-item">
-    <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg">
-    <p>Kajian 3</p>
-  </a>
+      <a href="https://www.youtube.com/embed/w3tdRtM1HlI" target="ytframe" class="yt-item">
+        <img src="https://img.youtube.com/vi/w3tdRtM1HlI/hqdefault.jpg">
+        <p>Kajian 1</p>
+      </a>
 
-</div>
+      <a href="https://www.youtube.com/embed/VIDEO_ID_2" target="ytframe" class="yt-item">
+        <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg">
+        <p>Kajian 2</p>
+      </a>
+
+      <a href="https://www.youtube.com/embed/VIDEO_ID_3" target="ytframe" class="yt-item">
+        <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg">
+        <p>Kajian 3</p>
+      </a>
+
+    </div>
+
+  </div>
 
 </div>
 
 </section>
-
 <style>
 
   /* PLAYLIST */
