@@ -24,7 +24,7 @@
     }
 
     .logo-wrap { display:flex; align-items:center; gap:10px; }
-    .logo-wrap img { height:40px; border-radius:50%; }
+    .logo-wrap img { height:40px; width:auto; border-radius:50%; }
 
     header h1 { margin:0; color:white; font-family:'Playfair Display', serif; font-size:20px; }
 
@@ -193,6 +193,12 @@
       width:100%;
       border-radius:10px;
     }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+      
 
     /* VIDEO */
     .video-section { text-align:center; }
@@ -949,8 +955,6 @@ window.onload = function () {
   slider.addEventListener("mouseleave", () => auto = setInterval(autoSlide, 3000));
 
 }
-
-  ... kode lain ...
 
 <script>
 document.querySelectorAll('.dropdown > a').forEach(el => {
