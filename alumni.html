@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendaftaran Alumni - Rubath Al-Muhibbien</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#f5f5f5;
+  color:#333;
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(90deg, #1B5E20, #4CAF50);
+  padding: 12px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LOGO */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-wrap img {
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logo-wrap h1 {
+  font-size: 16px;
+  color: white;
+  margin: 0;
+}
+
+/* MENU */
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  position: relative;
+}
+
+nav a::after {
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-3px;
+  width:0%;
+  height:2px;
+  background:#FFD700;
+  transition:0.3s;
+}
+
+nav a:hover::after {
+  width:100%;
+}
+
+/* HERO */
+.hero {
+  padding: 50px 20px 70px;
+  text-align: center;
+  color: white;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(27,94,32,0.8)),
+    url('Images/alumni.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* HERO CONTENT */
+.hero-content {
+  max-width: 600px;
+  margin: auto;
+}
+
+/* LOGO */
+.logo-alumni {
+  width: 120px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+/* JUDUL */
+.hero h2 {
+  font-size: 26px;
+  margin-bottom: 4px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+}
+
+/* GARIS EMAS */
+.gold-line {
+  width: 0;
+  height: 3px;
+  margin: 6px auto 8px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #C8A951, #FFD700, #C8A951);
+  animation: lineGrow 0.8s ease forwards;
+  animation-delay: 1s;
+}
+
+/* DESKRIPSI */
+.hero p {
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 1.3s;
+}
+
+/* ANIMATION KEYFRAMES */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineGrow {
+  to {
+    width: 80px;
+  }
+}
+
+/* FORM */
+.container {
+  max-width: 800px;
+  margin: -60px auto 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* SECTION */
+h3 {
+  margin-top: 25px;
+  color: #1B5E20;
+}
+
+/* INPUT */
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* FIX CHECKBOX ERROR NGANAN */
+.checkbox-wrap {
+  display: block !important;
+  width: 100%;
+  text-align: left;
+}
+
+.checkbox-wrap label {
+  display: block;
+  align-items: flex-start;
+  gap: 10px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.checkbox-wrap input {
+  margin-top: 4px;
+}
+
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #388E3C;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav {
+    gap: 10px;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo-wrap">
+    <img src="Images/logo.png">
+    <h1>Form Alumni Rubath Al-Muhibbien</h1>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="alumni.html">Alumni</a>
+    <a href="#">Kontak</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+
+    <img src="Images/irtibath.PNG" class="logo-alumni">
+
+    <h2>Pendaftaran Alumni</h2>
+    <div class="gold-line"></div>
+    <p>Bergabung kembali dalam silaturahmi alumni Rubath Al-Muhibbien</p>
+
+  </div>
+</section>
+
+<!-- FORM -->
+<div class="container">
+
+<form>
+
+<h3>Data Diri</h3>
+
+<label>Nama Lengkap</label>
+<input type="text">
+
+<label>No HP / WhatsApp</label>
+<input type="text">
+
+<label>Email</label>
+<input type="email">
+
+<label>Alamat</label>
+<textarea rows="3"></textarea>
+
+<label>Upload Foto (Opsional)</label>
+<input type="file">
+
+<h3>Data Pendidikan</h3>
+
+<label>Tahun Masuk</label>
+<input type="number">
+
+<label>Tahun Lulus</label>
+<input type="number">
+
+<label>Program</label>
+<select>
+  <option>Tahfidzul Qur'an</option>
+  <option>Hadits</option>
+  <option>Lainnya</option>
+</select>
+
+<h3>Aktivitas Sekarang</h3>
+
+<label>Pekerjaan / Kuliah</label>
+<input type="text">
+
+<label>Bidang Usaha</label>
+<input type="text">
+
+<label>Domisili Sekarang</label>
+<input type="text">
+
+<h3>Kontribusi Alumni</h3>
+
+<label>Bersedia ikut kegiatan alumni?</label>
+<select>
+  <option>Ya</option>
+  <option>Tidak</option>
+</select>
+
+<label>Bidang Kontribusi</label>
+<input type="text" placeholder="Dakwah / Pendidikan / Sosial">
+
+<div class="checkbox-wrap">
+  <label>
+    <input type="checkbox" required>
+    Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien</b> dimanapun berada.
+  </label>
+</div>
+
+<button type="submit">Kirim Data Alumni</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
