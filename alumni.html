@@ -402,11 +402,16 @@ uploadBtn.addEventListener("click", () => {
         const percent = Math.round((e.loaded / e.total) * 100);
         progressBar.style.width = percent + "%";
         progressText.innerText = percent + "%";
+        
+      if (percent === 100) {
+      progressText.innerText = "Processing...";
       }
     };
 
     // success
     xhr.onload = function() {
+      isDone = true;
+      
       if (xhr.status === 200) {
         const link = xhr.responseText.trim();
 
@@ -424,6 +429,8 @@ uploadBtn.addEventListener("click", () => {
 
     // error
     xhr.onerror = function() {
+        if (isDone) return;
+      
       uploadStatus.innerText = "⚠️ Error koneksi";
     };
 
