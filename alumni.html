@@ -324,14 +324,6 @@ button:hover {
 </form>
 </div>
 
-  <script>
-const form = document.getElementById("formAlumni");
-
-form.addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const data = Object.fromEntries(new FormData(form).entries());
-
 <script>
 const form = document.getElementById("formAlumni");
 
@@ -346,15 +338,34 @@ form.addEventListener("submit", function(e){
   })
   .then(res => res.text())
   .then(res => {
-    alert("Data & foto berhasil dikirim!");
-    form.reset();
+
+    const notif = document.createElement("div");
+
+    notif.innerText = res.includes("Sukses")
+      ? "✅ Data berhasil dikirim"
+      : "❌ Gagal kirim data";
+
+    notif.style.position = "fixed";
+    notif.style.top = "20px";
+    notif.style.right = "20px";
+    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
+    notif.style.color = "white";
+    notif.style.padding = "12px 20px";
+    notif.style.borderRadius = "8px";
+    notif.style.zIndex = "9999";
+
+    document.body.appendChild(notif);
+
+    setTimeout(() => notif.remove(), 3000);
+
+    if (res.includes("Sukses")) form.reset();
   })
   .catch(err => {
-    alert("Gagal upload 😅");
+    alert("Server error 😅");
     console.error(err);
   });
 });
-</script>
+</script> 
   
 </body>
 </html>
