@@ -288,7 +288,7 @@ button:hover {
   <small id="progressText">0%</small>
 </div>
 
-<input type="text" name="foto" id="fotoLink" placeholder="Link foto akan muncul di sini" readonly>
+<input type="hidden" name="foto" id="fotoLink" placeholder="Link foto akan muncul di sini" readonly>
 
 <h3>Data Pendidikan</h3>
 
@@ -389,14 +389,22 @@ xhr.send(JSON.stringify({
     };
 
     // 🔥 SUCCESS
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        fotoLink.value = xhr.responseText;
-        progressText.innerText = "Upload selesai ✅";
-      } else {
-        alert("❌ Yaaaah 😅, Upload gagal");
-      }
-    };
+   xhr.onload = function() {
+  if (xhr.status === 200) {
+    const link = xhr.responseText.trim(); // 🔥 ini penting
+
+    console.log("Link dari server:", link); // debug
+
+    if (link.startsWith("http")) {
+      fotoLink.value = link;
+      progressText.innerText = "Upload selesai ✅";
+    } else {
+      alert("❌ Upload gagal: " + link);
+    }
+  } else {
+    alert("❌ Upload gagal (status " + xhr.status + ")");
+  }
+};
 
     // 🔥 ERROR
     xhr.onerror = function() {
