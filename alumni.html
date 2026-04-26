@@ -272,8 +272,12 @@ button:hover {
 <label>Alamat</label>
 <textarea name="alamat" rows="3"></textarea>
 
-<label>Upload Foto (Opsional)</label>
-<input type="file" name="foto">
+<label>Upload Foto</label>
+<input type="file" id="fotoInput" accept="image/*">
+
+<button type="button" id="btnUpload">Upload Foto</button>
+
+<input type="text" name="foto" id="fotoLink" placeholder="Link foto akan muncul di sini" readonly>
 
 <h3>Data Pendidikan</h3>
 
@@ -324,6 +328,51 @@ button:hover {
 </form>
 </div>
 
+<script>
+const uploadBtn = document.getElementById("btnUpload");
+const fileInput = document.getElementById("fotoInput");
+const fotoLink = document.getElementById("fotoLink");
+
+uploadBtn.addEventListener("click", () => {
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Pilih foto dulu bro 😅");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const base64 = e.target.result.split(",")[1];
+
+    fetch("ISI_URL_APPS_SCRIPT_LO", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "uploadFoto",
+        file: base64,
+        filename: file.name,
+        mimeType: file.type
+      })
+    })
+    .then(res => res.text())
+    .then(link => {
+      fotoLink.value = link;
+      alert("✅ Ajiiib !!! Foto berhasil diupload!");
+    })
+    .catch(err => {
+      alert("❌ Yaaah 😅, Upload gagal");
+      console.error(err);
+    });
+  };
+
+  reader.readAsDataURL(file);
+});
+</script>
+  
 <script>
 const form = document.getElementById("formAlumni");
 
