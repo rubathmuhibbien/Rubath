@@ -397,64 +397,37 @@ uploadBtn.addEventListener("click", () => {
     xhr.setRequestHeader("Content-Type", "text/plain");
 
     // progress
-    xhr.upload.onprogress = function(e) {
-      if (e.lengthComputable) {
-        const percent = Math.round((e.loaded / e.total) * 100);
-        progressBar.style.width = percent + "%";
-        progressText.innerText = percent + "%";
-        
-      if (percent === 100) {
+ xhr.upload.onprogress = function(e) {
+  if (e.lengthComputable) {
+    const percent = Math.round((e.loaded / e.total) * 100);
+
+    progressBar.style.width = percent + "%";
+    progressText.innerText = percent + "%";
+
+    if (percent === 100) {
       progressText.innerText = "Processing...";
-      }
-    };
+    }
+  }
+};
 
-    // success
-    xhr.onload = function() {
-      isDone = true;
-      
-      if (xhr.status === 200) {
-        const link = xhr.responseText.trim();
-
-        if (link.startsWith("http")) {
-          fotoLink.value = link;
-          uploadStatus.innerText = "✅ Foto berhasil diupload";
-          progressText.innerText = "Selesai";
-        } else {
-          uploadStatus.innerText = "❌ Upload gagal";
-        }
-      } else {
-        uploadStatus.innerText = "❌ Upload gagal (server)";
-      }
-    };
-
-    // error
-  xhr.onloadend = function() {
-
+xhr.onloadend = function() {
   if (xhr.status === 200) {
     const link = xhr.responseText.trim();
 
     if (link.startsWith("http")) {
-
-      // 🔄 tampilkan processing dulu
-      progressText.innerText = "Processing...";
-
-      // 🔥 DELAY 500ms biar smooth
       setTimeout(() => {
         fotoLink.value = link;
         uploadStatus.innerText = "✅ Foto berhasil diupload";
         progressText.innerText = "Selesai ✅";
       }, 500);
-
     } else {
       uploadStatus.innerText = "❌ Upload gagal";
     }
-
   } else {
     uploadStatus.innerText = "⚠️ Koneksi tidak stabil";
   }
-    
 };
-
+    
     xhr.send(JSON.stringify({
       action: "uploadFoto",
       file: base64,
@@ -465,7 +438,9 @@ uploadBtn.addEventListener("click", () => {
 
   reader.readAsDataURL(file);
 });
-</script>  
+  
+</script>
+  
 <script>
 const form = document.getElementById("formAlumni");
 
@@ -489,8 +464,9 @@ form.addEventListener("submit", function(e){
 
     notif.style.position = "fixed";
     notif.style.bottom = "20px";
-    notif.style.center = "20px";
-    notif.style.background = res.includes("Sukses ") ? "#4CAF50" : "#F44336";
+    notif.style.center = "50%";
+    notif.style.transform = "translateX(-50%)";
+    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
     notif.style.color = "white";
     notif.style.padding = "12px 20px";
     notif.style.borderRadius = "8px";
