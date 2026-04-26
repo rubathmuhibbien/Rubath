@@ -428,11 +428,32 @@ uploadBtn.addEventListener("click", () => {
     };
 
     // error
-    xhr.onerror = function() {
-        if (isDone) return;
-      
-      uploadStatus.innerText = "⚠️ Error koneksi";
-    };
+  xhr.onloadend = function() {
+
+  if (xhr.status === 200) {
+    const link = xhr.responseText.trim();
+
+    if (link.startsWith("http")) {
+
+      // 🔄 tampilkan processing dulu
+      progressText.innerText = "Processing...";
+
+      // 🔥 DELAY 500ms biar smooth
+      setTimeout(() => {
+        fotoLink.value = link;
+        uploadStatus.innerText = "✅ Foto berhasil diupload";
+        progressText.innerText = "Selesai ✅";
+      }, 500);
+
+    } else {
+      uploadStatus.innerText = "❌ Upload gagal";
+    }
+
+  } else {
+    uploadStatus.innerText = "⚠️ Koneksi tidak stabil";
+  }
+    
+};
 
     xhr.send(JSON.stringify({
       action: "uploadFoto",
