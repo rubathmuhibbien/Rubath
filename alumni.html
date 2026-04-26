@@ -383,13 +383,8 @@ form.addEventListener("submit", function(e){
 
   fetch("https://script.google.com/macros/s/AKfycbwP-Lph4badggB0NQGJcG5gt4e5GWrot9w2G9rE0kJbs0afKIExbXkFx3nsYYMr_bPF/exec", {
     method: "POST",
-  body: JSON.stringify({
-    action: "uploadFoto",
-    file: base64,
-    filename: file.name,
-    mimeType: file.type
+    body: formData
   })
-})
   .then(res => res.text())
   .then(res => {
 
