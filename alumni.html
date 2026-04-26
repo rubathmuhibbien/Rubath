@@ -275,9 +275,9 @@ button:hover {
 <label>Upload Foto</label>
 <input type="file" id="fotoInput" accept="image/*">
 
-<button type="button" id="btnUpload">Upload Foto</button>
+<button type="button" id="btnUpload">Upload Foto (max 5mb)</button>
 
-<input type="text" name="foto" id="fotoLink" placeholder="Link foto akan muncul di sini" readonly>
+<input type="text" name="foto" id="fotoLink" placeholder="Tunggu, Link foto akan muncul di sini" readonly>
 
 <h3>Data Pendidikan</h3>
 
@@ -388,13 +388,13 @@ form.addEventListener("submit", function(e){
     const notif = document.createElement("div");
 
     notif.innerText = res.includes("Sukses")
-      ? "✅ Data berhasil dikirim"
+      ? "✅ Data berhasil dikirim 👍"
       : "❌ Gagal kirim data";
 
     notif.style.position = "fixed";
-    notif.style.top = "20px";
-    notif.style.right = "20px";
-    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
+    notif.style.bottom = "20px";
+    notif.style.center = "20px";
+    notif.style.background = res.includes("Sukses ") ? "#4CAF50" : "#F44336";
     notif.style.color = "white";
     notif.style.padding = "12px 20px";
     notif.style.borderRadius = "8px";
