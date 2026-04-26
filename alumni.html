@@ -19,71 +19,63 @@ body {
 }
 
 /* NAVBAR */
-/* NAVBAR REVISI */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
   background: linear-gradient(90deg, #1B5E20, #4CAF50);
-  padding: 15px 0; /* Padding vertikal saja */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 12px 25px;
   display: flex;
-  flex-direction: column; /* Membuat isi menumpuk ke bawah */
-  align-items: center;    /* Semua di tengah */
-  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
 }
 
+/* LOGO */
 .logo-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  justify-content: center;
+  gap: 10px;
 }
 
 .logo-wrap img {
-  height: 45px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.3);
 }
 
 .logo-wrap h1 {
-  font-size: 18px; /* Sedikit lebih besar agar memanjang */
+  font-size: 16px;
   color: white;
   margin: 0;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-align: center;
 }
 
-/* MENU PINDAH KE BAWAH */
+/* MENU */
 nav {
   display: flex;
-  gap: 25px;
-  border-top: 1px solid rgba(255,255,255,0.2); /* Garis halus pemisah */
-  padding-top: 10px;
-  width: 100%;
-  justify-content: center;
+  gap: 20px;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  font-size: 13px;
-  font-weight: 400;
-  opacity: 0.9;
-  transition: 0.3s;
+  font-size: 14px;
+  position: relative;
 }
 
-nav a:hover {
-  opacity: 1;
-  color: #FFD700;
+nav a::after {
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-3px;
+  width:0%;
+  height:2px;
+  background:#FFD700;
+  transition:0.3s;
 }
+
+nav a:hover::after {
+  width:100%;
+}
+
 /* HERO */
 .hero {
   padding: 50px 20px 70px;
@@ -217,15 +209,36 @@ button:hover {
   background: #388E3C;
 }
 
-/* MOBILE */
+/* KHUSUS TAMPILAN MOBILE */
 @media(max-width:768px){
+  .navbar {
+    flex-direction: column; /* Biar menu pindah ke bawah judul */
+    gap: 12px;
+    padding: 15px 10px;
+  }
+
+  .logo-wrap {
+    justify-content: center; /* Judul & logo ke tengah */
+    width: 100%;
+  }
+
+  .logo-wrap h1 {
+    font-size: 14px;
+    text-align: center;
+  }
+
   nav {
-    gap: 10px;
+    width: 100%;
+    justify-content: center; /* Menu ke tengah */
+    gap: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.2); /* Garis halus pemisah */
   }
 
   .container {
     margin: 20px;
     padding: 20px;
+    margin-top: -30px; /* Biar tetap naik sedikit ke arah hero */
   }
 }
 
@@ -287,20 +300,18 @@ button:hover {
 
 <!-- NAVBAR -->
 <header class="navbar">
-  <div class="nav-container">
-    <div class="logo-wrap">
-      <img src="Images/logo.png">
-      <h1>Form Alumni Rubath Al-Muhibbien</h1>
-    </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="alumni.html">Alumni</a>
-      <a href="#">Kontak</a>
-    </nav>
+  <div class="logo-wrap">
+    <img src="Images/logo.png">
+    <h1>Form Alumni Rubath Al-Muhibbien</h1>
   </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="alumni.html">Alumni</a>
+    <a href="#">Kontak</a>
+  </nav>
 </header>
-  
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
