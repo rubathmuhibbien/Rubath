@@ -256,74 +256,105 @@ button:hover {
 <!-- FORM -->
 <div class="container">
 
-<form>
+<form id="formAlumni">
 
 <h3>Data Diri</h3>
 
 <label>Nama Lengkap</label>
-<input type="text">
+<input type="text" name="nama" required>
 
 <label>No HP / WhatsApp</label>
-<input type="text">
+<input type="text" name="hp" required>
 
 <label>Email</label>
-<input type="email">
+<input type="email" name="email">
 
 <label>Alamat</label>
-<textarea rows="3"></textarea>
+<textarea name="alamat" rows="3"></textarea>
 
 <label>Upload Foto (Opsional)</label>
-<input type="file">
+<input type="file" name="foto">
 
 <h3>Data Pendidikan</h3>
 
 <label>Tahun Masuk</label>
-<input type="number">
+<input type="number" name="masuk">
 
 <label>Tahun Lulus / Keluar</label>
-<input type="number">
+<input type="number" name="lulus">
 
 <label>Program</label>
-<select>
-  <option>Tahfidzul Qur'an</option>
-  <option>Hadits</option>
-  <option>Lainnya</option>
+<select name="program">
+  <option value="Tahfidz">Tahfidzul Qur'an</option>
+  <option value="Hadits">Hadits</option>
+  <option value="Lainnya">Lainnya</option>
 </select>
 
 <h3>Aktivitas Sekarang</h3>
 
 <label>Pekerjaan / Kuliah</label>
-<input type="text">
+<input type="text" name="pekerjaan">
 
 <label>Bidang Usaha</label>
-<input type="text">
+<input type="text" name="usaha">
 
 <label>Domisili Sekarang</label>
-<input type="text">
+<input type="text" name="domisili">
 
 <h3>Kontribusi Alumni</h3>
 
 <label>Bersedia ikut kegiatan alumni?</label>
-<select>
-  <option>Ya</option>
-  <option>Tidak</option>
+<select name="kontribusi">
+  <option value="Ya">Ya</option>
+  <option value="Tidak">Tidak</option>
 </select>
 
 <label>Aktivitas Sekarang</label>
-<input type="text" placeholder="Dakwah / Mengajar / Kerja/Usaha">
+<input type="text" name="aktivitas">
 
 <div class="checkbox-wrap">
   <label>
     <input type="checkbox" required>
-    Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b> dimanapun berada.
+    Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b>
   </label>
 </div>
 
 <button type="submit">Kirim Data Alumni</button>
 
 </form>
-
 </div>
 
+  <script>
+const form = document.getElementById("formAlumni");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = Object.fromEntries(new FormData(form).entries());
+
+<script>
+const form = document.getElementById("formAlumni");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  fetch("https://script.google.com/macros/s/AKfycbwaRxkNelmN0nRGduWcktLPRdQb6p1i0Gntme5Gm5HqWpYeNeSbZIsgcSS7-rLJr9h9/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(res => {
+    alert("Data & foto berhasil dikirim!");
+    form.reset();
+  })
+  .catch(err => {
+    alert("Gagal upload 😅");
+    console.error(err);
+  });
+});
+</script>
+  
 </body>
 </html>
