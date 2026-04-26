@@ -337,7 +337,7 @@ uploadBtn.addEventListener("click", () => {
   const file = fileInput.files[0];
 
   if (!file) {
-    alert("Pilih foto dulu bro 😅");
+    alert("Upload foto dulu bro 😅");
     return;
   }
 
@@ -346,18 +346,15 @@ uploadBtn.addEventListener("click", () => {
   reader.onload = function(e) {
     const base64 = e.target.result.split(",")[1];
 
-    fetch("ISI_URL_APPS_SCRIPT_LO", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        action: "uploadFoto",
-        file: base64,
-        filename: file.name,
-        mimeType: file.type
-      })
-    })
+    fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    action: "uploadFoto",
+    file: base64,
+    filename: file.name,
+    mimeType: file.type
+  })
+})
     .then(res => res.text())
     .then(link => {
       fotoLink.value = link;
@@ -381,7 +378,7 @@ form.addEventListener("submit", function(e){
 
   const formData = new FormData(form);
 
-  fetch("https://script.google.com/macros/s/AKfycbwP-Lph4badggB0NQGJcG5gt4e5GWrot9w2G9rE0kJbs0afKIExbXkFx3nsYYMr_bPF/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
     method: "POST",
     body: formData
   })
