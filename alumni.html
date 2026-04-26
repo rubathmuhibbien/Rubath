@@ -221,6 +221,31 @@ button:hover {
   }
 }
 
+  /* Styling Progress Bar */
+.progress-container {
+  display: none; /* Sembunyi dulu */
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 10px;
+  background: linear-gradient(90deg, #FFD700, #4CAF50);
+  transition: width 0.3s;
+}
+
+.loading-text {
+  display: none;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
 </style>
 </head>
 
@@ -276,6 +301,11 @@ button:hover {
 <input type="file" id="fotoInput" accept="image/*">
 
 <button type="button" id="btnUpload">Upload Foto</button>
+  
+<div id="loadingText" class="loading-text">Sedang mengupload, sabar ya...</div>
+<div class="progress-container" id="progressContainer">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
 
 <input type="text" name="foto" id="fotoLink" placeholder="Link foto akan muncul di sini" readonly>
 
@@ -332,6 +362,9 @@ button:hover {
 const uploadBtn = document.getElementById("btnUpload");
 const fileInput = document.getElementById("fotoInput");
 const fotoLink = document.getElementById("fotoLink");
+const progressBar = document.getElementById("progressBar");
+const progressContainer = document.getElementById("progressContainer");
+const loadingText = document.getElementById("loadingText");
 
 uploadBtn.addEventListener("click", () => {
   const file = fileInput.files[0];
@@ -346,29 +379,52 @@ uploadBtn.addEventListener("click", () => {
   reader.onload = function(e) {
     const base64 = e.target.result.split(",")[1];
 
+    // Tampilkan loading
+    progressContainer.style.display = "block";
+    loadingText.style.display = "block";
+    uploadBtn.disabled = true;
+    uploadBtn.innerText = "Processing...";
+    progressBar.style.width = "30%"; // Mulai jalan
+
     fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    action: "uploadFoto",
-    file: base64,
-    filename: file.name,
-    mimeType: file.type
-  })
-})
-    .then(res => res.text())
+      method: "POST",
+      body: JSON.stringify({
+        action: "uploadFoto",
+        file: base64,
+        filename: file.name,
+        mimeType: file.type
+      })
+    })
+    .then(res => {
+      progressBar.style.width = "70%"; // Progres bertambah
+      return res.text();
+    })
     .then(link => {
+      progressBar.style.width = "100%"; // Selesai
       fotoLink.value = link;
-      alert("✅ Ajiiib !!! Foto berhasil diupload!");
+      
+      setTimeout(() => {
+        alert("✅ Ajiiib !!! Foto berhasil diupload!");
+        // Reset tampilan setelah sukses
+        progressContainer.style.display = "none";
+        loadingText.style.display = "none";
+        progressBar.style.width = "0%";
+        uploadBtn.disabled = false;
+        uploadBtn.innerText = "Upload Foto";
+      }, 500);
     })
     .catch(err => {
       alert("❌ Yaaah 😅, Upload gagal");
       console.error(err);
+      progressContainer.style.display = "none";
+      loadingText.style.display = "none";
+      uploadBtn.disabled = false;
+      uploadBtn.innerText = "Upload Foto";
     });
   };
 
   reader.readAsDataURL(file);
-});
-</script>
+});</script>
   
 <script>
 const form = document.getElementById("formAlumni");
