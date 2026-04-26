@@ -180,19 +180,32 @@ input, textarea, select {
 
 /* FIX CHECKBOX ERROR NGANAN */
 .checkbox-wrap {
-  display: block !important;
-  width: 100%;
-  text-align: left;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px 0;
+  background: #f0f7f0;
+  padding: 15px;
+  border-radius: 8px;
+}
+  
+.checkbox-wrap input[type="checkbox"] {
+  width: 20px !important;        
+  height: 20px !important;
+  margin: 0 !important;          
+  cursor: pointer;
+  flex-shrink: 0;                
 }
 
 .checkbox-wrap label {
-  display: block;
-  align-items: flex-start;
-  gap: 10px;
-  justify-content: flex-start;
-  width: 100%;
-}
-  /* Efek saat kotak diklik */
+  margin: 0 !important;          
+  font-weight: 400;
+  color: #333;
+  cursor: pointer;
+  line-height: 1.4;   
+} 
+  
+/* Efek saat kotak diklik */
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: #4CAF50;
@@ -412,8 +425,8 @@ button:hover {
 <input type="text" name="aktivitas">
 
 <div class="checkbox-wrap">
-  <label>
-    <input type="checkbox" required>
+  <input type="checkbox" id="setuju" required>
+  <label for="setuju">
     Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b>
   </label>
 </div>
