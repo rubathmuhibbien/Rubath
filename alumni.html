@@ -425,7 +425,7 @@ uploadBtn.addEventListener("click", () => {
       progressBar.style.width = "100%";
       fotoLink.value = link;
       
-      // Fungsi untuk nampilin notifikasi keren (Toast)
+      // Fungsi bantuan untuk memunculkan Toast
       const showToast = (msg, isSuccess) => {
         const toast = document.createElement("div");
         toast.className = "toast-notif";
@@ -440,22 +440,22 @@ uploadBtn.addEventListener("click", () => {
       };
 
       setTimeout(() => {
+        // Notifikasi keren pengganti alert
         showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
         
-        // Reset tampilan dengan smooth
+        // Reset tampilan
         progressContainer.style.display = "none";
         loadingText.style.display = "none";
         progressBar.style.width = "0%";
-        
         uploadBtn.disabled = false;
-        uploadBtn.classList.remove("btn-loading");
-        uploadBtn.innerHTML = "Upload Foto";
+        uploadBtn.classList.remove("btn-loading"); // Kembalikan warna tombol
+        uploadBtn.innerText = "Upload Foto";
       }, 600);
     })
     .catch(err => {
       console.error(err);
       
-      // Ganti alert dengan toast merah
+      // Notifikasi gagal versi toast
       const errorToast = document.createElement("div");
       errorToast.className = "toast-notif";
       errorToast.style.background = "#F44336";
@@ -467,17 +467,8 @@ uploadBtn.addEventListener("click", () => {
       loadingText.style.display = "none";
       uploadBtn.disabled = false;
       uploadBtn.classList.remove("btn-loading");
-      uploadBtn.innerHTML = "Upload Foto";
-    });
-    .catch(err => {
-      alert("❌ Yaaah 😅, Upload gagal");
-      console.error(err);
-      progressContainer.style.display = "none";
-      loadingText.style.display = "none";
-      uploadBtn.disabled = false;
       uploadBtn.innerText = "Upload Foto";
-    });
-  };
+    });  };
 
   reader.readAsDataURL(file);
 });</script>
