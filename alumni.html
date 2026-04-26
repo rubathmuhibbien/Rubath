@@ -389,6 +389,8 @@ uploadBtn.addEventListener("click", () => {
 
   reader.onload = function(e) {
     const base64 = e.target.result.split(",")[1];
+    console.log("BASE64 length:", base64.length);
+    console.log("RESP:", xhr.responseText);
 
     const xhr = new XMLHttpRequest();
 
