@@ -238,6 +238,30 @@ button:hover {
   transition: width 0.3s;
 }
 
+  .toast-notif {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 9999;
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.btn-loading {
+  background: #999 !important;
+  cursor: not-allowed;
+  position: relative;
+}
+  
 .loading-text {
   display: none;
   font-size: 12px;
@@ -367,6 +391,8 @@ const progressContainer = document.getElementById("progressContainer");
 const loadingText = document.getElementById("loadingText");
 
 uploadBtn.addEventListener("click", () => {
+  uploadBtn.classList.add("btn-loading");
+  uploadBtn.classList.remove("btn-loading");
   const file = fileInput.files[0];
 
   if (!file) {
@@ -395,24 +421,54 @@ uploadBtn.addEventListener("click", () => {
         mimeType: file.type
       })
     })
-    .then(res => {
-      progressBar.style.width = "70%"; // Progres bertambah
-      return res.text();
-    })
     .then(link => {
-      progressBar.style.width = "100%"; // Selesai
+      progressBar.style.width = "100%";
       fotoLink.value = link;
       
+      // Fungsi untuk nampilin notifikasi keren (Toast)
+      const showToast = (msg, isSuccess) => {
+        const toast = document.createElement("div");
+        toast.className = "toast-notif";
+        toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
+        toast.innerHTML = msg;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.animation = "slideIn 0.5s ease reverse forwards";
+          setTimeout(() => toast.remove(), 500);
+        }, 3000);
+      };
+
       setTimeout(() => {
-        alert("✅ Ajiiib !!! Foto berhasil diupload!");
-        // Reset tampilan setelah sukses
+        showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
+        
+        // Reset tampilan dengan smooth
         progressContainer.style.display = "none";
         loadingText.style.display = "none";
         progressBar.style.width = "0%";
+        
         uploadBtn.disabled = false;
-        uploadBtn.innerText = "Upload Foto";
-      }, 500);
+        uploadBtn.classList.remove("btn-loading");
+        uploadBtn.innerHTML = "Upload Foto";
+      }, 600);
     })
+    .catch(err => {
+      console.error(err);
+      
+      // Ganti alert dengan toast merah
+      const errorToast = document.createElement("div");
+      errorToast.className = "toast-notif";
+      errorToast.style.background = "#F44336";
+      errorToast.innerHTML = "❌ Yaaah 😅, Upload gagal";
+      document.body.appendChild(errorToast);
+      setTimeout(() => errorToast.remove(), 3000);
+
+      progressContainer.style.display = "none";
+      loadingText.style.display = "none";
+      uploadBtn.disabled = false;
+      uploadBtn.classList.remove("btn-loading");
+      uploadBtn.innerHTML = "Upload Foto";
+    });
     .catch(err => {
       alert("❌ Yaaah 😅, Upload gagal");
       console.error(err);
