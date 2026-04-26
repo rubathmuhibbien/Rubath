@@ -240,20 +240,22 @@ button:hover {
 
   .toast-notif {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);  
   padding: 15px 25px;
-  border-radius: 10px;
+  border-radius: 50px;
   color: white;
   font-weight: 600;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   z-index: 9999;
-  animation: slideIn 0.5s ease forwards;
+  white-space: nowrap;
+  animation: slideUpCenter 0.5s ease forwards;
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from { transform: translate(-50%, 100%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }
 
 .btn-loading {
@@ -426,19 +428,19 @@ uploadBtn.addEventListener("click", () => {
       fotoLink.value = link;
       
       // Fungsi bantuan untuk memunculkan Toast
-      const showToast = (msg, isSuccess) => {
-        const toast = document.createElement("div");
-        toast.className = "toast-notif";
-        toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
-        toast.innerHTML = msg;
-        document.body.appendChild(toast);
-        
-        setTimeout(() => {
-          toast.style.animation = "slideIn 0.5s ease reverse forwards";
-          setTimeout(() => toast.remove(), 500);
-        }, 3000);
-      };
-
+  const showToast = (msg, isSuccess) => {
+  const toast = document.createElement("div");
+  toast.className = "toast-notif";
+  toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
+  toast.innerHTML = msg;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    // Animasi keluar (turun lagi ke bawah)
+    toast.style.animation = "slideUpCenter 0.5s ease reverse forwards";
+    setTimeout(() => toast.remove(), 500);
+  }, 3000);
+};
       setTimeout(() => {
         // Notifikasi keren pengganti alert
         showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
