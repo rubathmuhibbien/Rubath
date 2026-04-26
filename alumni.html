@@ -273,12 +273,30 @@ button:hover {
 <textarea name="alamat" rows="3"></textarea>
 
 <label>Upload Foto</label>
+
 <input type="file" id="fotoInput" accept="image/*">
 
-<button type="button" id="btnUpload">Upload Foto (max 5mb)</button>
+<button type="button" id="btnUpload">Upload Foto</button>
 
-<input type="text" name="foto" id="fotoLink" placeholder="Tunggu, Link foto akan muncul di sini" readonly>
+<!-- 🔥 PREVIEW -->
+<div id="previewContainer" style="margin-top:10px; display:none;">
+  <img id="previewImage" style="max-width:150px; border-radius:8px;">
+</div>
 
+<!-- 🔥 STATUS -->
+<div id="uploadStatus" style="margin-top:8px; font-size:14px;"></div>
+
+<!-- 🔥 PROGRESS BAR -->
+<div id="progressContainer" style="display:none; margin-top:10px;">
+  <div style="background:#ddd; border-radius:10px; overflow:hidden;">
+    <div id="progressBar" style="width:0%; height:10px; background:#4CAF50;"></div>
+  </div>
+  <small id="progressText">0%</small>
+</div>
+
+<!-- 🔥 HIDDEN LINK -->
+<input type="hidden" name="foto" id="fotoLink">
+  
 <h3>Data Pendidikan</h3>
 
 <label>Tahun Masuk</label>
@@ -333,43 +351,93 @@ const uploadBtn = document.getElementById("btnUpload");
 const fileInput = document.getElementById("fotoInput");
 const fotoLink = document.getElementById("fotoLink");
 
+const previewContainer = document.getElementById("previewContainer");
+const previewImage = document.getElementById("previewImage");
+
+const progressContainer = document.getElementById("progressContainer");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+
+const uploadStatus = document.getElementById("uploadStatus");
+
+// 🔥 PREVIEW SAAT PILIH FILE
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  if (file) {
+    previewImage.src = URL.createObjectURL(file);
+    previewContainer.style.display = "block";
+    uploadStatus.innerText = "Foto siap diupload";
+  }
+});
+
+// 🔥 UPLOAD
 uploadBtn.addEventListener("click", () => {
   const file = fileInput.files[0];
 
   if (!file) {
-    alert("Upload foto dulu bro 😅");
+    alert("Pilih foto dulu bro 😅");
     return;
   }
+
+  // reset progress
+  progressBar.style.width = "0%";
+  progressText.innerText = "0%";
+  progressContainer.style.display = "block";
+  uploadStatus.innerText = "Mengupload...";
 
   const reader = new FileReader();
 
   reader.onload = function(e) {
     const base64 = e.target.result.split(",")[1];
 
-    fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    action: "uploadFoto",
-    file: base64,
-    filename: file.name,
-    mimeType: file.type
-  })
-})
-    .then(res => res.text())
-    .then(link => {
-      fotoLink.value = link;
-      alert("✅ Ajiiib !!! Foto berhasil diupload!");
-    })
-    .catch(err => {
-      alert("❌ Yaaah 😅, Upload gagal");
-      console.error(err);
-    });
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "https://script.google.com/macros/s/AKfycbwP-Lph4badggB0NQGJcG5gt4e5GWrot9w2G9rE0kJbs0afKIExbXkFx3nsYYMr_bPF/exec");
+
+    xhr.setRequestHeader("Content-Type", "text/plain");
+
+    // progress
+    xhr.upload.onprogress = function(e) {
+      if (e.lengthComputable) {
+        const percent = Math.round((e.loaded / e.total) * 100);
+        progressBar.style.width = percent + "%";
+        progressText.innerText = percent + "%";
+      }
+    };
+
+    // success
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const link = xhr.responseText.trim();
+
+        if (link.startsWith("http")) {
+          fotoLink.value = link;
+          uploadStatus.innerText = "✅ Foto berhasil diupload";
+          progressText.innerText = "Selesai";
+        } else {
+          uploadStatus.innerText = "❌ Upload gagal";
+        }
+      } else {
+        uploadStatus.innerText = "❌ Upload gagal (server)";
+      }
+    };
+
+    // error
+    xhr.onerror = function() {
+      uploadStatus.innerText = "⚠️ Error koneksi";
+    };
+
+    xhr.send(JSON.stringify({
+      action: "uploadFoto",
+      file: base64,
+      filename: file.name,
+      mimeType: file.type
+    }));
   };
 
   reader.readAsDataURL(file);
 });
-</script>
-  
+</script>  
 <script>
 const form = document.getElementById("formAlumni");
 
