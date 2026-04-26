@@ -426,7 +426,7 @@ uploadBtn.addEventListener("click", () => {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open("POST", "https://script.google.com/macros/s/AKfycbzkPPj_JybgF6gsTXeDRtMjFWQLg1XgTSIK4704XX1kAj3rd_dJgbAKeUPeHkpyIZdg/exec");
+    xhr.open("POST", "https://script.google.com/macros/s/AKfycbwns8W_9GOFCEvVllK8UHATlTMGcblbcYXIRR2bCkq6VYoxF0BHDTZ_piicR7auTXFe/exec");
 
     xhr.upload.onprogress = function(e) {
       if (e.lengthComputable) {
@@ -479,7 +479,7 @@ form.addEventListener("submit", function(e){
 
   const formData = new FormData(form);
 
-  fetch("https://script.google.com/macros/s/AKfycbzkPPj_JybgF6gsTXeDRtMjFWQLg1XgTSIK4704XX1kAj3rd_dJgbAKeUPeHkpyIZdg/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwns8W_9GOFCEvVllK8UHATlTMGcblbcYXIRR2bCkq6VYoxF0BHDTZ_piicR7auTXFe/exec", {
     method: "POST",
     body: formData
   })
