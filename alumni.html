@@ -212,33 +212,34 @@ button:hover {
 /* KHUSUS TAMPILAN MOBILE */
 @media(max-width:768px){
   .navbar {
-    flex-direction: column; /* Biar menu pindah ke bawah judul */
+    display: flex;
+    flex-direction: column;
     gap: 12px;
-    padding: 15px 10px;
+    padding: 15px 20px;
   }
 
   .logo-wrap {
-    justify-content: center; /* Judul & logo ke tengah */
+    justify-content: flex-start;
     width: 100%;
   }
 
   .logo-wrap h1 {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
   }
 
   nav {
     width: 100%;
-    justify-content: center; /* Menu ke tengah */
+    justify-content: flex-start;
     gap: 20px;
     padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.2); /* Garis halus pemisah */
+    border-top: 1px solid rgba(255,255,255,0.2);
   }
 
   .container {
     margin: 20px;
     padding: 20px;
-    margin-top: -30px; /* Biar tetap naik sedikit ke arah hero */
+    margin-top: -30px;
   }
 }
 
