@@ -346,6 +346,8 @@ button:hover {
 </form>
 </div>
 
+<script>
+// 🔥 COMPRESS
 function compressImage(file, maxWidth = 600, quality = 0.6) {
   return new Promise((resolve) => {
     const img = new Image();
@@ -375,11 +377,12 @@ function compressImage(file, maxWidth = 600, quality = 0.6) {
       resolve(compressed);
     };
 
+    // 🔥 WAJIB ADA
     reader.readAsDataURL(file);
   });
 }
-  
-<script>
+
+// 🔥 ELEMENT
 const uploadBtn = document.getElementById("btnUpload");
 const fileInput = document.getElementById("fotoInput");
 const fotoLink = document.getElementById("fotoLink");
@@ -393,7 +396,7 @@ const progressText = document.getElementById("progressText");
 
 const uploadStatus = document.getElementById("uploadStatus");
 
-// 🔥 PREVIEW SAAT PILIH FILE
+// 🔥 PREVIEW
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
   if (file) {
@@ -412,64 +415,62 @@ uploadBtn.addEventListener("click", () => {
     return;
   }
 
-  // reset progress
   progressBar.style.width = "0%";
   progressText.innerText = "0%";
   progressContainer.style.display = "block";
   uploadStatus.innerText = "Mengupload...";
 
- compressImage(file, 600, 0.6).then((compressed) => {
+  compressImage(file, 600, 0.6).then((compressed) => {
 
-  const base64 = compressed.split(",")[1];
+    const base64 = compressed.split(",")[1];
 
-  const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-  xhr.open("POST", "https://script.google.com/macros/s/AKfycbzkPPj_JybgF6gsTXeDRtMjFWQLg1XgTSIK4704XX1kAj3rd_dJgbAKeUPeHkpyIZdg/exec");
+    xhr.open("POST", "https://script.google.com/macros/s/AKfycbzkPPj_JybgF6gsTXeDRtMjFWQLg1XgTSIK4704XX1kAj3rd_dJgbAKeUPeHkpyIZdg/exec");
 
-  xhr.setRequestHeader("Content-Type", "text/plain");
+    xhr.setRequestHeader("Content-Type", "text/plain");
 
-  // progress
-  xhr.upload.onprogress = function(e) {
-    if (e.lengthComputable) {
-      const percent = Math.round((e.loaded / e.total) * 100);
+    xhr.upload.onprogress = function(e) {
+      if (e.lengthComputable) {
+        const percent = Math.round((e.loaded / e.total) * 100);
+        progressBar.style.width = percent + "%";
+        progressText.innerText = percent + "%";
 
-      progressBar.style.width = percent + "%";
-      progressText.innerText = percent + "%";
-
-      if (percent === 100) {
-        progressText.innerText = "Processing...";
+        if (percent === 100) {
+          progressText.innerText = "Processing...";
+        }
       }
-    }
-  };
+    };
 
-  // result
-  xhr.onloadend = function() {
-    const response = xhr.responseText.trim();
+    xhr.onloadend = function() {
+      const response = xhr.responseText.trim();
+      console.log("RESP:", response);
 
-    if (response.startsWith("http")) {
-      setTimeout(() => {
-        fotoLink.value = response;
-        uploadStatus.innerText = "✅ Foto berhasil diupload";
-        progressText.innerText = "Selesai ✅";
-      }, 500);
-    } else {
-      uploadStatus.innerText = "⚠️ Upload gagal";
-    }
-  };
+      if (response.startsWith("http")) {
+        setTimeout(() => {
+          fotoLink.value = response;
+          uploadStatus.innerText = "✅ Foto berhasil diupload";
+          progressText.innerText = "Selesai ✅";
+        }, 500);
+      } else {
+        uploadStatus.innerText = "❌ Upload gagal";
+      }
+    };
 
-  xhr.send(JSON.stringify({
-    action: "uploadFoto",
-    file: base64,
-    filename: file.name,
-    mimeType: "image/jpeg"
-  }));
+    xhr.onerror = function() {
+      uploadStatus.innerText = "⚠️ Koneksi error";
+    };
 
+    xhr.send(JSON.stringify({
+      action: "uploadFoto",
+      file: base64,
+      filename: file.name,
+      mimeType: "image/jpeg"
+    }));
+
+  });
 });
-  reader.readAsDataURL(file);
-});
-  
-</script>
-  
+</script>  
 <script>
 const form = document.getElementById("formAlumni");
 
@@ -493,7 +494,7 @@ form.addEventListener("submit", function(e){
 
     notif.style.position = "fixed";
     notif.style.bottom = "20px";
-    notif.style.center = "50%";
+    notif.style.left = "50%";
     notif.style.transform = "translateX(-50%)";
     notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
     notif.style.color = "white";
