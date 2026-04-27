@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Alumni</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f4f6f8;
+}
+
+/* HEADER - Semua teks pindah ke sini */
+.header {
+  background: linear-gradient(90deg, #1B5E20, #4CAF50);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header h1 {
+  font-size: 10px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.header-line {
+  width: 100%;
+  height: 1px;
+  background: white;
+  opacity: 0.3;
+  margin: 2px 0;
+}
+
+.header h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.header p {
+  font-size: 9px;
+  margin: 2px 0 0;
+  opacity: 0.8;
+  line-height: 1.1;
+}
+
+/* Tombol Home Teks di Pojok Kanan */
+.home-text-btn {
+  margin-left: auto; /* Dorong ke kanan */
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4); /* Garis kotak halus */
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.home-text-btn:hover {
+  background: white;
+  color: #1B5E20; /* Berubah jadi hijau pas di-hover */
+  opacity: 1;
+}
+
+/* HERO - Hanya Gambar */
+.hero {
+  height: 250px; 
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('Images/alumni.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* FILTER */
+.filter-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
+  margin-top: -30px; /* Biar agak naik ke gambar hero */
+}
+
+input {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+/* GRID & CARD */
+#dataAlumni {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 40px 20px; 
+  min-height: 600px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* FOOTER - Dirampingkan */
+.footer {
+  background: linear-gradient(180deg, #1B5E20, #0D3B15);
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+}
+
+.footer h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.footer-content p {
+  font-size: 11px;
+  opacity: 0.8;
+  margin: 4px 0;
+}
+
+.follow-text {
+  font-weight: 600;
+  color: #FFD700;
+  margin: 15px 0 8px 0; /* Jarak ke atas */
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.social a {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.yt { background: #FF0000; }
+.ig { background: linear-gradient(45deg,#feda75,#d62976,#962fbf); }
+.fb { background: #1877F2; }
+.tt { background: #000; }
+
+.footer-bottom {
+  margin-top: 15px;
+  font-size: 10px;
+  opacity: 0.5;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 10px;
+}
+
+/* SKELETON & POPUP TETAP */
+.skeleton { height: 150px; border-radius: 15px; background: linear-gradient(90deg,#eee,#ddd,#eee); animation: loading 1.2s infinite; }
+@keyframes loading { 0%{background-position:-200px;} 100%{background-position:200px;} }
+
+.popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
+.popup-content { background: white; padding: 20px; border-radius: 15px; width: 280px; text-align: center; }
+
+@media(max-width:600px){
+  input { width: 120px; }
+  .header h2 { font-size: 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="Images/logo.png">
+  <div class="header-text">
+    <h2>Rubath Al-Muhibbien</h2>
+    <div class="header-line"></div>
+    <h2>IRTIBATH</h2>
+    <p>Ikatan Ruhani Timbangan Bakti Amal Tolabah Rubath</p>
+  </div>
+
+<a href="index.html" class="home-text-btn">HOME</a>
+</div>
+
+<div class="hero"></div>
+
+<div class="filter-box">
+  <input type="text" id="searchNama" placeholder="Cari nama...">
+  <input type="number" id="filterTahun" placeholder="Tahun masuk...">
+</div>
+
+<div id="dataAlumni"></div>
+<div class="pagination" id="pagination"></div>
+
+<div class="popup" id="popup">
+  <div class="popup-content" id="popupContent"></div>
+</div>
+
+<script>
+// Script JS kamu tetap sama, tidak ada perubahan logika di sini
+const URL = "https://script.google.com/macros/s/XXXX/exec?action=getData";
+let dataAsli = [];
+let dataFilter = [];
+let page = 1;
+const perPage = 12;
+const container = document.getElementById("dataAlumni");
+
+for(let i=0;i<6;i++){ container.innerHTML += `<div class="skeleton"></div>`; }
+
+fetch(URL).then(res => res.json()).then(data => {
+  dataAsli = data.reverse();
+  dataFilter = [...dataAsli];
+  render();
+});
+
+function render(){
+  const start = (page-1)*perPage;
+  const end = start + perPage;
+  const data = dataFilter.slice(start,end);
+  container.innerHTML = "";
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="card" onclick='showDetail(${JSON.stringify(item)})'>
+        <img src="${item.foto}">
+        <h3>${item.nama}</h3>
+        <small>${item.masuk}</small>
+      </div>
+    `;
+  });
+  renderPagination();
+}
+
+function renderPagination(){
+  const total = Math.ceil(dataFilter.length/perPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+  for(let i=1;i<=total;i++){ pag.innerHTML += `<button onclick="goPage(${i})">${i}</button>`; }
+}
+
+function goPage(p){ page = p; render(); }
+
+let delay;
+document.getElementById("searchNama").addEventListener("input", function(){
+  clearTimeout(delay);
+  delay = setTimeout(filterData, 400);
+});
+document.getElementById("filterTahun").addEventListener("input", filterData);
+
+function filterData(){
+  const nama = document.getElementById("searchNama").value.toLowerCase();
+  const tahun = document.getElementById("filterTahun").value;
+  dataFilter = dataAsli.filter(item =>
+    item.nama.toLowerCase().includes(nama) && (tahun==="" || item.masuk==tahun)
+  );
+  page = 1; render();
+}
+
+
+function showDetail(item){
+  document.getElementById("popupContent").innerHTML = `
+    <img src="${item.foto}" style="width:80px;border-radius:50%">
+    <h3>${item.nama}</h3>
+    <p><b>Alamat:</b> ${item.alamat || "-"}</p>
+    <p><b>Tahun Lulus:</b> ${item.lulus || "-"}</p>
+    <button onclick="closePopup()">Tutup</button>
+  `;
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+</script>
+
+<footer class="footer">
+  <div class="footer-content">
+    <h3>Rubath Al-Muhibbien</h3>
+    <p>Ikatan Ruhani Timbangan Bakti Amal Tolabag Rubath</p>
+
+    <p class="follow-text">Follow Us</p>
+    <div class="social">
+      <a href="#" class="yt"><i class="fab fa-youtube"></i></a>
+      <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="tt"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Rubath Al-Muhibbien
+  </div>
+</footer>
+
+</body>
+</html>
