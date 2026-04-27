@@ -1,87 +1,202 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Database Alumni</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Database Alumni</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #f1f5f9;
-      margin: 0;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    header {
-      background: #0ea5e9;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+<style>
+body {
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#f5f5f5;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 30px;
-    }
+/* HEADER */
+.header {
+  background: linear-gradient(90deg, #1B5E20, #4CAF50);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
+/* FILTER */
+.filter-box {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:20px;
+}
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
+input {
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  min-width:200px;
+}
 
-    .name {
-      font-weight: bold;
-      font-size: 18px;
-    }
+/* GRID */
+#dataAlumni {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap:15px;
+  padding:20px;
+}
 
-    .info {
-      font-size: 14px;
-      color: #555;
-      margin-top: 5px;
-    }
-  </style>
+/* CARD */
+.card {
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform:translateY(-5px);
+}
+
+.card img {
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+/* POPUP */
+.popup {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.popup-content {
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:280px;
+  text-align:center;
+}
+
+.popup-content img {
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+
+.close-btn {
+  margin-top:15px;
+  padding:8px 15px;
+  background:#4CAF50;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  <h1>Database Alumni</h1>
-</header>
+<div class="header">
+  <h2>Database Alumni</h2>
+</div>
 
-<div class="container">
-  <div class="grid" id="alumniList"></div>
+<!-- FILTER -->
+<div class="filter-box">
+  <input type="text" id="searchNama" placeholder="Cari nama...">
+  <input type="number" id="filterTahun" placeholder="Tahun masuk...">
+</div>
+
+<!-- DATA -->
+<div id="dataAlumni"></div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-content" id="popupContent"></div>
 </div>
 
 <script>
-const apiURL = "LINK_WEB_APP_LU?action=getAlumni";
 
-async function loadAlumni() {
-  const res = await fetch(apiURL);
-  const data = await res.json();
+const URL = "https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec?action=getData";
 
-  const container = document.getElementById("alumniList");
+let semuaData = [];
+
+// LOAD DATA
+fetch(URL)
+.then(res => res.json())
+.then(data => {
+  semuaData = data.reverse();
+  renderData(semuaData);
+});
+
+// RENDER DATA
+function renderData(data) {
+  const container = document.getElementById("dataAlumni");
   container.innerHTML = "";
 
-  data.forEach(alumni => {
-    const card = `
-      <div class="card">
-        <div class="name">${alumni.nama}</div>
-        <div class="info">📍 ${alumni.domisili || '-'}</div>
-        <div class="info">📅 ${alumni.tahun_masuk} - ${alumni.tahun_keluar}</div>
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="card" onclick='showDetail(${JSON.stringify(item)})'>
+        <img src="${item.foto}">
+        <h3>${item.nama}</h3>
+        <p>${item.domisili || ""}</p>
+        <small>${item.masuk}</small>
       </div>
     `;
-    container.innerHTML += card;
   });
 }
 
-loadAlumni();
+// FILTER
+document.getElementById("searchNama").addEventListener("input", filterData);
+document.getElementById("filterTahun").addEventListener("input", filterData);
+
+function filterData() {
+  const nama = document.getElementById("searchNama").value.toLowerCase();
+  const tahun = document.getElementById("filterTahun").value;
+
+  const hasil = semuaData.filter(item => {
+    return (
+      item.nama.toLowerCase().includes(nama) &&
+      (tahun === "" || item.masuk == tahun)
+    );
+  });
+
+  renderData(hasil);
+}
+
+// POPUP (AMAN - TANPA DATA SENSITIF)
+function showDetail(item) {
+  const popup = document.getElementById("popup");
+  const content = document.getElementById("popupContent");
+
+  content.innerHTML = `
+    <img src="${item.foto}">
+    <h3>${item.nama}</h3>
+    <p><b>Alamat:</b> ${item.alamat || "-"}</p>
+    <p><b>Tahun Lulus:</b> ${item.lulus || "-"}</p>
+    <button class="close-btn" onclick="closePopup()">Tutup</button>
+  `;
+
+  popup.style.display = "flex";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
 </script>
 
 </body>
