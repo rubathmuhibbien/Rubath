@@ -465,7 +465,7 @@ uploadBtn.addEventListener("click", () => {
     loadingText.style.display = "block";
     uploadBtn.disabled = true;
     uploadBtn.innerText = "Processing...";
-    progressBar.style.width = "30%"; // Mulai jalan
+    progressBar.style.width = "30%";
 
     fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
       method: "POST",
@@ -502,19 +502,20 @@ uploadBtn.addEventListener("click", () => {
         progressContainer.style.display = "none";
         loadingText.style.display = "none";
         progressBar.style.width = "0%";
-        uploadBtn.disabled = false;
+        uploadBtn.disabled = true;
         uploadBtn.classList.remove("btn-loading"); // Kembalikan warna tombol
-        uploadBtn.innerText = "Upload Foto";
+        uploadBtn.innerText = "Foto Antum Sudah disimpan";
+        uploadBtn.style.background = "#999";
+        fileInput.style.display = "none";
       }, 600);
     })
     .catch(err => {
       console.error(err);
       
-      // Notifikasi gagal versi toast
       const errorToast = document.createElement("div");
       errorToast.className = "toast-notif";
       errorToast.style.background = "#F44336";
-      errorToast.innerHTML = "❌ Yaaah 😅, Upload gagal";
+      errorToast.innerHTML = "❌ Yaaah Gagal 😅, Coba Lagi";
       document.body.appendChild(errorToast);
       setTimeout(() => errorToast.remove(), 3000);
 
@@ -523,7 +524,8 @@ uploadBtn.addEventListener("click", () => {
       uploadBtn.disabled = false;
       uploadBtn.classList.remove("btn-loading");
       uploadBtn.innerText = "Upload Foto";
-    });  };
+    });  
+  };
 
   reader.readAsDataURL(file);
 });</script>
