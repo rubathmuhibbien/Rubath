@@ -432,7 +432,7 @@ button:hover {
   </label>
 </div>
 
-<button type="submit">Kirim Data Alumni</button>
+<button type="submit" id="btnSubmit">Kirim Data Alumni</button>
 
 </form>
 </div>
@@ -534,15 +534,11 @@ const form = document.getElementById("formAlumni");
 form.addEventListener("submit", function(e){
   e.preventDefault();
 
-  const formData = new FormData(form);
   const btn = document.getElementById("btnSubmit");
-  const pBar = document.getElementById("progressSubmitBar");
-  const pContainer = document.getElementById("progressSubmitContainer");
-
   btn.disabled = true;
-  btn.innerText = "Sabar, lagi ngirim...";
-  pContainer.style.display = "block";
-  pBar.style.width = "40%"; // Bar jalan ke 40%
+  btn.innerText = "Processing Submit... ⏳";
+  
+  const formData = new FormData(form);
 
   fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
     method: "POST",
@@ -550,7 +546,6 @@ form.addEventListener("submit", function(e){
   })
   .then(res => res.text())
   .then(res => {
-    pBar.style.width = "100%"; // Bar penuh saat sukses
 
     const notif = document.createElement("div");
 
@@ -558,6 +553,7 @@ form.addEventListener("submit", function(e){
       ? "✅ Data berhasil dikirim"
       : "❌ Gagal kirim data";
 
+    notif.style.cssText = "position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:8px; z-index:9999; color:white; font-weight:600;";
     notif.style.position = "fixed";
     notif.style.top = "20px";
     notif.style.right = "20px";
@@ -566,14 +562,11 @@ form.addEventListener("submit", function(e){
     notif.style.padding = "12px 20px";
     notif.style.borderRadius = "8px";
     notif.style.zIndex = "9999";
-
     document.body.appendChild(notif);
 
-setTimeout(() => {
+    setTimeout(() => {
       notif.remove();
-      // Reset tampilan ke semula
-      pContainer.style.display = "none";
-      pBar.style.width = "0%";
+      // 3. Kembalikan tombol ke semula setelah notif hilang
       btn.disabled = false;
       btn.innerText = "Kirim Data Alumni";
     }, 3000);
@@ -581,13 +574,13 @@ setTimeout(() => {
     if (res.includes("Sukses")) form.reset();
   })
   .catch(err => {
-    alert("Waduh, ada error server 😅");
+    alert("Server error 😅");
+    console.error(err);
+    // Kembalikan tombol jika error agar bisa coba lagi
     btn.disabled = false;
     btn.innerText = "Kirim Data Alumni";
-    pContainer.style.display = "none";
   });
 });
-  
 </script> 
   
 </body>
