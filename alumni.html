@@ -432,7 +432,12 @@ button:hover {
   </label>
 </div>
 
-<button type="submit">Kirim Data Alumni</button>
+<button type="submit" id="btnSubmit">Kirim Data Alumni</button>
+
+<div class="progress-container" id="progressSubmitContainer" style="margin-top: 10px;">
+  <div class="progress-bar" id="progressSubmitBar"></div>
+</div>
+<div id="loadingSubmitText" class="loading-text">Menyimpan data ke database...</div>
 
 </form>
 </div>
@@ -496,7 +501,7 @@ uploadBtn.addEventListener("click", () => {
 };
       setTimeout(() => {
         // Notifikasi keren pengganti alert
-        showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
+        showToast("✅ Ajiiib !!! Proses Upload Berhasil!", true);
         
         // Reset tampilan
         progressContainer.style.display = "none";
@@ -514,7 +519,7 @@ uploadBtn.addEventListener("click", () => {
       const errorToast = document.createElement("div");
       errorToast.className = "toast-notif";
       errorToast.style.background = "#F44336";
-      errorToast.innerHTML = "❌ Yaaah 😅, Upload gagal";
+      errorToast.innerHTML = "❌ Ukuran File Kebesaran 😅, Coba Lagi!";
       document.body.appendChild(errorToast);
       setTimeout(() => errorToast.remove(), 3000);
 
@@ -530,9 +535,26 @@ uploadBtn.addEventListener("click", () => {
   
 <script>
 const form = document.getElementById("formAlumni");
+const progressSubmitContainer = document.getElementById("progressSubmitContainer");
+const progressSubmitBar = document.getElementById("progressSubmitBar");
+const loadingSubmitText = document.getElementById("loadingSubmitText");
+const btnSubmit = document.getElementById("btnSubmit");
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", function(e) {
   e.preventDefault();
+
+  // 1. Pengaman: Cek apakah foto sudah diupload (pakai link dari hidden input)
+  if (!document.getElementById("fotoLink").value) {
+    showToast("⚠️ Upload fotonya dulu sampai selesai, bro!", false);
+    return;
+  }
+
+  // 2. Visual: Aktifkan Loading & Progress Bar
+  btnSubmit.disabled = true;
+  btnSubmit.innerText = "Sedang Memproses...";
+  progressSubmitContainer.style.display = "block";
+  loadingSubmitText.style.display = "block";
+  progressSubmitBar.style.width = "30%"; // Mulai jalan
 
   const formData = new FormData(form);
 
@@ -540,36 +562,43 @@ form.addEventListener("submit", function(e){
     method: "POST",
     body: formData
   })
-  .then(res => res.text())
   .then(res => {
-
-    const notif = document.createElement("div");
-
-    notif.innerText = res.includes("Sukses")
-      ? "✅ Data berhasil dikirim"
-      : "❌ Gagal kirim data";
-
-    notif.style.position = "fixed";
-    notif.style.top = "20px";
-    notif.style.right = "20px";
-    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
-    notif.style.color = "white";
-    notif.style.padding = "12px 20px";
-    notif.style.borderRadius = "8px";
-    notif.style.zIndex = "9999";
-
-    document.body.appendChild(notif);
-
-    setTimeout(() => notif.remove(), 3000);
-
-    if (res.includes("Sukses")) form.reset();
+    progressSubmitBar.style.width = "70%"; // Progres naik setelah ada respon
+    return res.text();
+  })
+  .then(res => {
+    if (res.includes("Sukses")) {
+      progressSubmitBar.style.width = "100%";
+      setTimeout(() => {
+        showToast("✅ Jazakallah! Data antum berhasil disimpan.", true);
+        form.reset();
+        document.getElementById("fotoLink").value = "";
+        document.getElementById("btnUpload").innerText = "Upload Foto";
+        resetSubmitUI();
+      }, 500);
+    } else if (res.includes("Sudah Ada") || res.includes("Terdaftar")) {
+      showToast("⚠️ Nomor WhatsApp ini sudah terdaftar!", false);
+      resetSubmitUI();
+    } else {
+      showToast("❌ Gagal: " + res, false);
+      resetSubmitUI();
+    }
   })
   .catch(err => {
-    alert("Server error 😅");
+    showToast("❌ Waduh, ada gangguan koneksi/server.", false);
     console.error(err);
+    resetSubmitUI();
   });
 });
-</script> 
+
+// Fungsi Reset tampilan setelah kirim
+function resetSubmitUI() {
+  btnSubmit.disabled = false;
+  btnSubmit.innerText = "Kirim Data Alumni";
+  progressSubmitContainer.style.display = "none";
+  loadingSubmitText.style.display = "none";
+  progressSubmitBar.style.width = "0%";
+}
   
 </body>
 </html>
