@@ -432,11 +432,7 @@ button:hover {
   </label>
 </div>
 
-<button type="submit" id="btnSubmit">Kirim Data Alumni</button>
-
-<div class="progress-container" id="progressSubmitContainer" style="display:none; margin-top:10px;">
-  <div class="progress-bar" id="progressSubmitBar"></div>
-</div>
+<button type="submit">Kirim Data Alumni</button>
 
 </form>
 </div>
@@ -538,17 +534,6 @@ const form = document.getElementById("formAlumni");
 form.addEventListener("submit", function(e){
   e.preventDefault();
 
-  // Elemen UI
-  const btn = document.getElementById("btnSubmit");
-  const pBar = document.getElementById("progressSubmitBar");
-  const pContainer = document.getElementById("progressSubmitContainer");
-
-  // Jalankan Efek Loading
-  btn.disabled = true;
-  btn.innerText = "Sabar, lagi ngirim...";
-  pContainer.style.display = "block";
-  pBar.style.width = "40%"; // Bar jalan ke 40%
-
   const formData = new FormData(form);
 
   fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
@@ -557,33 +542,9 @@ form.addEventListener("submit", function(e){
   })
   .then(res => res.text())
   .then(res => {
-    pBar.style.width = "100%"; // Bar penuh saat sukses
 
-    // Notifikasi (pakai style bawaan kamu)
     const notif = document.createElement("div");
-    notif.innerText = res.includes("Sukses") ? "✅ Data berhasil dikirim" : "❌ Gagal kirim data";
-    notif.style.cssText = "position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:8px; z-index:9999; color:white; font-weight:600;";
-    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
-    document.body.appendChild(notif);
 
-    setTimeout(() => {
-      notif.remove();
-      // Reset tampilan ke semula
-      pContainer.style.display = "none";
-      pBar.style.width = "0%";
-      btn.disabled = false;
-      btn.innerText = "Kirim Data Alumni";
-    }, 3000);
-
-    if (res.includes("Sukses")) form.reset();
-  })
-  .catch(err => {
-    alert("Waduh, ada error server 😅");
-    btn.disabled = false;
-    btn.innerText = "Kirim Data Alumni";
-    pContainer.style.display = "none";
-  });
-});
     notif.innerText = res.includes("Sukses")
       ? "✅ Data berhasil dikirim"
       : "❌ Gagal kirim data";
