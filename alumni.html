@@ -574,6 +574,10 @@ form.addEventListener("submit", function(e){
     }, 3000);
 
     if (res.includes("Sukses")) form.reset();
+    uploadBtn.disabled = false;
+    uploadBtn.innerText = "Upload Foto";
+    uploadBtn.style.background = "#4CAF50"; 
+    fileInput.style.display = "block";
   })
   .catch(err => {
     alert("Server error 😅");
