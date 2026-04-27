@@ -444,30 +444,40 @@ const fotoLink = document.getElementById("fotoLink");
 const progressBar = document.getElementById("progressBar");
 const progressContainer = document.getElementById("progressContainer");
 const loadingText = document.getElementById("loadingText");
+const scriptURL = "https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec";
 
+// Fungsi Toast Notif
+const showToast = (msg, isSuccess) => {
+  const toast = document.createElement("div");
+  toast.className = "toast-notif";
+  toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
+  toast.innerHTML = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500);
+  }, 3000);
+};
+
+// 1. PROSES UPLOAD FOTO
 uploadBtn.addEventListener("click", () => {
-  uploadBtn.classList.add("btn-loading");
-  uploadBtn.classList.remove("btn-loading");
   const file = fileInput.files[0];
-
   if (!file) {
-    alert("Upload foto dulu bro 😅");
+    alert("Pilih foto dulu ya Bro 😅");
     return;
   }
 
   const reader = new FileReader();
-
   reader.onload = function(e) {
     const base64 = e.target.result.split(",")[1];
 
-    // Tampilkan loading
     progressContainer.style.display = "block";
     loadingText.style.display = "block";
     uploadBtn.disabled = true;
-    uploadBtn.innerText = "Processing...";
-    progressBar.style.width = "30%";
+    uploadBtn.innerText = "Sabar, Lagi Nyimpen... ⏳";
+    progressBar.style.width = "40%";
 
-    fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
+    fetch(scriptURL, {
       method: "POST",
       body: JSON.stringify({
         action: "uploadFoto",
@@ -476,84 +486,74 @@ uploadBtn.addEventListener("click", () => {
         mimeType: file.type
       })
     })
+    .then(res => res.text()) // Ambil response berupa link teks
     .then(link => {
-      progressBar.style.width = "100%";
-      fotoLink.value = link;
-      
-      // Fungsi bantuan untuk memunculkan Toast
-  const showToast = (msg, isSuccess) => {
-  const toast = document.createElement("div");
-  toast.className = "toast-notif";
-  toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
-  toast.innerHTML = msg;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    // Animasi keluar (turun lagi ke bawah)
-    toast.style.animation = "slideUpCenter 0.5s ease reverse forwards";
-    setTimeout(() => toast.remove(), 500);
-  }, 3000);
-};
-      setTimeout(() => {
-        // Notifikasi keren pengganti alert
-        showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
+      if (link.includes("http")) {
+        fotoLink.value = link; // MASUKIN LINK KE INPUT HIDDEN
+        progressBar.style.width = "100%";
+        showToast("✅ Mantap! Foto Berhasil Disimpan", true);
         
-        // Reset tampilan
-        progressContainer.style.display = "none";
-        loadingText.style.display = "none";
-        progressBar.style.width = "0%";
-        uploadBtn.disabled = true;
-        uploadBtn.classList.remove("btn-loading"); // Kembalikan warna tombol
-        uploadBtn.innerText = "Foto Antum Sudah disimpan";
-        uploadBtn.style.background = "#999";
-        fileInput.style.display = "none";
-      }, 600);
+        setTimeout(() => {
+          progressContainer.style.display = "none";
+          loadingText.style.display = "none";
+          uploadBtn.innerText = "✅ Foto Sudah Terkunci";
+          uploadBtn.style.background = "#2E7D32";
+          fileInput.style.display = "none";
+        }, 500);
+      } else {
+        throw new Error("Link tidak valid");
+      }
     })
     .catch(err => {
       console.error(err);
-      
-      const errorToast = document.createElement("div");
-      errorToast.className = "toast-notif";
-      errorToast.style.background = "#F44336";
-      errorToast.innerHTML = "❌ Yaaah Gagal 😅, Coba Lagi";
-      document.body.appendChild(errorToast);
-      setTimeout(() => errorToast.remove(), 3000);
-
-      progressContainer.style.display = "none";
-      loadingText.style.display = "none";
+      showToast("❌ Gagal Upload, Coba Lagi", false);
       uploadBtn.disabled = false;
-      uploadBtn.classList.remove("btn-loading");
       uploadBtn.innerText = "Upload Foto";
-    });  
+    });
   };
-
   reader.readAsDataURL(file);
-});</script>
-  
-<script>
-const form = document.getElementById("formAlumni");
+});
 
+// 2. PROSES KIRIM FORM
+const form = document.getElementById("formAlumni");
 form.addEventListener("submit", function(e){
   e.preventDefault();
 
-  const btn = document.getElementById("btnSubmit");
-  btn.disabled = true;
-  btn.innerText = "Processing Submit... ⏳";
+  const btnSubmit = document.getElementById("btnSubmit");
+  btnSubmit.disabled = true;
+  btnSubmit.innerText = "Lagi Ngirim Data... ⏳";
   
+  // Ambil semua data form termasuk input 'foto' yang tipenya hidden
   const formData = new FormData(form);
+  const queryString = new URLSearchParams(formData).toString();
 
-  fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
-    method: "POST",
-    body: formData
+  fetch(scriptURL + "?" + queryString, {
+    method: "POST"
   })
   .then(res => res.text())
   .then(res => {
-
-    const notif = document.createElement("div");
-
-    notif.innerText = res.includes("Sukses")
-      ? "✅ Data berhasil dikirim"
-      : "❌ Gagal kirim data";
+    if (res.includes("Sukses")) {
+      showToast("✅ Berhasil! Data Antum Sudah Masuk", true);
+      form.reset();
+      // Reset Tombol Upload
+      uploadBtn.disabled = false;
+      uploadBtn.innerText = "Upload Foto";
+      uploadBtn.style.background = "#4CAF50";
+      fileInput.style.display = "block";
+      fotoLink.value = "";
+    } else {
+      showToast("❌ Gagal Kirim Data", false);
+    }
+    btnSubmit.disabled = false;
+    btnSubmit.innerText = "Kirim Data Alumni";
+  })
+  .catch(err => {
+    console.error(err);
+    showToast("❌ Server Error, Hubungi Admin", false);
+    btnSubmit.disabled = false;
+    btnSubmit.innerText = "Kirim Data Alumni";
+  });
+});
 
     notif.style.cssText = "position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:8px; z-index:9999; color:white; font-weight:600;";
     notif.style.position = "fixed";
@@ -568,7 +568,6 @@ form.addEventListener("submit", function(e){
 
     setTimeout(() => {
       notif.remove();
-      // 3. Kembalikan tombol ke semula setelah notif hilang
       btn.disabled = false;
       btn.innerText = "Kirim Data Alumni";
     }, 3000);
