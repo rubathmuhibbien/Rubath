@@ -467,7 +467,7 @@ uploadBtn.addEventListener("click", () => {
     uploadBtn.innerText = "Processing...";
     progressBar.style.width = "30%";
 
-    fetch("https://script.google.com/macros/s/AKfycbxIwYLaMhAfrs-1mHdxh3ESlIrrBsDJLsMXJfb-zDb9BzUcPNQLAF1pKLKeZOskxZSQ/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
       method: "POST",
       body: JSON.stringify({
         action: "uploadFoto",
@@ -542,7 +542,7 @@ form.addEventListener("submit", function(e){
   
   const formData = new FormData(form);
 
-  fetch("https://script.google.com/macros/s/AKfycbxIwYLaMhAfrs-1mHdxh3ESlIrrBsDJLsMXJfb-zDb9BzUcPNQLAF1pKLKeZOskxZSQ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
     method: "POST",
     body: formData
   })
