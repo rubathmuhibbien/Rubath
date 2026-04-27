@@ -535,6 +535,14 @@ form.addEventListener("submit", function(e){
   e.preventDefault();
 
   const formData = new FormData(form);
+  const btn = document.getElementById("btnSubmit");
+  const pBar = document.getElementById("progressSubmitBar");
+  const pContainer = document.getElementById("progressSubmitContainer");
+
+  btn.disabled = true;
+  btn.innerText = "Sabar, lagi ngirim...";
+  pContainer.style.display = "block";
+  pBar.style.width = "40%"; // Bar jalan ke 40%
 
   fetch("https://script.google.com/macros/s/AKfycbyh5mgtROM3s-6H6kgP_Zdx4NAi-aWEJa_zctzhY6waayQKn6gQzi1a8B0ow3Q4R7Fy/exec", {
     method: "POST",
@@ -542,6 +550,7 @@ form.addEventListener("submit", function(e){
   })
   .then(res => res.text())
   .then(res => {
+    pBar.style.width = "100%"; // Bar penuh saat sukses
 
     const notif = document.createElement("div");
 
@@ -560,15 +569,25 @@ form.addEventListener("submit", function(e){
 
     document.body.appendChild(notif);
 
-    setTimeout(() => notif.remove(), 3000);
+setTimeout(() => {
+      notif.remove();
+      // Reset tampilan ke semula
+      pContainer.style.display = "none";
+      pBar.style.width = "0%";
+      btn.disabled = false;
+      btn.innerText = "Kirim Data Alumni";
+    }, 3000);
 
     if (res.includes("Sukses")) form.reset();
   })
   .catch(err => {
-    alert("Server error 😅");
-    console.error(err);
+    alert("Waduh, ada error server 😅");
+    btn.disabled = false;
+    btn.innerText = "Kirim Data Alumni";
+    pContainer.style.display = "none";
   });
 });
+  
 </script> 
   
 </body>
