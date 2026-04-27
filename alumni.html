@@ -386,7 +386,7 @@ button:hover {
   <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<input type="hidden" name="foto" id="fotoLink">
+<input type="text" name="foto" id="fotoLink">
 
 <h3>Data Pendidikan</h3>
 
@@ -476,9 +476,7 @@ uploadBtn.addEventListener("click", () => {
         mimeType: file.type
       })
     })
-    .then(res => res.text())
     .then(link => {
-      if (link.includes("http")) {
       progressBar.style.width = "100%";
       fotoLink.value = link;
       
@@ -497,6 +495,7 @@ uploadBtn.addEventListener("click", () => {
   }, 3000);
 };
       setTimeout(() => {
+        // Notifikasi keren pengganti alert
         showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
         
         // Reset tampilan
