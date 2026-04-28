@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Struktur & Profil IRTIBATH - Rubath Al-Muhibbien</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ===== BASE STYLE ===== */
+    body {
+      margin:0;
+      font-family:'Poppins', sans-serif;
+      color:#333;
+      line-height:1.8;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      background-color: #f4f7f4;
+    }
+
+    /* ===== HEADER (KONSISTEN) ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(90deg, #1B5E20, #4CAF50);
+      padding:15px 40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo-wrap { display:flex; align-items:center; gap:10px; }
+    .logo-wrap img { height:40px; border-radius:50%; }
+    header h1 { margin:0; color:white; font-family:'Playfair Display', serif; font-size:20px; }
+    nav { display:flex; gap:20px; }
+    nav a { color:white; text-decoration:none; font-size:14px; position:relative; }
+    nav a::after { content:''; position:absolute; left:0; bottom:-3px; width:0%; height:2px; background:#C8A951; transition:0.3s; }
+    nav a:hover::after { width:100%; }
+
+    /* ===== HERO (KONSISTEN) ===== */
+    .about-hero {
+      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('Images/alumni.JPG');
+      background-size:cover; background-position:center;
+      color:black; text-align:center; padding:100px 20px;
+    }
+
+    .about-hero h1 { font-size: 42px; font-family: 'Playfair Display', serif; position: relative; top: 170px; display: inline-block; margin-bottom: 10px; }
+    .about-hero h1::after { content: ""; display: none; width: 60%; height: 3px; margin: 10px auto 0; background: #C8A951; border-radius: 2px; }
+    .about-hero p { font-size: 16px; opacity: 0.9; animation: fadeUpHero 1s ease; }
+
+    @keyframes fadeUpHero { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .container { max-width: 1100px; margin: auto; padding: 60px 20px; flex: 1; }
+
+    /* ===== PROFIL & MAKNA SECTION (NEW) ===== */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 80px; }
+    .info-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 6px solid #1B5E20; }
+    .info-card h2 { color: #1B5E20; font-family: 'Playfair Display', serif; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    
+    .meaning-list { list-style: none; padding: 0; }
+    .meaning-list li { margin-bottom: 15px; display: flex; gap: 15px; align-items: flex-start; }
+    .meaning-list i { color: #C8A951; margin-top: 5px; }
+
+    /* ===== STRUKTUR ORGANISASI ===== */
+    .section-title { text-align: center; color: #1B5E20; font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 50px; }
+    .org-group { margin-bottom: 80px; }
+
+    /* Card Design */
+    .member-card {
+      background: white; border-radius: 15px; padding: 25px; text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04); border-bottom: 4px solid #C8A951; transition: 0.3s;
+    }
+    .member-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+    .member-card i { font-size: 28px; color: #1B5E20; margin-bottom: 15px; display: block; }
+    .pos-label { font-size: 11px; text-transform: uppercase; color: #888; letter-spacing: 1px; font-weight: 600; display: block; }
+    .member-name { font-size: 18px; color: #1B5E20; font-weight: 600; margin-top: 5px; }
+
+    /* Grids */
+    .grid-pembina { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .grid-inti { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+    .row-main { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; }
+    .row-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; width: 100%; max-width: 900px; }
+
+    .grid-qisim { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+    .qisim-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
+    .qisim-card:hover { transform: scale(1.03); }
+    .qisim-header { background: linear-gradient(90deg, #1B5E20, #4CAF50); color: white; padding: 15px; font-weight: 600; text-align: center; }
+    .qisim-body { padding: 20px; }
+    .qisim-body ul { list-style: none; padding: 0; margin: 0; }
+    .qisim-body li { padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 15px; color: #555; display: flex; align-items: center; gap: 10px; }
+    .qisim-body li::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #C8A951; font-size: 14px; }
+
+    /* ===== FOOTER (KONSISTEN) ===== */
+    footer { background: linear-gradient(75deg, #1B5E20, #4CAF50); color:white; padding:20px 10px; }
+    .footer-container { display:flex; justify-content:center; }
+    .footer-col { text-align:center; }
+    .social-icons { display:flex; justify-content:center; gap:15px; margin-top:10px; }
+    .social-icons a { font-size:20px; padding:11px; border-radius:50%; color:white; background:rgba(255,255,255,0.15); transition:0.3s; }
+    .social-icons a:hover { transform:scale(1.2); }
+    .footer-bottom { text-align:center; margin-top:15px; }
+    .footer-bottom p { margin:2px 0; font-size:12px; opacity:0.85; }
+
+    /* RESPONSIVE */
+    @media (max-width: 850px) {
+      .info-grid { grid-template-columns: 1fr; }
+      header { flex-direction:column; padding: 20px; }
+      nav { margin-top:15px; }
+      .row-main, .row-sub { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <img src="Images/logo.png" alt="Logo">
+    <h1>Rubath Al Muhibbien</h1>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
+</header>
+
+<section class="about-hero">
+  <h1>Struktur & Profil IRTIBATH</h1>
+</section>
+
+<div class="container">
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h2>Tentang Organisasi</h2>
+      <p><strong>IRTIBATH</strong> didirikan di Kota Palembang pada tahun <strong>2012/2013</strong>. Organisasi ini berkedudukan di Pondok Pesantren Rubath Al-Muhibbien.</p>
+      <p>Berakidah <strong>Ahlus Sunnah Wal Jamaah</strong> dan mengikuti <strong>Mazhab Syafi'i</strong>.</p>
+      <div style="margin-top: 15px; background: #f0f4f0; padding: 15px; border-radius: 10px;">
+        <h4 style="color: #1B5E20; margin-bottom: 5px;"><i class="fas fa-bullseye"></i> Tujuan Utama:</h4>
+        <ul style="font-size: 14px; padding-left: 20px;">
+          <li>Membina hubungan alumni dengan Pengasuh, Pesantren, dan Asatiz.</li>
+          <li>Membina hubungan antar alumni dan masyarakat sekitar.</li>
+          <li>Meningkatkan kualitas serta kuantitas alumni.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-card" style="border-left-color: #C8A951;">
+      <h2>Makna Lambang</h2>
+      <ul class="meaning-list">
+        <li><i class="fas fa-book-open"></i> <span><strong>Buku:</strong> Pedoman Al-Qur'an, Sunnah, dan Itrah (Ahlul Bait).</span></li>
+        <li><i class="fas fa-hands-helping"></i> <span><strong>Jabat Tangan:</strong> Simbol persatuan antar anggota.</span></li>
+        <li><i class="fas fa-link"></i> <span><strong>Rantai Emas:</strong> Berharganya ikatan persaudaraan IRTIBATH.</span></li>
+        <li><i class="fas fa-circle-notch"></i> <span><strong>19 Lingkaran:</strong> Mengambil keberkahan lafaz Bismillah (19 huruf).</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="org-group">
+    <h2 class="section-title">Dewan Pembina</h2>
+    <div class="grid-pembina">
+      <div class="member-card">
+        <i class="fas fa-shield-halved"></i>
+        <div class="member-name">Abuya Alhabib Umar Abdul Aziz Syahab</div>
+      </div>
+      <div class="member-card">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <div class="member-name">Al Ustadz Syukri Syahab</div>
+      </div>
+      <div class="member-card">
+        <i class="fas fa-user-tie"></i>
+        <div class="member-name">Al Ustadz Hazwan</div>
+      </div>
+      <div class="member-card">
+        <i class="fas fa-book"></i>
+        <div class="member-name">Al Ustadz Muhsin Buftaim</div>
+      </div>
+      <div class="member-card">
+        <i class="fas fa-mosque"></i>
+        <div class="member-name">Al Ustadz Hasan Syahab</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="org-group">
+    <h2 class="section-title">Pengurus Inti</h2>
+    <div class="grid-inti">
+      <div class="row-main">
+        <div class="member-card">
+          <span class="pos-label">Ketua</span>
+          <div class="member-name">Hasan Almadihij</div>
+        </div>
+        <div class="member-card">
+          <span class="pos-label">Wakil Ketua</span>
+          <div class="member-name">Hasan Syahab</div>
+        </div>
+      </div>
+      <div class="row-sub">
+        <div class="member-card">
+          <span class="pos-label">Sekertaris</span>
+          <div class="member-name">Rizki Alhabsyi</div>
+          <p style="font-size:12px; color:#888;">
+	    <strong>Wakil: Ahmad Alkaf</strong>
+	   </p>
+        </div>
+        <div class="member-card">
+          <span class="pos-label">Bendahara</span>
+          <div class="member-name">M. Abdurrahman</div>
+          <p style="font-size:12px; color:#888;">
+	    <strong>Wakil: Mustofa Syahab</strong>
+	   </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="org-group">
+    <h2 class="section-title">Bidang</h2>
+    <div class="grid-qisim">
+      <div class="qisim-card">
+        <div class="qisim-header">Qisim Dakwah</div>
+        <div class="qisim-body">
+          <ul><li>Nafis Syahab</li><li>Syukri</li></ul>
+        </div>
+      </div>
+      <div class="qisim-card">
+        <div class="qisim-header">Qisim Ilmu</div>
+        <div class="qisim-body">
+          <ul><li>Faris Segaf</li><li>Syakir Syahab</li></ul>
+        </div>
+      </div>
+      <div class="qisim-card">
+        <div class="qisim-header">Qisim Taqrib</div>
+        <div class="qisim-body">
+          <ul><li>Ahmad Madihij</li><li>Thohir</li></ul>
+        </div>
+      </div>
+      <div class="qisim-card">
+        <div class="qisim-header">Qisim I'lan</div>
+        <div class="qisim-body">
+          <ul><li>Fahri Baraqbah</li><li>Musthofa</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h3>Hubungi Kami</h3>
+      <div class="social-icons">
+        <a href="https://www.youtube.com/@RubathAlmuhibbien" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://instagram.com/ponpes_rubathalmuhibbien" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://web.facebook.com/people/Rubath-Media/61552513858638/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://wa.me/62811893121" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ponpes Rubath Al-Muhibbien | Design by Rubath Media
+</footer>
+
+</body>
+</html>
