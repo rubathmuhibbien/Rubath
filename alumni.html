@@ -588,6 +588,36 @@ form.addEventListener("submit", function(e){
   });
 });
 </script> 
+
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+// CONFIG PUNYA LO (PASTE DI SINI)
+const firebaseConfig = {
+  apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
+  authDomain: "web-rubath.firebaseapp.com",
+  projectId: "web-rubath",
+  storageBucket: "web-rubath.firebasestorage.app",
+  messagingSenderId: "606538369074",
+  appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
+  measurementId: "G-30H5Q676LD"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// bikin global biar script lo bisa pakai
+window.db = db;
+window.storage = storage;
+window.collection = collection;
+window.addDoc = addDoc;
+window.ref = ref;
+window.uploadBytes = uploadBytes;
+window.getDownloadURL = getDownloadURL;
+</script>
   
 </body>
 </html>
