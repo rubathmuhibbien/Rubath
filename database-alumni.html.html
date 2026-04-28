@@ -25,6 +25,36 @@
   .home-text-btn { margin-left: auto; color: white; text-decoration: none; font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 5px; transition: 0.3s; }
   .home-text-btn:hover { background: white; color: #1B5E20; }
 
+  .nav-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+/* tombol utama */
+.nav-btn.primary {
+  background: #2e7d32;
+  color: white;
+}
+
+/* tombol kedua */
+.nav-btn.secondary {
+  border: 2px solid #2e7d32;
+  color: #2e7d32;
+}
+
+/* hover */
+.nav-btn:hover {
+  opacity: 0.85;
+}
+
+  .nav-btn.active {
+  background: #1b5e20;
+}
+
   /* HERO */
   .hero { height: 200px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('Images/alumni.jpg'); background-size: cover; background-position: center; }
 
@@ -120,6 +150,11 @@
   <div class="popup-content" id="popupContent"></div>
 </div>
 
+  <div class="nav-right">
+  <a href="index.html" class="nav-btn primary">HOME</a>
+  <a href="alumni.html" class="nav-btn secondary">FORM DAFTAR</a>
+</div>
+  
 <footer class="footer">
   <div class="footer-content">
     <h3>Rubath Al-Muhibbien</h3>
