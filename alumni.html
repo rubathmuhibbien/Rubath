@@ -533,28 +533,45 @@ uploadBtn.addEventListener("click", () => {
 <script>
 const form = document.getElementById("formAlumni");
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", async function(e){
   e.preventDefault();
 
   const btn = document.getElementById("btnSubmit");
   btn.disabled = true;
   btn.innerText = "Processing Submit... ⏳";
-  
-  const formData = new FormData(form);
 
-  fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(res => {
+  try {
+    const file = document.getElementaryById("fotoInput").files[0];
+    let fotoUrl = "";
+      if (file) {
+      const storageRef = window.ref(window.storage, "alumni/" + Date.now() + "_" + file.name);
+      const snapshot = await window.uploadBytes(storageRef, file);
+      fotoURL = await window.getDownloadURL(snapshot.ref);
+      }
+    const formData = new FormData(form);
+     const data = {
+      nama: formData.get("nama"),
+      hp: formData.get("hp"),
+      email: formData.get("email"),
+      alamat: formData.get("alamat"),
+      masuk: Number(formData.get("masuk")),
+      lulus: Number(formData.get("lulus")),
+      program: formData.get("program"),
+      pekerjaan: formData.get("pekerjaan"),
+      usaha: formData.get("usaha"),
+      domisili: formData.get("domisili"),
+      kontribusi: formData.get("kontribusi"),
+      aktivitas: formData.get("aktivitas"),
+      foto: fotoURL,
+      created_at: new Date()
+    };
 
+     await window.addDoc(window.collection(window.db, "alumni"), data);
+    
     const notif = document.createElement("div");
-
     notif.innerText = res.includes("Sukses")
       ? "✅ Data berhasil dikirim"
       : "❌ Gagal kirim data";
-
     notif.style.cssText = "position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:8px; z-index:9999; color:white; font-weight:600;";
     notif.style.position = "fixed";
     notif.style.top = "20px";
@@ -565,10 +582,9 @@ form.addEventListener("submit", function(e){
     notif.style.borderRadius = "8px";
     notif.style.zIndex = "9999";
     document.body.appendChild(notif);
-
+    
     setTimeout(() => {
       notif.remove();
-      // 3. Kembalikan tombol ke semula setelah notif hilang
       btn.disabled = false;
       btn.innerText = "Kirim Data Alumni";
     }, 3000);
@@ -579,10 +595,10 @@ form.addEventListener("submit", function(e){
     uploadBtn.style.background = "#4CAF50"; 
     fileInput.style.display = "block";
   })
+  
   .catch(err => {
     alert("Server error 😅");
     console.error(err);
-    // Kembalikan tombol jika error agar bisa coba lagi
     btn.disabled = false;
     btn.innerText = "Kirim Data Alumni";
   });
