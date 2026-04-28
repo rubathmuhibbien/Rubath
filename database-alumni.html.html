@@ -34,75 +34,17 @@
   .filter-box input:focus { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2); }
 
   /* GRID & CARD */
-  #dataAlumni { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Lebar kolom dikecilkan */
-    gap: 15px; /* Jarak antar kartu dirapatkan */
-    padding: 20px; 
-    max-width: 1100px; 
-    margin: auto; 
-  }
+  #dataAlumni { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 20px 20px; min-height: 400px; max-width: 1100px; margin: auto; }
   
   .card { 
-    background: white; 
-    padding: 15px 10px; /* Padding atas-bawah dikurangi */
-    border-radius: 15px; 
-    text-align: center; 
-    cursor: pointer; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-    transition: 0.3s ease; 
-    border: 1px solid #eee;
+    background: white; padding: 15px 10px; border-radius: 15px; text-align: center; cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s ease; animation: fadeInUp 0.5s ease backwards; 
   }
-  
   .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .card img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid #f0f7f0; }
+  .card h3 { font-size: 13px; margin: 5px 0 2px; color: #1B5E20; line-height:1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-oirent: vertical; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .card small { font-size: 11px; color: #666; background: #f0f7f0; font-weight: 600; display: block; background: #f0f0f0; border-radius: 5px; padding: 2px 8px; display: inline-block; width: fit-content; margin: auto; }
 
-  .card img { 
-    width: 70px; /* Ukuran foto dikecilkan dari 85px */
-    height: 70px; 
-    border-radius: 50%; 
-    object-fit: cover; 
-    margin-bottom: 8px; /* Jarak bawah foto dirapatkan */
-    border: 2px solid #4CAF50; 
-  }
-
-  .card h3 { 
-    font-size: 13px; /* Ukuran font nama dikecilkan */
-    margin: 5px 0 2px; 
-    color: #1B5E20; 
-    line-height: 1.2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Maksimal 2 baris nama */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card small { 
-    font-size: 11px; 
-    color: #666; 
-    background: #f0f7f0; 
-    padding: 2px 8px; 
-    border-radius: 5px;
-    display: inline-block;
-  }
-
-  /* Footer Social Update */
-  .social a { 
-    width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; 
-    border-radius: 50%; color: white; font-size: 18px; transition: 0.3s; 
-  }
-
-  @media(max-width:600px){
-    #dataAlumni { 
-      grid-template-columns: repeat(2, 1fr); /* Tetap 2 kolom di HP tapi lebih rapat */
-      gap: 10px; 
-      padding: 15px 10px;
-    }
-    .card { padding: 12px 8px; }
-    .card img { width: 60px; height: 60px; }
-    .card h3 { font-size: 12px; }
-  }
-</style>
-  
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   /* PAGINATION */
@@ -132,7 +74,7 @@
   .footer-content p { font-size: 11px; opacity: 0.8; margin: 4px 0; }
   .follow-text { font-weight: 600; color: #FFD700; margin: 20px 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
   .social { display: flex; justify-content: center; gap: 15px; }
-  .social a { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-size: 18px; transition: 0.3s; }
+  .social a { width:380px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-size: 18px; transition: 0.3s; }
   .yt { background: #FF0000; } .ig { background: linear-gradient(45deg,#feda75,#d62976,#962fbf); } .fb { background: #1877F2; } .tt { background: #000; }
   .footer-bottom { margin-top: 30px; font-size: 10px; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
@@ -142,8 +84,12 @@
 
   @media(max-width:600px){
     .filter-box input { width: 140px; font-size: 12px; }
-    #dataAlumni { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 20px 12px; }
+    #dataAlumni { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px 10px; }
   }
+  .card { padding: 12px 8px; }
+  .card img { width: 60px height: 60px; }
+  .card h3 { font-size: 12px; }
+  
 </style>
 </head>
 
@@ -182,7 +128,7 @@
     <h3>Rubath Al-Muhibbien</h3>
     <p>Ikatan Ruhani Timbangan Bakti Amal Tolabah Rubath</p>
     <p class="follow-text">Follow Us</p>
-    <div class="social">
+<div class="social">
   <a href="https://www.youtube.com/@RubathAlmuhibbien" class="yt" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
   <a href="https://instagram.com/ponpes_rubathalmuhibbien" class="ig" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
   <a href="https://web.facebook.com/people/Rubath-Media/61552513858638/" class="fb" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
@@ -220,7 +166,6 @@
   // 1. AMBIL DATA DARI FIREBASE
  async function loadData() {
     try {
-      // PENTING: orderBy("masuk", "asc") agar angkatan tertua muncul di halaman pertama
       const q = query(collection(db, "alumni"), orderBy("masuk", "asc"));
       
       const querySnapshot = await getDocs(q);
@@ -236,10 +181,6 @@
       container.innerHTML = "<p>Gagal memuat data. Cek koneksi atau Index Firebase.</p>";
     }
   }
-
-  loadData();
-</script>
-  
   // 2. RENDER CARD ALUMNI
   window.renderData = function() {
     container.innerHTML = "";
