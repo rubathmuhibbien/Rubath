@@ -129,7 +129,7 @@
     <label>Tahun Lulus / Keluar</label>
     <input type="number" name="lulus" placeholder="Contoh: 2018">
 
-    <label>Program</label>
+    <label>Program Studi</label>
     <select name="program">
       <option value="Tahfidz">Tahfidzul Qur'an</option>
       <option value="Hadits">Hadits</option>
@@ -138,13 +138,13 @@
 
     <h3>Aktivitas Sekarang</h3>
     <label>Pekerjaan / Kuliah</label>
-    <input type="text" name="pekerjaan">
+    <input type="text" name="pekerjaan" placeholder="Contoh: Mengajar / Dagang / Kerja">
 
-    <label>Bidang Usaha / Universitas</label>
-    <input type="text" name="usaha">
+    <label>Bidang / Nama Kantor / Universitas</label>
+    <input type="text" name="usaha" placeholder="Contoh: Pendidikan / Kuliner / PT. ABC">
 
     <label>Domisili Sekarang</label>
-    <input type="text" name="domisili">
+    <input type="text" name="domisili" placeholder="Contoh: Palembang">
 
     <h3>Status Akhir</h3>
     <label>Menyelesaikan s/d Wisuda?</label>
@@ -219,7 +219,7 @@
     }
     
     btnSubmit.disabled = true;
-    btnSubmit.innerText = "Sabar ya, lagi proses... ⏳";
+    btnSubmit.innerText = "Sabar ya, berkas ente lagi diproses... ⏳";
     
     const fileInput = document.getElementById("fotoInput");
     const file = fileInput.files[0];
