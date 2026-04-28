@@ -43,7 +43,6 @@
     display: inline-block;
   }
 
-  /* Tombol Home - Gaya Outline */
   .btn-home {
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -137,10 +136,26 @@
     .card img { width: 75px; height: 75px; }
   }
 </style>
+
+  /* PASTE DI SINI (Baris paling atas dalam style) */
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-content {
+    flex: 1 0 auto;
+  }
+  </style>
 </head>
 
 <body>
 
+<div class="main-content">
+  
 <div class="header">
   <img src="Images/logo.png">
   <div class="header-text">
