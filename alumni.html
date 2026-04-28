@@ -129,7 +129,7 @@
     <label>Tahun Lulus / Keluar</label>
     <input type="number" name="lulus" placeholder="Contoh: 2018">
 
-    <label>Program Studi</label>
+    <label>Program</label>
     <select name="program">
       <option value="Tahfidz">Tahfidzul Qur'an</option>
       <option value="Hadits">Hadits</option>
@@ -138,13 +138,13 @@
 
     <h3>Aktivitas Sekarang</h3>
     <label>Pekerjaan / Kuliah</label>
-    <input type="text" name="pekerjaan" placeholder="Contoh: Mengajar / Dagang / Kerja">
+    <input type="text" name="pekerjaan">
 
-    <label>Bidang / Nama Kantor / Universitas</label>
-    <input type="text" name="usaha" placeholder="Contoh: Pendidikan / Kuliner / PT. ABC">
+    <label>Bidang Usaha / Universitas</label>
+    <input type="text" name="usaha">
 
     <label>Domisili Sekarang</label>
-    <input type="text" name="domisili" placeholder="Contoh: Palembang">
+    <input type="text" name="domisili">
 
     <h3>Status Akhir</h3>
     <label>Menyelesaikan s/d Wisuda?</label>
@@ -167,9 +167,9 @@
   </form>
 </div>
 
-<script type="module" src="script.js"></script>
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, query, where, getdocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
   const firebaseConfig = {
@@ -219,7 +219,7 @@
     }
     
     btnSubmit.disabled = true;
-    btnSubmit.innerText = "Sabar ya, berkas ente lagi diproses... ⏳";
+    btnSubmit.innerText = "Sabar ya, lagi proses... ⏳";
     
     const fileInput = document.getElementById("fotoInput");
     const file = fileInput.files[0];
@@ -270,19 +270,6 @@
         created_at: new Date()
       };
 
-      const q = query(
-    collection(db, "alumni"),
-    where("email", "==", email)
-    where("hp", "==", hp)
-  );
-
-  const snapshot = await getDocs(q);
-
-  if (!snapshot.empty) {
-    showToast("⚠️ Data sudah terdaftar bro!", false);
-    return; // STOP, jangan lanjut simpan
-  }
-      
       await addDoc(collection(db, "alumni"), dataAlumni);
 
       // 3. SELESAI
