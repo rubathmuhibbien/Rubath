@@ -165,6 +165,9 @@
 </div>
     
     <button type="submit" id="btnSubmit">Kirim Data Alumni</button>
+    <label style="color: #1B5E20;">Kode Validasi Alumni (Wajib Isi)</label>
+<input type="text" id="kodeAkses" placeholder="Tanya admin buat kodenya..." required 
+       style="border: 2px solid #4CAF50; font-weight: bold;">
   </form>
 </div>
 
@@ -202,17 +205,19 @@
     document.body.appendChild(toast);
     setTimeout(() => { toast.remove(); }, 4000);
   };
-
+  
+ const KODE_RAHASIA = "ALUMNI_BARU_BRO";
+  
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const kodeInput = document.getElementById("kodeAkses").value;
-    const KODE_RAHASIA = "ALUMNI_BARU_BRO";
 
     if (kodeInput !== KODE_RAHASIA) {
       document.getElementById("pesanErrorKode").style.display = "block";
-      showToast("❌ Kode Validasi Salah!", false);
+      showToast("❌ Kode Validasi Salah! Ente bukan alumni ya? 😅", false);
       return; // Stop proses submit
+      
     } else {
       document.getElementById("pesanErrorKode").style.display = "none";
     }
