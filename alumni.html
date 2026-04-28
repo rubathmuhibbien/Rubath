@@ -543,12 +543,15 @@ form.addEventListener("submit", async function(e){
   try {
     const file = document.getElementaryById("fotoInput").files[0];
     let fotoUrl = "";
+    
       if (file) {
       const storageRef = window.ref(window.storage, "alumni/" + Date.now() + "_" + file.name);
       const snapshot = await window.uploadBytes(storageRef, file);
       fotoURL = await window.getDownloadURL(snapshot.ref);
       }
+    
     const formData = new FormData(form);
+    
      const data = {
       nama: formData.get("nama"),
       hp: formData.get("hp"),
@@ -565,8 +568,11 @@ form.addEventListener("submit", async function(e){
       foto: fotoURL,
       created_at: new Date()
     };
-
+console.log("DATA:", data);
+    
      await window.addDoc(window.collection(window.db, "alumni"), data);
+    
+    alert("✅ Data berhasil dikirim");
     
     const notif = document.createElement("div");
     notif.innerText = res.includes("Sukses")
