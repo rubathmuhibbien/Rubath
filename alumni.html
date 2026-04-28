@@ -8,638 +8,268 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+  html { scroll-behavior: smooth; }
+  body { margin:0; font-family:'Poppins', sans-serif; background:#f5f5f5; color:#333; }
 
-html { scroll-behavior: smooth; }
-
-body {
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background:#f5f5f5;
-  color:#333;
-}
-
-/* NAVBAR */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: linear-gradient(90deg, #1B5E20, #4CAF50);
-  padding: 12px 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* LOGO */
-.logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-wrap img {
-  height: 40px;
-  border-radius: 50%;
-}
-
-.logo-wrap h1 {
-  font-size: 16px;
-  color: white;
-  margin: 0;
-}
-
-/* MENU */
-nav {
-  display: flex;
-  gap: 20px;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  position: relative;
-}
-
-nav a::after {
-  content:'';
-  position:absolute;
-  left:0;
-  bottom:-3px;
-  width:0%;
-  height:2px;
-  background:#FFD700;
-  transition:0.3s;
-}
-
-nav a:hover::after {
-  width:100%;
-}
-
-/* HERO */
-.hero {
-  padding: 50px 20px 70px;
-  text-align: center;
-  color: white;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(27,94,32,0.8)),
-    url('Images/alumni.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-/* HERO CONTENT */
-.hero-content {
-  max-width: 600px;
-  margin: auto;
-}
-
-/* LOGO */
-.logo-alumni {
-  width: 120px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.2s;
-}
-
-/* JUDUL */
-.hero h2 {
-  font-size: 26px;
-  margin-bottom: 4px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.6s;
-}
-
-/* GARIS EMAS */
-.gold-line {
-  width: 240px;
-  height: 3px;
-  margin: 10px auto 15px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #C8A951, #FFD700, #C8A951);
-  animation: lineGrow 0.8s ease forwards;
-  animation-delay: 1s;
-}
-
-/* DESKRIPSI */
-.hero p {
-  font-size: 13px;
-  opacity: 0;
-  transform: translateY(15px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 1.3s;
-}
-
-/* ANIMATION KEYFRAMES */
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes lineGrow {
-  to {
-    width: 80px;
-  }
-}
-
-/* FORM */
-.container {
-  max-width: 800px;
-  margin: -60px auto 40px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-}
-
-/* SECTION */
-h3 {
-  margin-top: 25px;
-  color: #1B5E20;
-}
-
-/* INPUT */
-input, textarea, select {
-  width: 100%;
-  padding: 12px 15px;
-  margin-top: 8px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background-color: #fafafa;
-  font-family: inherit;
-  box-sizing: border-box;
-  display: block;
-  transition: border-color 0.3;
-}
-
-/* FIX CHECKBOX ERROR NGANAN */
-.checkbox-wrap {
-  display: flex !important;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 20px 0;
-  background: #f0f7f0;
-  padding: 15px;
-  border-radius: 8px;
-}
-  
-.checkbox-wrap input[type="checkbox"] {
-  width: 20px !important;        
-  height: 20px !important;
-  margin: 0 !important;          
-  cursor: pointer;
-  flex-shrink: 0;                
-}
-
-.checkbox-wrap label {
-  margin: 0 !important;          
-  font-weight: 400;
-  color: #333;
-  cursor: pointer;
-  line-height: 1.4;   
-} 
-  
-/* Efek saat kotak diklik */
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: #4CAF50;
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
-}
-
-/* Khusus Label agar lebih rapi */
-label {
-  display: block;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-/* BUTTON */
-button {
-  width: 100%;
-  padding: 14px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #388E3C;
-}
-
-/* KHUSUS TAMPILAN MOBILE */
-@media(max-width:768px){
+  /* NAVBAR */
   .navbar {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 15px 20px;
+    position: sticky; top: 0; z-index: 1000;
+    background: linear-gradient(90deg, #1B5E20, #4CAF50);
+    padding: 12px 25px; display: flex; justify-content: space-between; align-items: center;
   }
+  .logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .logo-wrap img { height: 40px; border-radius: 50%; }
+  .logo-wrap h1 { font-size: 16px; color: white; margin: 0; }
+  nav { display: flex; gap: 20px; }
+  nav a { color: white; text-decoration: none; font-size: 14px; position: relative; }
+  nav a::after { content:''; position:absolute; left:0; bottom:-3px; width:0%; height:2px; background:#FFD700; transition:0.3s; }
+  nav a:hover::after { width:100%; }
 
-  .logo-wrap {
-    justify-content: flex-start;
-    width: 100%;
+  /* HERO */
+  .hero {
+    padding: 50px 20px 70px; text-align: center; color: white;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(27,94,32,0.8)), url('Images/alumni.jpg');
+    background-size: cover; background-position: center;
   }
+  .hero-content { max-width: 600px; margin: auto; }
+  .logo-alumni { width: 120px; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s ease forwards; animation-delay: 0.2s; }
+  .hero h2 { font-size: 26px; margin-bottom: 4px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.8s ease forwards; animation-delay: 0.6s; }
+  .gold-line { width: 240px; height: 3px; margin: 10px auto 15px; border-radius: 30px; background: linear-gradient(90deg, #C8A951, #FFD700, #C8A951); animation: lineGrow 0.8s ease forwards; animation-delay: 1s; }
+  .hero p { font-size: 13px; opacity: 0; transform: translateY(15px); animation: fadeUp 0.8s ease forwards; animation-delay: 1.3s; }
 
-  .logo-wrap h1 {
-    font-size: 14px;
-    text-align: left;
-  }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes lineGrow { to { width: 80px; } }
 
-  nav {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 20px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.2);
-  }
+  /* FORM */
+  .container { max-width: 800px; margin: -60px auto 40px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+  h3 { margin-top: 25px; color: #1B5E20; }
+  input, textarea, select { width: 100%; padding: 12px 15px; margin-top: 8px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; background-color: #fafafa; font-family: inherit; box-sizing: border-box; display: block; transition: 0.3s; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: #4CAF50; background-color: #fff; box-shadow: 0 0 5px rgba(76, 175, 80, 0.2); }
+  label { display: block; margin-top: 10px; font-weight: 600; }
 
-  .container {
-    margin: 20px;
-    padding: 20px;
-    margin-top: -30px;
-  }
-}
+  .checkbox-wrap { display: flex !important; align-items: flex-start; gap: 12px; margin: 20px 0; background: #f0f7f0; padding: 15px; border-radius: 8px; }
+  .checkbox-wrap input[type="checkbox"] { width: 20px !important; height: 20px !important; margin: 0 !important; flex-shrink: 0; cursor: pointer; }
 
-  /* Styling Progress Bar */
-.progress-container {
-  display: none; /* Sembunyi dulu */
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 8px;
-  margin: 10px 0;
-  overflow: hidden;
-}
+  button { width: 100%; padding: 14px; background: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+  button:hover { background: #388E3C; }
+  button:disabled { background: #999; cursor: not-allowed; }
 
-.progress-bar {
-  width: 0%;
-  height: 10px;
-  background: linear-gradient(90deg, #FFD700, #4CAF50);
-  transition: width 0.3s;
-}
+  /* PROGRESS & NOTIF */
+  .progress-container { display: none; width: 100%; background: #e0e0e0; border-radius: 8px; margin: 10px 0; overflow: hidden; }
+  .progress-bar { width: 0%; height: 10px; background: linear-gradient(90deg, #FFD700, #4CAF50); transition: 0.3s; }
+  .loading-text { display: none; font-size: 12px; color: #666; font-style: italic; margin-bottom: 5px; }
 
   .toast-notif {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);  
-  padding: 15px 25px;
-  border-radius: 50px;
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  z-index: 9999;
-  white-space: nowrap;
-  animation: slideUpCenter 0.5s ease forwards;
-}
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    padding: 15px 25px; border-radius: 50px; color: white; font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 9999; white-space: nowrap;
+    animation: slideIn 0.5s ease forwards;
+  }
+  @keyframes slideIn { from { bottom: -100px; opacity: 0; } to { bottom: 30px; opacity: 1; } }
 
-@keyframes slideIn {
-  from { transform: translate(-50%, 100%); opacity: 0; }
-  to { transform: translate(-50%, 0); opacity: 1; }
-}
-
-.btn-loading {
-  background: #999 !important;
-  cursor: not-allowed;
-  position: relative;
-}
-  
-.loading-text {
-  display: none;
-  font-size: 12px;
-  color: #666;
-  font-style: italic;
-  margin-bottom: 5px;
-}
-
+  @media(max-width:768px){
+    .navbar { flex-direction: column; gap: 12px; padding: 15px 20px; }
+    nav { width: 100%; justify-content: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; }
+    .container { margin: 20px; margin-top: -30px; }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <header class="navbar">
   <div class="logo-wrap">
-    <img src="Images/logo.png">
+    <img src="Images/logo.png" alt="Logo">
     <h1>Form Alumni Rubath Al-Muhibbien</h1>
   </div>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="alumni.html">Alumni</a>
     <a href="database-alumni.html">Database</a>
-    <a href="struktur">Struktur Iritbath</a>
+    <a href="struktur">Struktur</a>
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-
     <img src="Images/irtibath.png" class="logo-alumni">
-
     <h2>Pendaftaran Alumni</h2>
     <div class="gold-line"></div>
     <p>Bergabung kembali dalam silaturahmi Ikatan Alumni Rubath Al-Muhibbien</p>
-
   </div>
 </section>
 
-<!-- FORM -->
 <div class="container">
+  <form id="formAlumni">
+    <h3>Data Diri</h3>
+    <label>Nama Lengkap</label>
+    <input type="text" name="nama" required>
 
-<form id="formAlumni">
+    <label>No HP / WhatsApp</label>
+    <input type="text" name="hp" placeholder="Contoh: 0812345..." required>
 
-<h3>Data Diri</h3>
+    <label>Email</label>
+    <input type="email" name="email">
 
-<label>Nama Lengkap</label>
-<input type="text" name="nama" required>
+    <label>Alamat Asal</label>
+    <textarea name="alamat" rows="3"></textarea>
 
-<label>No HP / WhatsApp</label>
-<input type="text" name="hp" required>
+    <label>Upload Foto (Terbaik)</label>
+    <input type="file" id="fotoInput" accept="image/*">
+    
+    <div id="loadingText" class="loading-text">Menyiapkan foto...</div>
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-<label>Email</label>
-<input type="email" name="email">
+    <h3>Data Pendidikan</h3>
+    <label>Tahun Masuk</label>
+    <input type="number" name="masuk" placeholder="Contoh: 2015">
 
-<label>Alamat</label>
-<textarea name="alamat" rows="3"></textarea>
+    <label>Tahun Lulus / Keluar</label>
+    <input type="number" name="lulus" placeholder="Contoh: 2018">
 
-<label>Upload Foto</label>
-<input type="file" id="fotoInput" accept="image/*">
+    <label>Program</label>
+    <select name="program">
+      <option value="Tahfidz">Tahfidzul Qur'an</option>
+      <option value="Hadits">Hadits</option>
+      <option value="Lainnya">Lainnya</option>
+    </select>
 
-<button type="button" id="btnUpload">Upload Foto</button>
-  
-<div id="loadingText" class="loading-text">Sedang mengupload, sabar ya...</div>
-<div class="progress-container" id="progressContainer">
-  <div class="progress-bar" id="progressBar"></div>
+    <h3>Aktivitas Sekarang</h3>
+    <label>Pekerjaan / Kuliah</label>
+    <input type="text" name="pekerjaan">
+
+    <label>Bidang Usaha / Universitas</label>
+    <input type="text" name="usaha">
+
+    <label>Domisili Sekarang</label>
+    <input type="text" name="domisili">
+
+    <h3>Status Akhir</h3>
+    <label>Menyelesaikan s/d Wisuda?</label>
+    <select name="wisuda">
+      <option value="Ya">Ya, Sampai Wisuda</option>
+      <option value="Tidak">Tidak / Pindah</option>
+    </select>
+
+    <div class="checkbox-wrap">
+      <input type="checkbox" id="setuju" required>
+      <label for="setuju">Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b></label>
+    </div>
+
+    <button type="submit" id="btnSubmit">Kirim Data Alumni</button>
+  </form>
 </div>
 
-<input type="text" name="foto" id="fotoLink">
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
-<h3>Data Pendidikan</h3>
-
-<label>Tahun Masuk</label>
-<input type="number" name="masuk">
-
-<label>Tahun Lulus / Keluar</label>
-<input type="number" name="lulus">
-
-<label>Program</label>
-<select name="program">
-  <option value="Tahfidz">Tahfidzul Qur'an</option>
-  <option value="Hadits">Hadits</option>
-  <option value="Lainnya">Lainnya</option>
-</select>
-
-<h3>Aktivitas Sekarang</h3>
-
-<label>Pekerjaan / Kuliah</label>
-<input type="text" name="pekerjaan">
-
-<label>Bidang Usaha / Universitas</label>
-<input type="text" name="usaha">
-
-<label>Domisili Sekarang</label>
-<input type="text" name="domisili">
-
-<h3>Status Kelulusan</h3>
-
-<label>Menyelesaikan s/d Wisuda</label>
-<select name="kontribusi">
-  <option value="Ya, Saya di Wisuda">Ya</option>
-  <option value="Tidak, Saya Pindah/Keluar">Tidak</option>
-</select>
-
-<label>Aktivitas Sekarang</label>
-<input type="text" name="aktivitas">
-
-<div class="checkbox-wrap">
-  <input type="checkbox" id="setuju" required>
-  <label for="setuju">
-    Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b>
-  </label>
-</div>
-
-<button type="submit" id="btnSubmit">Kirim Data Alumni</button>
-
-</form>
-</div>
-
-<script>
-const uploadBtn = document.getElementById("btnUpload");
-const fileInput = document.getElementById("fotoInput");
-const fotoLink = document.getElementById("fotoLink");
-const progressBar = document.getElementById("progressBar");
-const progressContainer = document.getElementById("progressContainer");
-const loadingText = document.getElementById("loadingText");
-
-uploadBtn.addEventListener("click", () => {
-  uploadBtn.classList.add("btn-loading");
-  uploadBtn.classList.remove("btn-loading");
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert("Upload foto dulu bro 😅");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const base64 = e.target.result.split(",")[1];
-
-    // Tampilkan loading
-    progressContainer.style.display = "block";
-    loadingText.style.display = "block";
-    uploadBtn.disabled = true;
-    uploadBtn.innerText = "Processing...";
-    progressBar.style.width = "30%";
-
-    fetch("https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "uploadFoto",
-        file: base64,
-        filename: file.name,
-        mimeType: file.type
-      })
-    })
-    .then(link => {
-      progressBar.style.width = "100%";
-      fotoLink.value = link;
-      
-      // Fungsi bantuan untuk memunculkan Toast
-  const showToast = (msg, isSuccess) => {
-  const toast = document.createElement("div");
-  toast.className = "toast-notif";
-  toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
-  toast.innerHTML = msg;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    // Animasi keluar (turun lagi ke bawah)
-    toast.style.animation = "slideUpCenter 0.5s ease reverse forwards";
-    setTimeout(() => toast.remove(), 500);
-  }, 3000);
-};
-      setTimeout(() => {
-        // Notifikasi keren pengganti alert
-        showToast("✅ Ajiiib !!! Foto berhasil diupload!", true);
-        
-        // Reset tampilan
-        progressContainer.style.display = "none";
-        loadingText.style.display = "none";
-        progressBar.style.width = "0%";
-        uploadBtn.disabled = true;
-        uploadBtn.classList.remove("btn-loading"); // Kembalikan warna tombol
-        uploadBtn.innerText = "Foto Antum Sudah disimpan";
-        uploadBtn.style.background = "#999";
-        fileInput.style.display = "none";
-      }, 600);
-    })
-    .catch(err => {
-      console.error(err);
-      
-      const errorToast = document.createElement("div");
-      errorToast.className = "toast-notif";
-      errorToast.style.background = "#F44336";
-      errorToast.innerHTML = "❌ Yaaah Gagal 😅, Coba Lagi";
-      document.body.appendChild(errorToast);
-      setTimeout(() => errorToast.remove(), 3000);
-
-      progressContainer.style.display = "none";
-      loadingText.style.display = "none";
-      uploadBtn.disabled = false;
-      uploadBtn.classList.remove("btn-loading");
-      uploadBtn.innerText = "Upload Foto";
-    });  
+  const firebaseConfig = {
+    apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
+    authDomain: "web-rubath.firebaseapp.com",
+    projectId: "web-rubath",
+    storageBucket: "web-rubath.firebasestorage.app",
+    messagingSenderId: "606538369074",
+    appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
+    measurementId: "G-30H5Q676LD"
   };
 
-  reader.readAsDataURL(file);
-});</script>
-  
-<script>
-const form = document.getElementById("formAlumni");
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-form.addEventListener("submit", async function(e){
-  e.preventDefault();
+  const form = document.getElementById("formAlumni");
+  const btnSubmit = document.getElementById("btnSubmit");
+  const progressBar = document.getElementById("progressBar");
+  const progressContainer = document.getElementById("progressContainer");
+  const loadingText = document.getElementById("loadingText");
 
-  const btn = document.getElementById("btnSubmit");
-  btn.disabled = true;
-  btn.innerText = "Processing Submit... ⏳";
+  // Fungsi Toast
+  const showToast = (msg, isSuccess) => {
+    const toast = document.createElement("div");
+    toast.className = "toast-notif";
+    toast.style.background = isSuccess ? "#4CAF50" : "#F44336";
+    toast.innerHTML = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.remove(); }, 4000);
+  };
 
-  try {
-    const file = document.getElementById("fotoInput").files[0];
-    let fotoUrl = "";
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
     
+    btnSubmit.disabled = true;
+    btnSubmit.innerText = "Sabar ya, lagi proses... ⏳";
+    
+    const fileInput = document.getElementById("fotoInput");
+    const file = fileInput.files[0];
+    let finalFotoUrl = "";
+
+    try {
+      // 1. UPLOAD FOTO (Jika ada)
       if (file) {
-      const storageRef = window.ref(window.storage, "alumni/" + Date.now() + "_" + file.name);
-      const snapshot = await window.uploadBytes(storageRef, file);
-      fotoURL = await window.getDownloadURL(snapshot.ref);
+        progressContainer.style.display = "block";
+        loadingText.style.display = "block";
+        
+        const storageRef = ref(storage, "alumni/" + Date.now() + "_" + file.name);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        // Pantau Progress
+        await new Promise((resolve, reject) => {
+          uploadTask.on('state_changed', 
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progressBar.style.width = progress + "%";
+            }, 
+            (error) => reject(error), 
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                finalFotoUrl = url;
+                resolve();
+              });
+            }
+          );
+        });
       }
-    
-    const formData = new FormData(form);
-    
-     const data = {
-      nama: formData.get("nama"),
-      hp: formData.get("hp"),
-      email: formData.get("email"),
-      alamat: formData.get("alamat"),
-      masuk: Number(formData.get("masuk")),
-      lulus: Number(formData.get("lulus")),
-      program: formData.get("program"),
-      pekerjaan: formData.get("pekerjaan"),
-      usaha: formData.get("usaha"),
-      domisili: formData.get("domisili"),
-      kontribusi: formData.get("kontribusi"),
-      aktivitas: formData.get("aktivitas"),
-      foto: fotoURL,
-      created_at: new Date()
-    };
-console.log("DATA:", data);
-    
-     await window.addDoc(window.collection(window.db, "alumni"), data);
-    
-    alert("✅ Data berhasil dikirim");
-    
-    const notif = document.createElement("div");
-    notif.innerText = res.includes("Sukses")
-      ? "✅ Data berhasil dikirim"
-      : "❌ Gagal kirim data";
-    notif.style.cssText = "position:fixed; top:20px; right:20px; padding:12px 20px; border-radius:8px; z-index:9999; color:white; font-weight:600;";
-    notif.style.position = "fixed";
-    notif.style.top = "20px";
-    notif.style.right = "20px";
-    notif.style.background = res.includes("Sukses") ? "#4CAF50" : "#F44336";
-    notif.style.color = "white";
-    notif.style.padding = "12px 20px";
-    notif.style.borderRadius = "8px";
-    notif.style.zIndex = "9999";
-    document.body.appendChild(notif);
-    
-    setTimeout(() => {
-      notif.remove();
-      btn.disabled = false;
-      btn.innerText = "Kirim Data Alumni";
-    }, 3000);
 
-    if (res.includes("Sukses")) form.reset();
-    uploadBtn.disabled = false;
-    uploadBtn.innerText = "Upload Foto";
-    uploadBtn.style.background = "#4CAF50"; 
-    fileInput.style.display = "block";
-  })
-  
-  .catch(err => {
-    alert("Server error 😅");
-    console.error(err);
-    btn.disabled = false;
-    btn.innerText = "Kirim Data Alumni";
+      // 2. SIMPAN DATA KE FIRESTORE
+      const formData = new FormData(form);
+      const dataAlumni = {
+        nama: formData.get("nama"),
+        hp: formData.get("hp"),
+        email: formData.get("email"),
+        alamat: formData.get("alamat"),
+        masuk: Number(formData.get("masuk")),
+        lulus: Number(formData.get("lulus")),
+        program: formData.get("program"),
+        pekerjaan: formData.get("pekerjaan"),
+        usaha: formData.get("usaha"),
+        domisili: formData.get("domisili"),
+        wisuda: formData.get("wisuda"),
+        foto: finalFotoUrl,
+        created_at: new Date()
+      };
+
+      await addDoc(collection(db, "alumni"), dataAlumni);
+
+      // 3. SELESAI
+      showToast("✅ Ajiiib!!! Data Berhasil Terkirim!", true);
+      form.reset();
+      progressBar.style.width = "0%";
+      progressContainer.style.display = "none";
+      loadingText.style.display = "none";
+
+    } catch (error) {
+      console.error(error);
+      showToast("❌ Waduh Gagal! Coba cek koneksi ente.", false);
+    } finally {
+      btnSubmit.disabled = false;
+      btnSubmit.innerText = "Kirim Data Alumni";
+    }
   });
-});
-</script> 
-
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
-// CONFIG PUNYA LO (PASTE DI SINI)
-const firebaseConfig = {
-  apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
-  authDomain: "web-rubath.firebaseapp.com",
-  projectId: "web-rubath",
-  storageBucket: "web-rubath.firebasestorage.app",
-  messagingSenderId: "606538369074",
-  appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
-  measurementId: "G-30H5Q676LD"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-// bikin global biar script lo bisa pakai
-window.db = db;
-window.storage = storage;
-window.collection = collection;
-window.addDoc = addDoc;
-window.ref = ref;
-window.uploadBytes = uploadBytes;
-window.getDownloadURL = getDownloadURL;
 </script>
-  
+
 </body>
 </html>
