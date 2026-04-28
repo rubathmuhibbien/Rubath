@@ -3,221 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Database Alumni</title>
+<title>Database Alumni - Rubath Al-Muhibbien</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #f4f6f8;
-}
+  body { margin: 0; font-family: 'Poppins', sans-serif; background: #f4f6f8; color: #333; }
 
-/* HEADER - Semua teks pindah ke sini */
-.header {
-  background: linear-gradient(90deg, #1B5E20, #4CAF50);
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+  /* HEADER */
+  .header {
+    background: linear-gradient(90deg, #1B5E20, #4CAF50);
+    padding: 10px 15px; display: flex; align-items: center; gap: 12px; color: white;
+    position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .header img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.5); }
+  .header-text { display: flex; flex-direction: column; }
+  .header-line { width: 100%; height: 1px; background: white; opacity: 0.3; margin: 2px 0; }
+  .header h2 { font-size: 15px; margin: 0; font-weight: 600; line-height: 1.1; }
+  .header p { font-size: 9px; margin: 2px 0 0; opacity: 0.8; line-height: 1.1; }
+  .home-text-btn { margin-left: auto; color: white; text-decoration: none; font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 5px; transition: 0.3s; }
+  .home-text-btn:hover { background: white; color: #1B5E20; }
 
-.header img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  /* HERO */
+  .hero { height: 200px; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('Images/alumni.jpg'); background-size: cover; background-position: center; }
 
-.header-text {
-  display: flex;
-  flex-direction: column;
-}
+  /* FILTER */
+  .filter-box { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 15px; margin-top: -30px; }
+  .filter-box input { padding: 12px 18px; border-radius: 25px; border: none; box-shadow: 0 8px 20px rgba(0,0,0,0.1); font-size: 14px; outline: none; transition: 0.3s; width: 200px; }
+  .filter-box input:focus { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2); }
 
-.header h1 {
-  font-size: 10px;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.9;
-  font-weight: 400;
-}
+  /* GRID & CARD */
+  #dataAlumni { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding: 30px 20px; min-height: 400px; max-width: 1100px; margin: auto; }
+  
+  .card { 
+    background: white; padding: 20px; border-radius: 20px; text-align: center; cursor: pointer; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s ease; animation: fadeInUp 0.5s ease backwards; 
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+  .card img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 3px solid #f0f7f0; }
+  .card h3 { font-size: 15px; margin: 5px 0; color: #1B5E20; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card small { color: #888; font-weight: 600; display: block; background: #f0f0f0; border-radius: 10px; padding: 2px 8px; width: fit-content; margin: auto; }
 
-.header-line {
-  width: 100%;
-  height: 1px;
-  background: white;
-  opacity: 0.3;
-  margin: 2px 0;
-}
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.header h2 {
-  font-size: 16px;
-  margin: 0;
-  font-weight: 600;
-  line-height: 1.1;
-}
+  /* PAGINATION */
+  .pagination { display: flex; justify-content: center; gap: 8px; padding: 20px 0 50px; }
+  .pagination button { 
+    padding: 8px 15px; border: none; background: white; color: #1B5E20; border-radius: 8px; 
+    cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.05); font-weight: 600; transition: 0.3s;
+  }
+  .pagination button.active { background: #4CAF50; color: white; }
+  .pagination button:hover:not(.active) { background: #e8f5e9; }
 
-.header p {
-  font-size: 9px;
-  margin: 2px 0 0;
-  opacity: 0.8;
-  line-height: 1.1;
-}
+  /* POPUP */
+  .popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
+  .popup-content { 
+    background: white; padding: 30px; border-radius: 25px; width: 90%; max-width: 320px; text-align: center; 
+    position: relative; animation: popScale 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+  }
+  @keyframes popScale { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .popup-content img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 4px solid #4CAF50; margin-bottom: 15px; }
+  .popup-content h3 { margin: 10px 0; color: #1B5E20; }
+  .popup-content p { font-size: 13px; margin: 8px 0; color: #666; line-height: 1.5; }
+  .btn-close { margin-top: 20px; width: 100%; padding: 12px; background: #f44336; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; }
 
-/* Tombol Home Teks di Pojok Kanan */
-.home-text-btn {
-  margin-left: auto; /* Dorong ke kanan */
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  padding: 5px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Garis kotak halus */
-  border-radius: 5px;
-  transition: 0.3s;
-}
+  /* FOOTER */
+  .footer { background: linear-gradient(180deg, #1B5E20, #0D3B15); color: white; text-align: center; padding: 40px 15px 20px; margin-top: 50px; }
+  .footer h3 { margin: 0; font-size: 18px; }
+  .footer-content p { font-size: 11px; opacity: 0.8; margin: 4px 0; }
+  .follow-text { font-weight: 600; color: #FFD700; margin: 20px 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .social { display: flex; justify-content: center; gap: 15px; }
+  .social a { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; font-size: 18px; transition: 0.3s; }
+  .yt { background: #FF0000; } .ig { background: linear-gradient(45deg,#feda75,#d62976,#962fbf); } .fb { background: #1877F2; } .tt { background: #000; }
+  .footer-bottom { margin-top: 30px; font-size: 10px; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
-.home-text-btn:hover {
-  background: white;
-  color: #1B5E20; /* Berubah jadi hijau pas di-hover */
-  opacity: 1;
-}
+  /* SKELETON */
+  .skeleton { height: 180px; border-radius: 20px; background: #eee; background: linear-gradient(90deg,#eee 8%, #ddd 18%, #eee 33%); background-size: 800px 104px; animation: shine 1.2s infinite linear; }
+  @keyframes shine { 0% { background-position: -468px 0; } 100% { background-position: 468px 0; } }
 
-/* HERO - Hanya Gambar */
-.hero {
-  height: 250px; 
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('Images/alumni.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-/* FILTER */
-.filter-box {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 15px;
-  margin-top: -30px; 
-}
-
-input {
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  font-size: 14px;
-}
-
-/* GRID & CARD */
-#dataAlumni {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
-  padding: 40px 20px; 
-  min-height: 600px;
-}
-
-.card {
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  transition: 0.3s;
-}
-
-.card img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-.card h3 {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-/* FOOTER - Dirampingkan */
-.footer {
-  background: linear-gradient(180deg, #1B5E20, #0D3B15);
-  color: white;
-  text-align: center;
-  padding: 20px 15px;
-}
-
-.footer h3 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.footer-content p {
-  font-size: 11px;
-  opacity: 0.8;
-  margin: 4px 0;
-}
-
-.follow-text {
-  font-weight: 600;
-  color: #FFD700;
-  margin: 15px 0 8px 0; /* Jarak ke atas */
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.social {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.social a {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: white;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.yt { background: #FF0000; }
-.ig { background: linear-gradient(45deg,#feda75,#d62976,#962fbf); }
-.fb { background: #1877F2; }
-.tt { background: #000; }
-
-.footer-bottom {
-  margin-top: 15px;
-  font-size: 10px;
-  opacity: 0.5;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 10px;
-}
-
-/* SKELETON & POPUP TETAP */
-.skeleton { height: 150px; border-radius: 15px; background: linear-gradient(90deg,#eee,#ddd,#eee); animation: loading 1.2s infinite; }
-@keyframes loading { 0%{background-position:-200px;} 100%{background-position:200px;} }
-
-.popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
-.popup-content { background: white; padding: 20px; border-radius: 15px; width: 280px; text-align: center; }
-
-@media(max-width:600px){
-  input { width: 120px; }
-  .header h2 { font-size: 14px; }
-}
+  @media(max-width:600px){
+    .filter-box input { width: 140px; font-size: 12px; }
+    #dataAlumni { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 20px 12px; }
+  }
 </style>
 </head>
 
@@ -231,8 +99,7 @@ input {
     <h2>IRTIBATH</h2>
     <p>Ikatan Ruhani Timbangan Bakti Amal Tolabah Rubath</p>
   </div>
-
-<a href="index.html" class="home-text-btn">HOME</a>
+  <a href="index.html" class="home-text-btn">HOME</a>
 </div>
 
 <div class="hero"></div>
@@ -242,93 +109,20 @@ input {
   <input type="number" id="filterTahun" placeholder="Tahun masuk...">
 </div>
 
-<div id="dataAlumni"></div>
-<div class="pagination" id="pagination"></div>
-
-<div class="popup" id="popup">
-  <div class="popup-content" id="popupContent"></div>
+<div id="dataAlumni">
+  <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
 </div>
 
-<script>
-const URL = "https://script.google.com/macros/s/AKfycbwzT-Qio_24Ru_V0mXF7wUXSH5FlYx5cP0SrfDshyopylHEGGOUAWmp6wBdWacJHUul/exec?action=getData";
-let dataAsli = [];
-let dataFilter = [];
-let page = 1;
-const perPage = 12;
-const container = document.getElementById("dataAlumni");
+<div class="pagination" id="pagination"></div>
 
-for(let i=0;i<6;i++){ container.innerHTML += `<div class="skeleton"></div>`; }
-
-fetch(URL).then(res => res.json()).then(data => {
-  dataAsli = data.reverse();
-  dataFilter = [...dataAsli];
-  render();
-});
-
-function render(){
-  const start = (page-1)*perPage;
-  const end = start + perPage;
-  const data = dataFilter.slice(start,end);
-  container.innerHTML = "";
-  data.forEach(item => {
-    container.innerHTML += `
-      <div class="card" onclick='showDetail(${JSON.stringify(item)})'>
-        <img src="${item.foto}">
-        <h3>${item.nama}</h3>
-        <small>${item.masuk}</small>
-      </div>
-    `;
-  });
-  renderPagination();
-}
-
-function renderPagination(){
-  const total = Math.ceil(dataFilter.length/perPage);
-  const pag = document.getElementById("pagination");
-  pag.innerHTML = "";
-  for(let i=1;i<=total;i++){ pag.innerHTML += `<button onclick="goPage(${i})">${i}</button>`; }
-}
-
-function goPage(p){ page = p; render(); }
-
-let delay;
-document.getElementById("searchNama").addEventListener("input", function(){
-  clearTimeout(delay);
-  delay = setTimeout(filterData, 400);
-});
-document.getElementById("filterTahun").addEventListener("input", filterData);
-
-function filterData(){
-  const nama = document.getElementById("searchNama").value.toLowerCase();
-  const tahun = document.getElementById("filterTahun").value;
-  dataFilter = dataAsli.filter(item =>
-    item.nama.toLowerCase().includes(nama) && (tahun==="" || item.masuk==tahun)
-  );
-  page = 1; render();
-}
-
-
-function showDetail(item){
-  document.getElementById("popupContent").innerHTML = `
-    <img src="${item.foto}" style="width:80px;border-radius:50%">
-    <h3>${item.nama}</h3>
-    <p><b>Alamat:</b> ${item.alamat || "-"}</p>
-    <p><b>Tahun Lulus:</b> ${item.lulus || "-"}</p>
-    <button onclick="closePopup()">Tutup</button>
-  `;
-  document.getElementById("popup").style.display="flex";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display="none";
-}
-</script>
+<div class="popup" id="popup" onclick="closePopupExternal(event)">
+  <div class="popup-content" id="popupContent"></div>
+</div>
 
 <footer class="footer">
   <div class="footer-content">
     <h3>Rubath Al-Muhibbien</h3>
     <p>Ikatan Ruhani Timbangan Bakti Amal Tolabah Rubath</p>
-
     <p class="follow-text">Follow Us</p>
     <div class="social">
       <a href="https://www.youtube.com/@RubathAlmuhibbien" class="yt"><i class="fab fa-youtube"></i></a>
@@ -337,10 +131,148 @@ function closePopup(){
       <a href="https://www.tiktok.com/@media_rubath" class="tt"><i class="fab fa-tiktok"></i></a>
     </div>
   </div>
-  <div class="footer-bottom">
-    © 2026 Rubath Al-Muhibbien
-  </div>
+  <div class="footer-bottom">© 2026 Rubath Al-Muhibbien</div>
 </footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
+    authDomain: "web-rubath.firebaseapp.com",
+    projectId: "web-rubath",
+    storageBucket: "web-rubath.firebasestorage.app",
+    messagingSenderId: "606538369074",
+    appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
+    measurementId: "G-30H5Q676LD"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let dataAsli = [];
+  let dataFilter = [];
+  let currentPage = 1;
+  const itemsPerPage = 12;
+
+  const container = document.getElementById("dataAlumni");
+  const paginasiContainer = document.getElementById("pagination");
+
+  // 1. AMBIL DATA DARI FIREBASE
+  async function loadData() {
+    try {
+      const q = query(collection(db, "alumni"), orderBy("created_at", "desc"));
+      const querySnapshot = await getDocs(q);
+      dataAsli = [];
+      querySnapshot.forEach((doc) => {
+        dataAsli.push({ id: doc.id, ...doc.data() });
+      });
+      dataFilter = [...dataAsli];
+      renderData();
+    } catch (error) {
+      console.error("Error loading data: ", error);
+      container.innerHTML = "<p>Gagal memuat data. Periksa koneksi atau settingan Firebase.</p>";
+    }
+  }
+
+  // 2. RENDER CARD ALUMNI
+  window.renderData = function() {
+    container.innerHTML = "";
+    if (dataFilter.length === 0) {
+      container.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Data tidak ditemukan.</p>";
+      paginasiContainer.innerHTML = "";
+      return;
+    }
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedData = dataFilter.slice(start, end);
+
+    paginatedData.forEach((item, index) => {
+      const imgSource = item.foto || 'Images/default-avatar.png';
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.animationDelay = (index * 0.05) + "s";
+      card.onclick = () => showDetail(item);
+      card.innerHTML = `
+        <img src="${imgSource}" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'">
+        <h3>${item.nama}</h3>
+        <small>Masuk: ${item.masuk || '-'}</small>
+      `;
+      container.appendChild(card);
+    });
+
+    renderPagination();
+  }
+
+  // 3. PAGINATION LOGIC
+  function renderPagination() {
+    paginasiContainer.innerHTML = "";
+    const totalPages = Math.ceil(dataFilter.length / itemsPerPage);
+
+    if (totalPages <= 1) return;
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.innerText = i;
+      if (i === currentPage) btn.className = "active";
+      btn.onclick = () => {
+        currentPage = i;
+        renderData();
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+      };
+      paginasiContainer.appendChild(btn);
+    }
+  }
+
+  // 4. FILTER LOGIC
+  function handleFilter() {
+    const nama = document.getElementById("searchNama").value.toLowerCase();
+    const tahun = document.getElementById("filterTahun").value;
+
+    dataFilter = dataAsli.filter(item => {
+      const matchNama = item.nama.toLowerCase().includes(nama);
+      const matchTahun = tahun === "" || String(item.masuk) === tahun;
+      return matchNama && matchTahun;
+    });
+
+    currentPage = 1;
+    renderData();
+  }
+
+  document.getElementById("searchNama").addEventListener("input", handleFilter);
+  document.getElementById("filterTahun").addEventListener("input", handleFilter);
+
+  // 5. DETAIL POPUP
+  window.showDetail = function(item) {
+    const content = document.getElementById("popupContent");
+    content.innerHTML = `
+      <img src="${item.foto || 'https://via.placeholder.com/150'}" onerror="this.src='https://via.placeholder.com/150'">
+      <h3>${item.nama}</h3>
+      <div style="text-align: left; background: #f9f9f9; padding: 15px; border-radius: 15px; margin-top: 10px;">
+        <p><b><i class="fas fa-map-marker-alt"></i> Domisili:</b> ${item.domisili || '-'}</p>
+        <p><b><i class="fas fa-graduation-cap"></i> Program:</b> ${item.program || '-'}</p>
+        <p><b><i class="fas fa-calendar-check"></i> Angkatan:</b> ${item.masuk || '-'}</p>
+        <p><b><i class="fas fa-briefcase"></i> Aktivitas:</b> ${item.pekerjaan || '-'}</p>
+      </div>
+      <button class="btn-close" onclick="closePopup()">Tutup</button>
+    `;
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  // Jalankan load data saat halaman siap
+  loadData();
+</script>
+
+<script>
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+  function closePopupExternal(e) {
+    if (e.target.id === "popup") closePopup();
+  }
+</script>
 
 </body>
 </html>
