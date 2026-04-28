@@ -167,9 +167,9 @@
   </form>
 </div>
 
-<script type="module">
+<script type="module" src="script.js"></script>
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, query, where, getdocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
   const firebaseConfig = {
@@ -270,6 +270,19 @@
         created_at: new Date()
       };
 
+      const q = query(
+    collection(db, "alumni"),
+    where("email", "==", email)
+    where("hp", "==", hp)
+  );
+
+  const snapshot = await getDocs(q);
+
+  if (!snapshot.empty) {
+    showToast("⚠️ Data sudah terdaftar bro!", false);
+    return; // STOP, jangan lanjut simpan
+  }
+      
       await addDoc(collection(db, "alumni"), dataAlumni);
 
       // 3. SELESAI
