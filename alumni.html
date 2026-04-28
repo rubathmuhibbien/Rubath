@@ -157,7 +157,13 @@
       <input type="checkbox" id="setuju" required>
       <label for="setuju">Saya bersedia menjaga nama baik <b>Rubath Al-Muhibbien & Abuya</b></label>
     </div>
-
+    
+<label>Kode Validasi Alumni (Tanya Admin)</label>
+<input type="text" id="kodeAkses" placeholder="Masukkan kode keamanan..." required>
+<div id="pesanErrorKode" style="color: red; font-size: 11px; margin-top: -15px; margin-bottom: 15px; display: none;">
+  ❌ Kode salah! Ente bukan alumni ya? 😅
+</div>
+    
     <button type="submit" id="btnSubmit">Kirim Data Alumni</button>
   </form>
 </div>
@@ -199,6 +205,17 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    const kodeInput = document.getElementById("kodeAkses").value;
+    const KODE_RAHASIA = "ALUMNI_BARU_BRO";
+
+    if (kodeInput !== KODE_RAHASIA) {
+      document.getElementById("pesanErrorKode").style.display = "block";
+      showToast("❌ Kode Validasi Salah!", false);
+      return; // Stop proses submit
+    } else {
+      document.getElementById("pesanErrorKode").style.display = "none";
+    }
     
     btnSubmit.disabled = true;
     btnSubmit.innerText = "Sabar ya, lagi proses... ⏳";
