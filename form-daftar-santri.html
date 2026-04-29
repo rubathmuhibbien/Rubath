@@ -171,36 +171,32 @@
 </footer>
 
 <script type="module">
-  // 1. Import SDK (Gunakan versi CDN agar langsung jalan di browser)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // 2. Konfigurasi Asli lo (web-rubath)
   const firebaseConfig = {
     apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
     authDomain: "web-rubath.firebaseapp.com",
     projectId: "web-rubath",
     storageBucket: "web-rubath.firebasestorage.app",
     messagingSenderId: "606538369074",
-    appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
-    measurementId: "G-30H5Q676LD"
+    appId: "1:606538369074:web:2750e9c9d951bc130fd42b"
   };
 
-  // Initialize Firebase & Firestore
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // 3. Logic Submit Form
   const form = document.getElementById('pendaftaranForm');
   const btn = document.getElementById('submitBtn');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Mencegah halaman refresh/pindah URL
+    e.stopPropagation(); 
     
     const formData = new FormData(form);
-    const nik = formData.get('nik').toString().trim();
+    const nik = formData.get('nik');
 
-    if(nik.length !== 16) {
+    if (!nik || nik.length !== 16) {
       alert("⚠️ Nomor NIK harus 16 digit!");
       return;
     }
@@ -209,17 +205,13 @@
     btn.disabled = true;
 
     try {
-      // Alamat penyimpanan: Folder 'pendaftaran', File ID-nya 'nik'
-      const docRef = doc(db, "pendaftaran", nik);
-      
-      // CEK APAKAH NIK SUDAH ADA
+      const docRef = doc(db, "pendaftaran", nik.toString());
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        alert("❌ GAGAL: Nomor NIK ini sudah pernah mendaftar!");
+        alert("❌ GAGAL: Nomor NIK " + nik + " sudah terdaftar!");
       } else {
-        // Jika belum ada, SIMPAN DATA
-        const payload = {
+        await setDoc(docRef, {
           nik: nik,
           nama: formData.get('nama'),
           tempat_lahir: formData.get('tempat_lahir'),
@@ -230,22 +222,18 @@
           wa: formData.get('wa'),
           alamat: formData.get('alamat'),
           timestamp: new Date()
-        };
-
-        await setDoc(docRef, payload);
+        });
         alert("✅ ALHAMDULILLAH: Data Berhasil Terkirim!");
         form.reset();
       }
     } catch (error) {
-      console.error("Firebase Error:", error);
-      alert("Terjadi kesalahan teknis. Pastikan Rules di Firebase Console sudah di-PUBLISH.");
+      console.error(error);
+      alert("Error: " + error.message);
     } finally {
       btn.innerText = "KIRIM DATA PENDAFTARAN";
       btn.disabled = false;
     }
   });
-  
 </script>
-
 </body>
 </html>
