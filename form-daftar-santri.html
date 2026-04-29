@@ -76,9 +76,106 @@
       .header h2 { font-size: 16px; }
       .form-container { margin: 20px; padding: 25px; }
     }
+
+    /* OVERLAY */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* BOX */
+.popup-box {
+  background: white;
+  padding: 35px 30px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  animation: popupFade 0.4s ease;
+}
+
+/* ICON */
+.popup-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #c62828, #e53935);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  color: white;
+  font-size: 28px;
+}
+
+/* TEXT */
+.popup-box h2 {
+  margin: 10px 0;
+  color: #c62828;
+  font-size: 22px;
+}
+
+.popup-box p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* BUTTON */
+.popup-box button {
+  background: linear-gradient(90deg, #1B5E20, #2E7D32);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.popup-box button:hover {
+  transform: scale(1.05);
+}
+
+/* ANIMATION */
+@keyframes popupFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
   </style>
 </head>
 <body>
+
+  <div id="popupTutup" class="popup-overlay">
+  <div class="popup-box">
+    <div class="popup-icon">
+      <i class="fas fa-lock"></i>
+    </div>
+    <h2>PENDAFTARAN DITUTUP</h2>
+    <p>
+      Mohon maaf, pendaftaran santri baru saat ini belum dibuka.<br>
+      Silakan menunggu pengumuman resmi berikutnya.
+    </p>
+    <button onclick="keHome()">Mengerti</button>
+  </div>
+</div>
 
 <div class="main-content">
   <div class="header">
@@ -170,6 +267,17 @@
   <div class="footer-bottom">© 2026 Rubath Al-Muhibbien</div>
 </footer>
 
+<script>
+  function keHome() {
+    window.location.href = "index.html"; // arahkan ke halaman home lo
+  }
+
+  // biar ga bisa scroll belakang
+  window.onload = () => {
+    document.body.style.overflow = "hidden";
+  };
+</script>
+  
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
