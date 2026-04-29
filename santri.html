@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Akademik Rubath</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #064e3b; /* Hijau Rubath */
+            --secondary: #d97706; /* Gold/Amber */
+            --bg: #fdfcf0;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            color: var(--text);
+        }
+
+        /* Header Rubath Style */
+        header {
+            background: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        /* Container Portal */
+        .portal-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .portal-container h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Form Styling */
+        .input-group {
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #043a2c;
+            transform: translateY(-2px);
+        }
+
+        /* Result Card */
+        #result-card {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            display: none;
+            text-align: left;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">RUBATH DIGITAL</div>
+    <div style="color: var(--secondary);"><i class="fa-solid fa-mosque"></i></div>
+</header>
+
+<div class="portal-container">
+    <i class="fa-solid fa-graduation-cap" style="font-size: 40px; color: var(--secondary); margin-bottom: 15px;"></i>
+    <h2>Portal Data Santri</h2>
+    <p>Masukkan NISN Santri untuk melihat perkembangan akademik.</p>
+
+    <div class="input-group">
+        <label>NISN Santri</label>
+        <input type="text" id="nisn" placeholder="Contoh: 202610001">
+    </div>
+
+    <button onclick="checkData()">Cek Sekarang</button>
+    <div class="loader" id="loader"></div>
+
+    <div id="result-card">
+        <h3 style="margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 5px;">Data Akademik</h3>
+        <div class="data-row"><span>Nama:</span> <strong id="res-nama"></strong></div>
+        <div class="data-row"><span>Kelas:</span> <strong id="res-kelas"></strong></div>
+        <div class="data-row"><span>Hafalan Terakhir:</span> <strong id="res-hafalan"></strong></div>
+        <div class="data-row"><span>Status Pembayaran:</span> <strong id="res-status"></strong></div>
+        <button style="margin-top: 20px; background: var(--secondary); font-size: 14px;">Download E-Rapor <i class="fa-solid fa-download"></i></button>
+    </div>
+</div>
+
+<script>
+    async function checkData() {
+        const nisn = document.getElementById('nisn').value;
+        const loader = document.getElementById('loader');
+        const card = document.getElementById('result-card');
+        
+        if(!nisn) return alert("Isi NISN dulu, bro!");
+
+        // Reset & Show Loader
+        card.style.display = 'none';
+        loader.style.display = 'block';
+
+        // GANTI URL INI dengan URL Deployment Apps Script lo
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbZzoG3rUjrPYJJpL3jw8BZ6ZLcY_-PBIXdm05mu56jc49LwerUI5k57xZUU4g518q/exec";
+
+        try {
+            const response = await fetch(`${SCRIPT_URL}?nisn=${nisn}`);
+            const data = await response.json();
+
+            if (data !== "Not Found") {
+                document.getElementById('res-nama').innerText = data.nama;
+                document.getElementById('res-kelas').innerText = data.kelas;
+                document.getElementById('res-hafalan').innerText = data.hafalan;
+                document.getElementById('res-status').innerText = data.spp;
+                card.style.display = 'block';
+            } else {
+                alert("Data santri tidak ditemukan!");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Ada masalah koneksi ke server.");
+        } finally {
+            loader.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
