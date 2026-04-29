@@ -192,13 +192,16 @@
   const form = document.getElementById('pendaftaranForm');
   const btn = document.getElementById('submitBtn');
 
+  // ... (Firebase Initialize tetap sama)
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const formData = new FormData(form);
-    const nik = formData.get('nik');
+    
+    // PERBAIKAN: Pastikan NIK diambil sebagai STRING
+    const nik = formData.get('nik').toString().trim();
 
-    // Validasi panjang NIK
     if(nik.length !== 16) {
       alert("⚠️ Nomor NIK harus 16 digit!");
       return;
@@ -208,14 +211,15 @@
     btn.disabled = true;
 
     try {
-      // CEK DOUBLE ENTRY: Apakah NIK ini sudah ada sebagai Document ID?
+      // 1. Cek koneksi ke folder "pendaftaran" dengan ID "nik"
       const docRef = doc(db, "pendaftaran", nik);
+      
+      // 2. Cek manual sebelum tulis (Double Protection)
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        alert("❌ GAGAL: Nomor NIK ini sudah pernah mendaftar!");
+        alert("❌ GAGAL: Nomor NIK " + nik + " sudah pernah mendaftar!");
       } else {
-        // Jika belum ada, SIMPAN DATA
         const payload = {
           nik: nik,
           nama: formData.get('nama'),
@@ -229,13 +233,19 @@
           timestamp: new Date()
         };
 
+        // 3. Simpan
         await setDoc(docRef, payload);
-        alert("✅ ALHAMDULILLAH: Data Pendaftaran Berhasil Terkirim!");
+        alert("✅ ALHAMDULILLAH, Data Pendaftaran Berhasil Terkirim!");
         form.reset();
       }
     } catch (error) {
-      console.error("Firebase Error:", error);
-      alert("Terjadi kesalahan teknis. Pastikan Rules Firebase sudah diupdate.");
+      console.error("Detail Error:", error);
+      // Cek apakah error karena permission (Rules)
+      if (error.code === 'permission-denied') {
+        alert("Akses Ditolak! Cek apakah NIK sudah ada atau Rules Firebase belum di-Publish.");
+      } else {
+        alert("Kesalahan: " + error.message);
+      }
     } finally {
       btn.innerText = "KIRIM DATA PENDAFTARAN";
       btn.disabled = false;
