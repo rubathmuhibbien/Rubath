@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Santri Baru - Rubath Al-Muhibbien</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* BASE LAYOUT */
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; flex-direction: column; font-family: 'Poppins', sans-serif; background: #f4f6f8; color: #333; }
+    .main-content { flex: 1 0 auto; }
+
+    /* HEADER - DIPERTEGAS */
+    .header {
+      background: linear-gradient(90deg, #1B5E20, #4CAF50);
+      padding: 15px 5%;
+      display: flex; align-items: center; color: white;
+      position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .header img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.6); }
+    .header-text { display: flex; flex-direction: column; margin-left: 15px; }
+    .header-line { width: 100%; height: 2px; background: white; opacity: 0.5; margin: 4px 0; }
+    .header h2 { font-size: 20px; margin: 0; font-weight: 700; text-transform: uppercase; line-height: 1.1; }
+    .header p { font-size: 13px; margin: 2px 0 0; opacity: 1; font-weight: 600; color: #FFEB3B; line-height: 1.1; }
+    .header-nav { margin-left: auto; }
+    .btn-home { text-decoration: none; font-size: 12px; font-weight: 700; padding: 10px 16px; color: white; border: 2px solid white; border-radius: 10px; transition: 0.3s; }
+    .btn-home:hover { background: white; color: #1B5E20; }
+
+    /* FORM CONTAINER */
+    .form-container {
+      max-width: 750px; margin: 40px auto; background: white;
+      padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      border-top: 8px solid #1B5E20;
+    }
+    .form-header { text-align: center; margin-bottom: 35px; }
+    .form-header h1 { color: #1B5E20; font-size: 28px; margin: 0; font-weight: 700; }
+    .form-header .divider { width: 60px; height: 4px; background: #C8A951; margin: 15px auto; border-radius: 2px; }
+
+    /* FORM FIELDS */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { margin-bottom: 22px; }
+    .form-group.full { grid-column: span 2; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #1B5E20; }
+    
+    /* Highlight NIK */
+    .nik-field input { border: 2px solid #C8A951 !important; background: #fffdf0; }
+    
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 14px; border: 1.5px solid #eee; border-radius: 12px;
+      font-family: 'Poppins', sans-serif; font-size: 14px; box-sizing: border-box; outline: none; transition: 0.3s;
+    }
+    .form-group input:focus { border-color: #4CAF50; box-shadow: 0 0 10px rgba(76, 175, 80, 0.15); }
+
+    .btn-submit {
+      width: 100%; padding: 18px; background: linear-gradient(90deg, #1B5E20, #2E7D32); color: white; border: none;
+      border-radius: 15px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.4s;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(27, 94, 32, 0.3); }
+
+    /* FOOTER */
+    .footer { flex-shrink: 0; background: linear-gradient(180deg, #1B5E20, #0D3B15); color: white; text-align: center; padding: 20px 15px 10px; }
+    .footer h3 { margin: 0; font-size: 18px; letter-spacing: 1px; line-height: 1; }
+    .footer p { margin: 2px 0 10px; font-size: 11px; opacity: 0.8; line-height: 1; }
+    .social { display: flex; justify-content: center; gap: 12px; margin: 10px 0; }
+    .social a { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; text-decoration: none; font-size: 15px; transition: 0.3s; }
+    .social a:hover { transform: translateY(-5px); filter: brightness(1.2); }
+    .yt { background: #FF0000; } .ig { background: linear-gradient(45deg,#feda75,#d62976,#962fbf); } .fb { background: #1877F2; } .tt { background: #000; } .wa { background: #25D366; }
+    .footer-bottom { font-size: 10px; opacity: 0.4; margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5px; }
+
+    @media(max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .header h2 { font-size: 16px; }
+      .form-container { margin: 20px; padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-content">
+  <div class="header">
+    <img src="Images/logo.png" alt="Logo">
+    <div class="header-text">
+      <h2>Rubath Al-Muhibbien</h2>
+      <div class="header-line"></div>
+      <p>FORMULIR PENDAFTARAN SANTRI BARU</p>
+    </div>
+    <div class="header-nav">
+      <a href="index.html" class="btn-home">HOME</a>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-header">
+      <h1>Data Calon Santri</h1>
+      <div class="divider"></div>
+    </div>
+
+    <form id="pendaftaranForm">
+      <div class="form-grid">
+        
+        <!-- NIK UNTUK PENGAMAN -->
+        <div class="form-group full nik-field">
+          <label><i class="fas fa-id-card"></i> Nomor NIK (KTP/Kartu Keluarga)</label>
+          <input type="number" id="nik" name="nik" placeholder="16 digit angka NIK" required oninput="javascript: if (this.value.length > 16) this.value = this.value.slice(0, 16);">
+          <small id="nikError" style="color: red; font-size: 11px; display: none; margin-top: 5px;">NIK ini sudah terdaftar!</small>
+        </div>
+
+        <div class="form-group full">
+          <label><i class="fas fa-user"></i> Nama Lengkap Santri</label>
+          <input type="text" name="nama" placeholder="Sesuai Akta Kelahiran / KK" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-map-marker-alt"></i> Tempat Lahir</label>
+          <input type="text" name="tempat_lahir" placeholder="Kota" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-calendar-alt"></i> Tanggal Lahir</label>
+          <input type="date" name="tgl_lahir" required>
+        </div>
+
+        <div class="form-group full">
+          <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+          <select name="jk" required>
+            <option value="">-- Pilih Jenis Kelamin --</option>
+            <option value="Laki-laki">Laki-laki (Ikhwan)</option>
+            <option value="Perempuan">Perempuan (Akhwat)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-user-tie"></i> Nama Ayah / Wali</label>
+          <input type="text" name="ayah" placeholder="Nama lengkap" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-user-female"></i> Nama Ibu Kandung</label>
+          <input type="text" name="ibu" placeholder="Nama lengkap" required>
+        </div>
+
+        <div class="form-group full">
+          <label><i class="fab fa-whatsapp"></i> Nomor WhatsApp Orang Tua (Aktif)</label>
+          <input type="tel" name="wa" placeholder="Contoh: 081234567890" required>
+        </div>
+
+        <div class="form-group full">
+          <label><i class="fas fa-home"></i> Alamat Lengkap</label>
+          <textarea name="alamat" rows="3" placeholder="Alamat rumah sekarang..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Kirim Data Pendaftaran</button>
+    </form>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <h3>Rubath Al-Muhibbien</h3>
+    <p>Ikatan Ruhani Timbangan Bakti Amal Tolabah Rubath</p>
+    <div class="social">
+      <a href="https://www.youtube.com/@RubathAlmuhibbien" class="yt" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://instagram.com/ponpes_rubathalmuhibbien" class="ig" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://web.facebook.com/people/Rubath-Media/61552513858638/" class="fb" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@media_rubath" class="tt" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/62811893121" class="wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Rubath Al-Muhibbien</div>
+</footer>
+
+<script>
+  // SIMULASI PENGAMAN DOUBLE ENTRY (LOGIC FRONT-END)
+  // Di dunia nyata, pengecekan ini dilakukan di Database (Firebase/MySQL)
+  const databaseSimulasi = ["1234567890123456", "1122334455667788"]; // Contoh NIK yang sudah terdaftar
+
+  document.getElementById('pendaftaranForm').addEventListener('submit', function(e) {
+    const nikInput = document.getElementById('nik').value;
+    const nikError = document.getElementById('nikError');
+
+    if (databaseSimulasi.includes(nikInput)) {
+      e.preventDefault(); // Batalkan pengiriman
+      nikError.style.display = 'block';
+      alert('Maaf, Nomor NIK ini sudah terdaftar sebagai calon santri!');
+    } else {
+      nikError.style.display = 'none';
+      alert('Terima kasih! Data pendaftaran Anda sedang diproses.');
+      // Di sini lo bisa tambahin logic untuk kirim ke Firebase atau Google Sheets
+    }
+  });
+</script>
+
+</body>
+</html>
