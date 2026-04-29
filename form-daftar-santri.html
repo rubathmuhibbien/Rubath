@@ -171,22 +171,24 @@
 </footer>
 
 <script type="module">
-  // 1. Import SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // 2. Konfigurasi (GANTI DENGAN DATA FIREBASE-MU)
-  const firebaseConfig = {
-    apiKey: "AIzaSy...", 
-    authDomain: "rubath-almuhibbien.firebaseapp.com",
-    projectId: "rubath-almuhibbien",
-    storageBucket: "rubath-almuhibbien.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef"
-  };
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyCrdn2MDVH7UpAJopSpdPLlRH31Xl8XjOg",
+  authDomain: "web-rubath.firebaseapp.com",
+  databaseURL: "https://web-rubath-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "web-rubath",
+  storageBucket: "web-rubath.firebasestorage.app",
+  messagingSenderId: "606538369074",
+  appId: "1:606538369074:web:2750e9c9d951bc130fd42b",
+  measurementId: "G-30H5Q676LD"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
   // 3. Logic Submit Form
   const form = document.getElementById('pendaftaranForm');
