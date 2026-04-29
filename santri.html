@@ -3,199 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Akademik Rubath</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Rubath Digital Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <style>
         :root {
-            --primary: #064e3b; /* Hijau Rubath */
-            --secondary: #d97706; /* Gold/Amber */
-            --bg: #fdfcf0;
-            --text: #1f2937;
+            --primary: #064e3b;
+            --accent: #d97706;
+            --glass: rgba(255, 255, 255, 0.9);
+            --grad: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
+            background: #f0f2f5;
             margin: 0;
-            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 20% 20%, rgba(6, 78, 59, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 80%, rgba(217, 119, 6, 0.05) 0%, transparent 40%);
         }
 
-        /* Header Rubath Style */
+        /* Modern Header */
         header {
-            background: white;
-            padding: 20px 5%;
+            background: var(--grad);
+            padding: 20px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-bottom: 3px solid var(--primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        .logo {
+        .logo-box h1 {
             font-family: 'Playfair Display', serif;
             font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
+            margin: 0;
             letter-spacing: 2px;
         }
 
-        /* Container Portal */
-        .portal-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        .logo-box span {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        /* Main Portal Card */
+        .main-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+            margin: -40px auto 40px;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .search-section {
             text-align: center;
+            margin-bottom: 30px;
         }
 
-        .portal-container h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        /* Form Styling */
-        .input-group {
-            margin: 25px 0;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary);
+        .search-box {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
         }
 
         input[type="text"] {
-            width: 100%;
+            flex: 1;
+            border: none;
             padding: 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
             font-size: 16px;
-            transition: 0.3s;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--secondary);
+            font-family: inherit;
             outline: none;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
+        .btn-search {
+            background: var(--grad);
             color: white;
             border: none;
+            padding: 0 30px;
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
             cursor: pointer;
+            font-weight: 600;
             transition: 0.3s;
         }
 
-        button:hover {
-            background: #043a2c;
-            transform: translateY(-2px);
-        }
+        .btn-search:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(6, 78, 59, 0.3); }
 
-        /* Result Card */
-        #result-card {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 15px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            display: none;
-            text-align: left;
-        }
+        /* Result Section */
+        #result-area { display: none; animation: fadeIn 0.5s ease; }
 
-        .data-row {
+        .profile-header {
             display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed #cbd5e1;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 25px;
         }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--grad);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .grid-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+        }
+
+        .info-item:hover { border-color: var(--accent); }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .info-item span { font-size: 18px; font-weight: 600; color: var(--primary); }
+
+        .btn-download {
+            margin-top: 30px;
+            width: 100%;
+            padding: 18px;
+            background: #fff;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-download:hover { background: var(--primary); color: white; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .loader {
             display: none;
-            margin: 20px auto;
+            width: 40px;
+            height: 40px;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--secondary);
+            border-top: 4px solid var(--accent);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
             animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">RUBATH DIGITAL</div>
-    <div style="color: var(--secondary);"><i class="fa-solid fa-mosque"></i></div>
+    <div class="logo-box">
+        <h1>RUBATH</h1>
+        <span>Digital Portal</span>
+    </div>
+    <div class="date-now" id="current-date"></div>
 </header>
 
-<div class="portal-container">
-    <i class="fa-solid fa-graduation-cap" style="font-size: 40px; color: var(--secondary); margin-bottom: 15px;"></i>
-    <h2>Portal Data Santri</h2>
-    <p>Masukkan NISN Santri untuk melihat perkembangan akademik.</p>
-
-    <div class="input-group">
-        <label>NISN Santri</label>
-        <input type="text" id="nisn" placeholder="Contoh: 202610001">
+<div class="main-card">
+    <div class="search-section">
+        <h2 style="font-family: 'Playfair Display'; font-size: 32px; color: var(--primary);">Selamat Datang</h2>
+        <p style="color: #64748b;">Akses data akademik santri dalam satu pintu yang aman.</p>
+        
+        <div class="search-box">
+            <input type="text" id="nisn" placeholder="Masukkan NISN Santri...">
+            <button class="btn-search" onclick="fetchSantri()">Cari Data</button>
+        </div>
+        <div class="loader" id="loader"></div>
     </div>
 
-    <button onclick="checkData()">Cek Sekarang</button>
-    <div class="loader" id="loader"></div>
+    <div id="result-area">
+        <div class="profile-header">
+            <div class="avatar-circle" id="avatar-init">?</div>
+            <div>
+                <h3 id="res-nama" style="margin: 0; font-size: 24px;">Nama Santri</h3>
+                <p id="res-nisn-sub" style="margin: 0; color: var(--accent); font-weight: 600;">NISN: -</p>
+            </div>
+        </div>
 
-    <div id="result-card">
-        <h3 style="margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 5px;">Data Akademik</h3>
-        <div class="data-row"><span>Nama:</span> <strong id="res-nama"></strong></div>
-        <div class="data-row"><span>Kelas:</span> <strong id="res-kelas"></strong></div>
-        <div class="data-row"><span>Hafalan Terakhir:</span> <strong id="res-hafalan"></strong></div>
-        <div class="data-row"><span>Status Pembayaran:</span> <strong id="res-status"></strong></div>
-        <button style="margin-top: 20px; background: var(--secondary); font-size: 14px;">Download E-Rapor <i class="fa-solid fa-download"></i></button>
+        <div class="grid-info">
+            <div class="info-item">
+                <label><i class="fa-solid fa-mosque"></i> Kelas / Program</label>
+                <span id="res-kelas">-</span>
+            </div>
+            <div class="info-item">
+                <label><i class="fa-solid fa-book-quran"></i> Hafalan Terakhir</label>
+                <span id="res-hafalan">-</span>
+            </div>
+            <div class="info-item">
+                <label><i class="fa-solid fa-credit-card"></i> Status SPP</label>
+                <span id="res-spp">-</span>
+            </div>
+            <div class="info-item">
+                <label><i class="fa-solid fa-star"></i> Prestasi</label>
+                <span id="res-prestasi">Sangat Baik</span>
+            </div>
+        </div>
+
+        <button class="btn-download">
+            <i class="fa-solid fa-file-pdf"></i> Unduh E-Rapor Digital (PDF)
+        </button>
     </div>
 </div>
 
 <script>
-    async function checkData() {
+    // Set Current Date
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', options);
+
+    async function fetchSantri() {
         const nisn = document.getElementById('nisn').value;
         const loader = document.getElementById('loader');
-        const card = document.getElementById('result-card');
-        
-        if(!nisn) return alert("Isi NISN dulu, bro!");
+        const resultArea = document.getElementById('result-area');
+        const SCRIPT_URL = "URL_APPS_SCRIPT_LO_DISINI"; // GANTI INI
 
-        // Reset & Show Loader
-        card.style.display = 'none';
+        if(!nisn) return alert("Masukkan NISN dulu ya!");
+
         loader.style.display = 'block';
-
-        // GANTI URL INI dengan URL Deployment Apps Script lo
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbZzoG3rUjrPYJJpL3jw8BZ6ZLcY_-PBIXdm05mu56jc49LwerUI5k57xZUU4g518q/exec";
+        resultArea.style.display = 'none';
 
         try {
             const response = await fetch(`${SCRIPT_URL}?nisn=${nisn}`);
             const data = await response.json();
 
-            if (data !== "Not Found") {
+            if(data !== "Not Found") {
                 document.getElementById('res-nama').innerText = data.nama;
+                document.getElementById('res-nisn-sub').innerText = "NISN: " + nisn;
                 document.getElementById('res-kelas').innerText = data.kelas;
                 document.getElementById('res-hafalan').innerText = data.hafalan;
-                document.getElementById('res-status').innerText = data.spp;
-                card.style.display = 'block';
+                document.getElementById('res-spp').innerText = data.spp;
+                document.getElementById('avatar-init').innerText = data.nama.charAt(0);
+                
+                resultArea.style.display = 'block';
             } else {
-                alert("Data santri tidak ditemukan!");
+                alert("Waduh, santri dengan NISN tersebut nggak ketemu.");
             }
-        } catch (error) {
-            console.error(error);
-            alert("Ada masalah koneksi ke server.");
+        } catch (e) {
+            alert("Koneksi gagal. Cek lagi URL Deployment Apps Script-nya.");
         } finally {
             loader.style.display = 'none';
         }
